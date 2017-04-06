@@ -11,8 +11,8 @@
 |
 */
 
-Auth::routes();
-
-Route::get('/', 'FrontController@index');
-Route::get('/home', 'HomeController@index');
+Route::get('/', function(){
+    return "Hello";
+});
+Route::get('/dondeinvierto', 'HomeController@index');
 

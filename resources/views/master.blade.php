@@ -81,38 +81,9 @@
                     </a>
                 </div>
                 <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->
-                    @if (Auth::guest())
-                        <li><a href="{{ route('login') }}">Login</a></li>
-                        <li><a href="{{ route('register') }}">Register</a></li>
-                    @else
-                        <li class="dropdown" style="margin-top: 15px;">
-                            <span class="m-r-sm text-muted welcome-message">Bienvenido a ¿Dónde invierto?</span>
-                        </li>
-                        <li class="dropdown" style="margin-right: 30px;">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
-
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        Logout
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                          style="display: none;">
-                                        {{ csrf_field() }}
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    @endif
+                        <li><a href="#">Login</a></li>
+                        <li><a href="#">Register</a></li>
                 </ul>
-
             </nav>
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
