@@ -48,7 +48,7 @@
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li class="active"><a href="index.html">Resumen</a></li>
-                        <li><a href="account_upload.html">Cargar cuentas</a></li>
+                        <li><a href="{{ url('loadAccount') }}">Cargar cuentas</a></li>
                         <li><a href="dashboard_3.html">Analizar cuentas</a></li>
                     </ul>
                 </li>
@@ -153,6 +153,13 @@
             }, 2000);
         }
     }
+
+    var fn = function(e) {
+        if (!/zmore/.test(e.target.className)) { $('#dmore').hide(); }
+    }
+    document.addEventListener('click', fn);
+    document.addEventListener('touchstart', fn);
+
 </script>
 
 </body>
