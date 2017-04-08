@@ -11,10 +11,10 @@
                     <div id="contentWrapper">
 
                         <div class="row">
-                            @if (isset ($err))
-                                <div class="alert @if($err == 0) alert-success @else alert-danger @endif">
-                                    @if($err == 0)
-                                        Archivo cargado correctamente!!!
+                            @if ( Request::get('err') != null)
+                                <div class="alert @if(Request::get('err') == 0) alert-success @else alert-danger @endif">
+                                    @if(Request::get('err') == 0)
+                                        Archivo cargado correctamente!!! (en public/AccountFiles)
                                     @else
                                         Error al cargar el archivo!
                                     @endif
