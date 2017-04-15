@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\File;
 
 use App\Http\Requests;
 use App\Providers\SingletonCuentas;
-use App\EmpresaCuentasAux;
+use App\Model\EmpresaCuentasAux;
 
 class FileuploadingController extends Controller
 {
