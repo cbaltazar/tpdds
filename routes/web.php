@@ -2,9 +2,9 @@
 
 Route::get('/dondeinvierto', 'HomeController@index');
 
-Route::get('/loadAccount', 'HomeController@loadAccount');
+Route::get('/loadAccounts', 'HomeController@loadAccounts');
 
-Route::get('/viewAccount', 'HomeController@viewAccount');
+Route::get('/viewAccounts', 'HomeController@viewAccounts');
 
 Route::post('/store', 'FileUploaderController@store');
 

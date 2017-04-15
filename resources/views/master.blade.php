@@ -48,7 +48,8 @@
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li class="active"><a href="index.html">Resumen</a></li>
-                        <li><a href="{{ url('loadAccount') }}">Cargar cuentas</a></li>
+                        <li><a href="{{ url('loadAccounts') }}">Cargar cuentas</a></li>
+                        <li><a href="{{ url('viewAccounts') }}">Ver cuentas</a></li>
                         <li><a href="dashboard_3.html">Analizar cuentas</a></li>
                     </ul>
                 </li>

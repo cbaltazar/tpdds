@@ -7,6 +7,7 @@ use Input;
 use Validator;
 use Redirect;
 use Session;
+use App\Providers\SingletonCuentas;
 
 class HomeController extends Controller
 {
@@ -15,13 +16,15 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function loadAccount()
+    public function loadAccounts()
     {
         return view('account_load');
     }
 
-    public function viewAccount()
+    public function viewAccounts(Request $request)
     {
-        return view('account_view');
+        $listaDeDatos = SingletonCuentas::getInstance();
+        var_dump($listaDeDatos);
+        return view('accounts_view');
     }
 }
