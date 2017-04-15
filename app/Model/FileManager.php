@@ -20,7 +20,6 @@ class FileManager
 
     public function processFile($file)
     {
-        echo $file; die;
         $linea=file_get_contents($file);
         //     var_dump (json_decode ($linea));
         $array = json_decode($linea, true);
@@ -34,7 +33,6 @@ class FileManager
             $cuenta->setPeriodo($ar["period"]);
             $cuenta->setMonto($ar["amount"]);
             $ListaDeDatos->addCuentasToList($cuenta);
-
         }
     }
 }
