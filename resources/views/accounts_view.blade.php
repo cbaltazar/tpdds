@@ -13,7 +13,22 @@
                 </div>
                 <div class="ibox-content">
                     <div class="container">
-
+                        <div class="row">
+                            @if( $listado != null)
+                                <div class="col-md-3">Empresa</div>
+                                <div class="col-md-3">Cuenta</div>
+                                <div class="col-md-3">Periodo</div>
+                                <div class="col-md-3">Monto</div>
+                                @foreach($listado as $empresa )
+                                    <div class="col-md-3">{{$empresa->getNombreEmpresa()}}</div>
+                                    <div class="col-md-3">{{$empresa->getNombreCuenta()}}</div>
+                                    <div class="col-md-3">{{$empresa->getPeriodo()}}</div>
+                                    <div class="col-md-3">{{$empresa->getMonto()}}</div>
+                                @endforeach
+                            @else
+                                    No hay cuentas cargadas.
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>

@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Input;
 use Validator;
 use Redirect;
-use Session;
 use App\Providers\SingletonCuentas;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -23,8 +23,7 @@ class HomeController extends Controller
 
     public function viewAccounts(Request $request)
     {
-        $listaDeDatos = SingletonCuentas::getInstance();
-        var_dump($listaDeDatos);
-        return view('accounts_view');
+        $listaDeDatos = Session::get("ListaDeDatos")->getListCuentas();
+        return view('accounts_view')->with("listado", $listaDeDatos);
     }
 }

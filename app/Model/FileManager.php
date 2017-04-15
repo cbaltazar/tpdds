@@ -3,7 +3,8 @@
 namespace App\Model;
 
 use App\Providers\SingletonCuentas;
-use App\Model\EmpresaCuentasAux;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class FileManager
 {
@@ -18,7 +19,7 @@ class FileManager
         return $this->response;
     }
 
-    public function processFile($file)
+    public function processFile(Request $request, $file)
     {
         $linea=file_get_contents($file);
         //     var_dump (json_decode ($linea));
@@ -34,5 +35,7 @@ class FileManager
             $cuenta->setMonto($ar["amount"]);
             $ListaDeDatos->addCuentasToList($cuenta);
         }
+
+        Session::put("ListaDeDatos", $ListaDeDatos);
     }
 }

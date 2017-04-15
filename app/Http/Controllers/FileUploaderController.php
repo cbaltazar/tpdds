@@ -10,7 +10,7 @@ class FileUploaderController extends Controller
 {
     public function store(Request $request){
         $fileManager = new FileManager();
-        $fileManager->processFile($request->file("file")->getPathName());
+        $fileManager->processFile($request, $request->file("file")->getPathName());
 
         return redirect('loadAccounts?err=0');
     }

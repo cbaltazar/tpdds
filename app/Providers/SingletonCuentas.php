@@ -30,6 +30,5 @@ class SingletonCuentas extends ServiceProvider
    public function addCuentasToList($cuenta)
    {
      array_push ($this->Cuentas, $cuenta);
-    //  $Cuentas[] = $cuenta;
    }
 }
