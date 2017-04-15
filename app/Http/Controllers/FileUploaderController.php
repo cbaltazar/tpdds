@@ -9,7 +9,7 @@ use App\Http\Requests;
 use App\Providers\SingletonCuentas;
 use App\Model\EmpresaCuentasAux;
 
-class FileuploadingController extends Controller
+class FileUploaderController extends Controller
 {
     public function store(Request $request){
         $file = $request->file("file");

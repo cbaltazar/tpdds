@@ -11,14 +11,12 @@
 |
 */
 
-Route::get('/', function(){
-    return "Hello";
-});
-
 Route::get('/dondeinvierto', 'HomeController@index');
 
 Route::get('/loadAccount', 'HomeController@loadAccount');
 
-Route::post('/store', 'FileuploadingController@store');
+Route::get('/viewAccount', 'HomeController@viewAccount');
+
+Route::post('/store', 'FileUploaderController@store');
 
 

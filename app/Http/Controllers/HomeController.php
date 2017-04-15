@@ -10,33 +10,18 @@ use Session;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        return view('account_list');
+        return view('home');
     }
 
-    /**
-     * Show section to load account's files.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function loadAccount()
     {
-
         return view('account_load');
+    }
+
+    public function viewAccount()
+    {
+        return view('account_view');
     }
 }
