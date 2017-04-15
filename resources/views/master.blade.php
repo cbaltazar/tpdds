@@ -7,14 +7,12 @@
     <title>¿Dónde Invierto? | @yield('title')</title>
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('font-awesome/css/font-awesome.css')}}" rel="stylesheet">
-    <link href="{{asset('css/animate.css')}}" rel="stylesheet">
-    <link href="{{asset('css/style.css')}}" rel="stylesheet">
-    <!-- Toastr style -->
-    <link href="{{asset('css/plugins/toastr/toastr.min.css')}}" rel="stylesheet">
     <!-- Gritter -->
     <link href="{{asset('js/plugins/gritter/jquery.gritter.css')}}" rel="stylesheet">
-    <link href="{{asset('css/style.css')}}" rel="stylesheet">
+    @yield('head')
     <link href="{{asset('css/animate.css')}}" rel="stylesheet">
+    <link href="{{asset('css/style.css')}}" rel="stylesheet">
+
 </head>
 
 <body>
@@ -27,8 +25,7 @@
                             <img alt="image" class="img-circle" src="img/profile_small.jpg"/>
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong
-                                            class="font-bold">¿Dónde invierto?</strong>
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">¿Dónde invierto?</strong>
                             </span> <span class="text-muted text-xs block">Analista de inversiones <b class="caret"></b></span> </span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -47,27 +44,25 @@
                     <a href="index.html"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Cuentas</span> <span
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li class="active"><a href="index.html">Resumen</a></li>
-                        <li><a href="{{ url('loadAccounts') }}">Cargar cuentas</a></li>
+                        <li class="active"><a href="{{ url('loadAccounts') }}">Cargar cuentas</a></li>
                         <li><a href="{{ url('viewAccounts') }}">Ver cuentas</a></li>
-                        <li><a href="dashboard_3.html">Analizar cuentas</a></li>
+                        <li><a href="{{ url('viewAccounts') }}">Detalle de cuenta</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-calculator"></i> <span class="nav-label">Indicadores</span><span
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="graph_flot.html">Ver indicadores</a></li>
-                        <li><a href="graph_morris.html">Crear indicadores</a></li>
-                        <li><a href="graph_rickshaw.html">Analizar gráficos</a></li>
+                        <li><a href="{{ url('loadAccount') }}">Ver indicadores</a></li>
+                        <li><a href="{{ url('loadAccount') }}">Analizar indicador</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Metodologías</span><span
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="form_basic.html">Cargar metodología</a></li>
-                        <li><a href="form_advanced.html">Analizar metodología</a></li>
+                        <li><a href="{{ url('methodList') }}">Ver metodologías</a></li>
+                        <li><a href="{{ url('methodDetail') }}">Analizar metodología</a></li>
                     </ul>
                 </li>
             </ul>
@@ -78,12 +73,22 @@
         <div class="row border-bottom">
             <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i>
-                    </a>
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i></a>
+                    <!--form role="search" class="navbar-form-custom" method="post" action="search_results.html">
+                        <div class="form-group">
+                            <input type="text" placeholder="Buscar..." class="form-control" name="top-search" id="top-search">
+                        </div>
+                    </form-->
                 </div>
-                <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Login</a></li>
-                        <li><a href="#">Register</a></li>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <span class="m-r-sm text-muted welcome-message">Bienvenido a ¿Dónde Invierto?</span>
+                    </li>
+                    <li>
+                        <a href="{{ url('lockscreen') }}">
+                            <i class="fa fa-sign-out"></i> Salir
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -100,17 +105,15 @@
                 </ol>
             </div>
         </div>
-        <div class="row">
 
             @yield('content')
 
-        </div>
         <div class="footer">
             <div class="pull-right">
                 Desarrollado para la cátedra de <strong>Diseño de Sistemas</strong> de la <strong>UTN-FRBA</strong>.
             </div>
             <div>
-                <strong>Copyright</strong> AMEVA &copy; 2017-2017
+                <strong>Copyright</strong> ¿Dónde Invierto? &copy; 2017-2017
             </div>
         </div>
 
@@ -127,41 +130,10 @@
 <script src="{{asset('js/inspinia.js')}}"></script>
 <script src="{{asset('js/plugins/pace/pace.min.js')}}"></script>
 
-<script>
-    $(document).ready(function () {
+<!-- Toastr -->
+<script src="js/plugins/toastr/toastr.min.js"></script>
 
-        $('#loading-example-btn').click(function () {
-            btn = $(this);
-            simpleLoad(btn, true)
-
-            // Ajax example
-            //                $.ajax().always(function () {
-            //                    simpleLoad($(this), false)
-            //                });
-
-            simpleLoad(btn, false)
-        });
-    });
-
-    function simpleLoad(btn, state) {
-        if (state) {
-            btn.children().addClass('fa-spin');
-            btn.contents().last().replaceWith(" Loading");
-        } else {
-            setTimeout(function () {
-                btn.children().removeClass('fa-spin');
-                btn.contents().last().replaceWith(" Refresh");
-            }, 2000);
-        }
-    }
-
-    var fn = function(e) {
-        if (!/zmore/.test(e.target.className)) { $('#dmore').hide(); }
-    }
-    document.addEventListener('click', fn);
-    document.addEventListener('touchstart', fn);
-
-</script>
+@yield('scripts')
 
 </body>
 

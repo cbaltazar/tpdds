@@ -1,5 +1,9 @@
 @extends ('master')
 @section ('title','Cuentas')
+@section ('head')
+<!-- Toastr style -->
+<link href="{{asset('css/plugins/toastr/toastr.min.css')}}" rel="stylesheet">
+@endsection
 @section ('content')
     <div class="col-lg-12">
         <div class="wrapper wrapper-content animated fadeInUp">
@@ -36,4 +40,20 @@
 
         </div>
     </div>
+@endsection
+
+@section ('scripts')
+<script>
+    $(document).ready(function () {
+      setTimeout(function() {
+          toastr.options = {
+              closeButton: true,
+              progressBar: true,
+              showMethod: 'slideDown',
+              timeOut: 4000
+          };
+          toastr.success('Tu asesor de inversiones online', 'Bienvenido a ¿Dónde Invierto?');
+      }, 1300);
+    });
+</script>
 @endsection
