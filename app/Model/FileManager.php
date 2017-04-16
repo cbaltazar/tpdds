@@ -21,21 +21,32 @@ class FileManager
 
     public function processFile(Request $request, $file)
     {
-        $linea=file_get_contents($file);
-        //     var_dump (json_decode ($linea));
-        $array = json_decode($linea, true);
+        $listOfAccounts = $this->createAccountsList(
+            $this->processJson(
+                $this->getFileContent($file)
+                )
+        );
+        Session::put("ListaDeDatos", $listOfAccounts);
+    }
 
+    private function createAccountsList($data){
         $ListaDeDatos=SingletonCuentas::getInstance();
-        foreach ($array as $ar) {
-            //        echo $ar["company"],$ar["period"],$ar["account"],$ar["amount"], "\n";
+        foreach ($data as $ar) {
             $cuenta=new EmpresaCuentasAux();
-            $cuenta->setNombreEmpresa($ar["company"]);
-            $cuenta->setNombreCuenta($ar["account"]);
-            $cuenta->setPeriodo($ar["period"]);
-            $cuenta->setMonto($ar["amount"]);
+            $cuenta->setNombreEmpresa($ar->company);
+            $cuenta->setNombreCuenta($ar->account);
+            $cuenta->setPeriodo($ar->period);
+            $cuenta->setMonto($ar->amount);
             $ListaDeDatos->addCuentasToList($cuenta);
         }
+        return $ListaDeDatos;
+    }
 
-        Session::put("ListaDeDatos", $ListaDeDatos);
+    private function getFileContent($file){
+        return file_get_contents($file);
+    }
+
+    private function processJson($fileContent){
+        return json_decode($fileContent);
     }
 }

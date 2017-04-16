@@ -21,9 +21,8 @@ class FrontController extends Controller{
 
     public function viewAccounts(Request $request)
     {
-        $listaDeDatos = SingletonCuentas::getInstance();
-        var_dump($listaDeDatos);
-        return view('accounts_view');
+        return view('accounts_view')->with("accounts",
+            Session::get("ListaDeDatos")->getListCuentas());
     }
 
     public function accountDetail(){

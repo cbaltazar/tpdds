@@ -10,8 +10,6 @@ Route::get('/', function(){
 //ACCOUNT
 Route::get('/loadAccounts', 'FrontController@loadAccounts');
 
-Route::post('/store', 'FileuploadingController@store');
-
 Route::get('/viewAccounts', 'FrontController@viewAccounts');
 
 Route::get('/accountDetail', 'FrontController@accountDetail');
