@@ -46,15 +46,14 @@
                     <ul class="nav nav-second-level">
                         <li class="active"><a href="{{ url('loadAccounts') }}">Cargar cuentas</a></li>
                         <li><a href="{{ url('viewAccounts') }}">Ver cuentas</a></li>
-                        <li><a href="{{ url('viewAccounts') }}">Detalle de cuenta</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-calculator"></i> <span class="nav-label">Indicadores</span><span
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="{{ url('loadAccount') }}">Ver indicadores</a></li>
-                        <li><a href="{{ url('loadAccount') }}">Analizar indicador</a></li>
+                        <li><a href="{{ url('indicatorList') }}">Ver indicadores</a></li>
+                        <li><a href="{{ url('indicatorDetail') }}">Analizar indicador</a></li>
                     </ul>
                 </li>
                 <li>

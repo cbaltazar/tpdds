@@ -16,13 +16,13 @@ Route::get('/accountDetail', 'FrontController@accountDetail');
 
 Route::post('/store', 'FileUploaderController@store');
 
-//INDICATORS
+//METODOLOGIES
 
 Route::get('/methodDetail', 'FrontController@methodDetail');
 
 Route::get('/methodList', 'FrontController@methodList');
 
-//METODOLOGIES
+//INDICATORS
 
 Route::get('/indicatorDetail', 'FrontController@indicatorDetail');
 

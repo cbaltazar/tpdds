@@ -1,5 +1,5 @@
 @extends ('master')
-@section ('title','Metodologías')
+@section ('title','Indicadores')
 @section ('head')
 
 @endsection
@@ -9,9 +9,9 @@
 
                     <div class="ibox">
                         <div class="ibox-title">
-                            <h5>Listado de Metodologías</h5>
+                            <h5>Listado de Indicadores</h5>
                             <div class="ibox-tools">
-                                <a href="" class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> Crear nueva metodología</a>
+                                <a href="" class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> Crear nuevo Indicador</a>
                             </div>
                         </div>
                         <div class="ibox-content">
