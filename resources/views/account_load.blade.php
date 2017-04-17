@@ -1,5 +1,5 @@
 @extends ('master')
-@section ('title','Cuentas')
+@section ('title','Cargar Cuentas')
 @section ('head')
 <!-- Toastr style -->
 <link href="{{asset('css/plugins/toastr/toastr.min.css')}}" rel="stylesheet">
@@ -28,9 +28,8 @@
                             <div class="col-sm-7 col-xs-12">
                                 <form method="post" enctype="multipart/form-data" action="{{url('store')}}">
                                     {{csrf_field()}}
-                                    <input type="file" name="file">
-                                    <br>
-                                    <input type="submit" value="Cargar Cuentas">
+                                    <input type="file" name="file" class="filestyle" data-buttonText="Seleccionar Archivo" data-buttonName="btn-primary" data-placeholder="Seleccione un archivo...">
+                                    <input type="submit" value="Cargar Cuentas" class="btn btn-primary m-t">
                                 </form>
                             </div>
                         </div>
@@ -56,4 +55,8 @@
       }, 1300);
     });
 </script>
+<!-- FileStyle -->
+<script src="{{asset('js/plugins/fileStyle/bootstrap-filestyle.min.js')}}"></script>
+<!-- Toastr -->
+<script src="js/plugins/toastr/toastr.min.js"></script>
 @endsection

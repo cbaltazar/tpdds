@@ -52,8 +52,6 @@
                               <td>{{ $account->getMonto() }}</td>
                           </tr>
                       @endforeach
-                      @else
-                        No hay cuentas cargadas.
                   @endif
                   </tbody>
                   <tfoot>

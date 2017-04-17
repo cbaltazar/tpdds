@@ -130,9 +130,6 @@
 <script src="{{asset('js/inspinia.js')}}"></script>
 <script src="{{asset('js/plugins/pace/pace.min.js')}}"></script>
 
-<!-- Toastr -->
-<script src="js/plugins/toastr/toastr.min.js"></script>
-
 @yield('scripts')
 
 </body>
