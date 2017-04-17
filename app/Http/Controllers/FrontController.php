@@ -21,8 +21,11 @@ class FrontController extends Controller{
 
     public function viewAccounts(Request $request)
     {
-        return view('accounts_view')->with("accounts",
-            Session::get("ListaDeDatos")->getListCuentas());
+        $accountList = null;
+        if(Session::get("ListaDeDatos")){
+            $accountList =  Session::get("ListaDeDatos")->getListCuentas();
+        }
+        return view('accounts_view')->with("accounts", $accountList);
     }
 
     public function accountDetail(){

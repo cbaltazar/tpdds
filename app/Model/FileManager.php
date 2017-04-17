@@ -29,7 +29,7 @@ class FileManager
         Session::put("ListaDeDatos", $listOfAccounts);
     }
 
-    private function createAccountsList($data){
+    public function createAccountsList($data){
         $ListaDeDatos=SingletonCuentas::getInstance();
         foreach ($data as $ar) {
             $cuenta=new EmpresaCuentasAux();
@@ -42,11 +42,13 @@ class FileManager
         return $ListaDeDatos;
     }
 
-    private function getFileContent($file){
+    //testGetFilecontent
+    public function getFileContent($file){
         return file_get_contents($file);
     }
 
-    private function processJson($fileContent){
+    //testProcessJson
+    public function processJson($fileContent){
         return json_decode($fileContent);
     }
 }
