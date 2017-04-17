@@ -34,7 +34,7 @@
                                             <span class="label label-primary">activo</span>
                                         </td>
                                         <td class="project-title">
-                                            <a href="project_detail.html">Contract with Zender Company</a>
+                                            <a href="{{ url('methodDetail') }}">Contract with Zender Company</a>
                                             <br/>
                                             <small>Created 14.08.2014</small>
                                         </td>
@@ -49,7 +49,7 @@
                                             <span class="label label-primary">activo</span>
                                         </td>
                                         <td class="project-title">
-                                            <a href="project_detail.html">There are many variations of passages</a>
+                                            <a href="{{ url('methodDetail') }}">There are many variations of passages</a>
                                             <br/>
                                             <small>Created 11.08.2014</small>
                                         </td>
@@ -64,7 +64,7 @@
                                             <span class="label label-warning">inactivo</span>
                                         </td>
                                         <td class="project-title">
-                                            <a href="project_detail.html">Many desktop publishing packages and web</a>
+                                            <a href="{{ url('methodDetail') }}">Many desktop publishing packages and web</a>
                                             <br/>
                                             <small>Created 10.08.2014</small>
                                         </td>
@@ -79,7 +79,7 @@
                                             <span class="label label-primary">activo</span>
                                         </td>
                                         <td class="project-title">
-                                            <a href="project_detail.html">Letraset sheets containing</a>
+                                            <a href="{{ url('methodDetail') }}">Letraset sheets containing</a>
                                             <br/>
                                             <small>Created 22.07.2014</small>
                                         </td>
@@ -94,7 +94,7 @@
                                             <span class="label label-primary">activo</span>
                                         </td>
                                         <td class="project-title">
-                                            <a href="project_detail.html">Contrary to popular belief</a>
+                                            <a href="{{ url('methodDetail') }}">Contrary to popular belief</a>
                                             <br/>
                                             <small>Created 14.07.2014</small>
                                         </td>
@@ -109,7 +109,7 @@
                                             <span class="label label-primary">activo</span>
                                         </td>
                                         <td class="project-title">
-                                            <a href="project_detail.html">Contract with Zender Company</a>
+                                            <a href="{{ url('methodDetail') }}">Contract with Zender Company</a>
                                             <br/>
                                             <small>Created 14.08.2014</small>
                                         </td>
@@ -124,7 +124,7 @@
                                             <span class="label label-primary">activo</span>
                                         </td>
                                         <td class="project-title">
-                                            <a href="project_detail.html">There are many variations of passages</a>
+                                            <a href="{{ url('methodDetail') }}">There are many variations of passages</a>
                                             <br/>
                                             <small>Created 11.08.2014</small>
                                         </td>
@@ -139,7 +139,7 @@
                                             <span class="label label-warning">inactivo</span>
                                         </td>
                                         <td class="project-title">
-                                            <a href="project_detail.html">Many desktop publishing packages and web</a>
+                                            <a href="{{ url('methodDetail') }}">Many desktop publishing packages and web</a>
                                             <br/>
                                             <small>Created 10.08.2014</small>
                                         </td>
@@ -154,7 +154,7 @@
                                             <span class="label label-primary">activo</span>
                                         </td>
                                         <td class="project-title">
-                                            <a href="project_detail.html">Letraset sheets containing</a>
+                                            <a href="{{ url('methodDetail') }}">Letraset sheets containing</a>
                                             <br/>
                                             <small>Created 22.07.2014</small>
                                         </td>
@@ -169,7 +169,7 @@
                                             <span class="label label-primary">activo</span>
                                         </td>
                                         <td class="project-title">
-                                            <a href="project_detail.html">Contrary to popular belief</a>
+                                            <a href="{{ url('methodDetail') }}">Contrary to popular belief</a>
                                             <br/>
                                             <small>Created 14.07.2014</small>
                                         </td>

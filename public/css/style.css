@@ -2783,8 +2783,9 @@ video {
 }
 /* Summernote text editor  */
 .note-editor {
+  border: 1px solid #e5e6e7;
   height: auto;
-  min-height: 300px;
+  min-height: 200px;
 }
 /* MODAL */
 .modal-content {
