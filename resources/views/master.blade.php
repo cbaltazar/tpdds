@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¿Dónde Invierto? | @yield('title')</title>
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('font-awesome/css/font-awesome.css')}}" rel="stylesheet">
-    <!-- Gritter -->
-    <link href="{{asset('js/plugins/gritter/jquery.gritter.css')}}" rel="stylesheet">
     @yield('head')
     <link href="{{asset('css/animate.css')}}" rel="stylesheet">
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
-
 </head>
 
 <body>
@@ -36,9 +32,7 @@
                             <li><a href="login.html">Logout</a></li>
                         </ul>
                     </div>
-                    <div class="logo-element">
-                        DI?
-                    </div>
+                    <div class="logo-element">DI?</div>
                 </li>
                 <li> <!--class="active"-->
                     <a href="index.html"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Cuentas</span> <span
@@ -53,7 +47,7 @@
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a href="{{ url('indicatorList') }}">Ver indicadores</a></li>
-                        <li><a href="{{ url('indicatorDetail') }}">Analizar indicador</a></li>
+                        <li><a href="{{ url('indicatorDetail') }}">Editar indicador</a></li>
                     </ul>
                 </li>
                 <li>
@@ -61,7 +55,7 @@
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a href="{{ url('methodList') }}">Ver metodologías</a></li>
-                        <li><a href="{{ url('methodDetail') }}">Analizar metodología</a></li>
+                        <li><a href="{{ url('methodDetail') }}">Editar metodología</a></li>
                     </ul>
                 </li>
             </ul>
@@ -73,11 +67,6 @@
             <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header">
                     <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i></a>
-                    <!--form role="search" class="navbar-form-custom" method="post" action="search_results.html">
-                        <div class="form-group">
-                            <input type="text" placeholder="Buscar..." class="form-control" name="top-search" id="top-search">
-                        </div>
-                    </form-->
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
                     <li>
@@ -96,7 +85,7 @@
                 <h2>@yield('title')</h2>
                 <ol class="breadcrumb">
                     <li>
-                        <a href="index.html">Home</a>
+                        <a href=#>Home</a>
                     </li>
                     <li class="active">
                         <strong>@yield('title')</strong>
@@ -109,7 +98,7 @@
 
         <div class="footer">
             <div class="pull-right">
-                Desarrollado para la cátedra de <strong>Diseño de Sistemas</strong> de la <strong>UTN-FRBA</strong>.
+                Desarrollado para la cátedra de <strong>Diseño de Sistemas</strong> - <strong>UTN-FRBA</strong>.
             </div>
             <div>
                 <strong>Copyright</strong> ¿Dónde Invierto? &copy; 2017-2017

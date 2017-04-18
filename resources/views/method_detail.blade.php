@@ -6,7 +6,7 @@
     <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
 @endsection
 @section ('content')
-<div class="wrapper wrapper-content">
+<div class="wrapper wrapper-content animated fadeInUp">
   <div class="row">
       <div class="col-lg-12">
           <div class="ibox float-e-margins">
@@ -27,7 +27,7 @@
                               <div class="checkbox i-checks"><label> <input type="checkbox" value="" checked=""> <i></i> Activo </label></div>
                       </div>
                       <div class="hr-line-dashed"></div>
-                      <div class="form-group"><label class="col-sm-2 control-label">Fórmula</label>
+                      <div class="form-group"><label class="col-sm-2 control-label">Reglas</label>
                           <div class="col-md-10">
                               <div class="summernote" style="border:1px solid black">
                                   <h4>
@@ -52,7 +52,7 @@
 @endsection
 @section ('scripts')
     <script src="js/plugins/summernote/summernote.min.js"></script>
-
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
     <script>
         $(document).ready(function(){
             $('.summernote').summernote();
@@ -61,16 +61,5 @@
                 radioClass: 'iradio_square-green',
             });
        });
-
-       var edit = function() {
-            $('.click2edit').summernote({focus: true});
-        };
-
-        var save = function() {
-            var aHTML = $('.click2edit').code(); //save HTML If you need(aHTML: array).
-            $('.click2edit').destroy();
-        };
     </script>
-    <!-- iCheck -->
-    <script src="js/plugins/iCheck/icheck.min.js"></script>
 @endsection
