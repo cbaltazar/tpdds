@@ -7,6 +7,8 @@ use Illuminate\Support\ServiceProvider;
 class SingletonCuentas extends ServiceProvider
 {
   private $Cuentas;
+  private $created;
+
   static $instancia = null;
 
   //Por algún motivo laravel require que el constructor sea publico
@@ -31,4 +33,12 @@ class SingletonCuentas extends ServiceProvider
    {
      array_push ($this->Cuentas, $cuenta);
    }
+
+    public function setCreated($time){
+        $this->created = $time;
+    }
+
+    public function getCreated(){
+        return $this->created;
+    }
 }

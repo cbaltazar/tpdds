@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\Providers\SingletonCuentas;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class FileManager
 {
@@ -38,6 +39,8 @@ class FileManager
             $cuenta->setMonto($ar->amount);
             $ListaDeDatos->addCuentasToList($cuenta);
         }
+
+        $ListaDeDatos->setCreated(Carbon::now()->toDateTimeString());
         return $ListaDeDatos;
     }
 

@@ -20,7 +20,9 @@ class FrontController extends Controller{
         if(Session::get("ListaDeDatos")){
             $accountList =  Session::get("ListaDeDatos")->getListCuentas();
         }
-        return view('account_load')->with("accounts", $accountList);
+        $empresas = $this->getEmpresasCargadas($accountList);
+
+        return view('account_load')->with("empresas", $empresas)->with("created", Session::get("ListaDeDatos")->getCreated());
     }
 
     public function viewAccounts(Request $request)
@@ -61,5 +63,15 @@ class FrontController extends Controller{
 
     public function methodDetail(){
         return view('method_detail');
+    }
+
+    private function getEmpresasCargadas($accountList){
+        $empresas = array();
+        foreach ($accountList as $account){
+            if(!in_array($account->getNombreEmpresa(), $empresas)){
+                array_push($empresas, $account->getNombreEmpresa());
+            }
+        }
+        return $empresas;
     }
 }

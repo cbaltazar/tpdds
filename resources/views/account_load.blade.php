@@ -49,26 +49,23 @@
                     <div class="project-list">
                         <table class="table table-hover">
                             <tbody>
-                            @if( count($accounts) > 0)
-                                {{$lastEmpresa = null}}
-                                @foreach($accounts as $account)
-                                    @if($account->getNombreEmpresa() != $lastEmpresa)
+                            @if( count($empresas) > 0)
+                                @foreach($empresas as $empresa)
                                     <tr>
                                         <td class="project-status">
                                             <span class="label label-primary">activo</span>
                                         </td>
                                         <td class="project-title">
-                                            <a href="{{ url('accountDetail/'.$lastEmpresa) }}">{{ $lastEmpresa = $account->getNombreEmpresa() }}</a>
+                                            <a href="{{ url('accountDetail/'.$empresa) }}">{{ $empresa }}</a>
                                             <br/>
-                                            <small>Creado el 18.04.2017</small>
+                                            <small>Created at {{ $created }}</small>
                                         </td>
                                         <td class="project-actions">
-                                            <a href="{{ url('accountDetail/'.$lastEmpresa) }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
-                                            <a href="{{ url('accountDetail/'.$lastEmpresa) }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
+                                            <a href="{{ url('accountDetail/'.$empresa) }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
+                                            <a href="{{ url('accountDetail/'.$empresa) }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
                                             <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
                                         </td>
                                     </tr>
-                                    @endif
                                 @endforeach
                             @else
                                 <p>No se encontraron cuentas cargadas</p>
@@ -103,6 +100,10 @@
           };
           toastr.success('Tu asesor de inversiones online', 'Bienvenido a ¿Dónde Invierto?');
       }, 1300);
+
+        setTimeout(function () {
+            $(".alert-success").fadeOut(1500);
+        }, 2000);
     });
 </script>
 @endsection
