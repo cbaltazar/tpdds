@@ -11,7 +11,7 @@ class MainTest extends TestCase
     public function testLoadFile()
     {
         $fileManager = new FileManager();
-        $accounts = $fileManager->processFile( __DIR__."\\testing.json")->getListCuentas();
+        $accounts = $fileManager->processFile( __DIR__.DIRECTORY_SEPARATOR."testing.json")->getListCuentas();
 
         $this->assertEquals("Facebook Inc.", $accounts[0]->getNombreEmpresa());
         $this->assertEquals("FCF(B)", $accounts[0]->getNombreCuenta());
