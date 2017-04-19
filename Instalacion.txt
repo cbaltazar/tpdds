@@ -1,0 +1,10 @@
+Pasos para la instalacion del proyecto:
+
+1) clonar el repo desde https://bitbucket.org/dds2017/tpdds/
+2) dentro del directorio raiz (tpdds) ejecutar php artisan key:generate
+3) ejecutar php artisan serve (se puede configurar el puerto agregando --port=xxxxx. Por defecto es el 8000).
+4) acceder mediante localhost:8000
+
+Como correr los tests:
+
+1) desde la raiz del proyecto, ejecutar: vendor/bin/phpunit tests/Unit/"nombre del test"
