@@ -31,7 +31,7 @@ class FileManagerTest extends TestCase
     {
         return [
             [
-                "cuentas.json",
+                __DIR__."\cuentas.json",
                 "[{\"company\":\"Facebook Inc.\",\"period\":2016,\"account\":\"Discontinued Operations(B)\",\"amount\":0}]"]
         ];
     }

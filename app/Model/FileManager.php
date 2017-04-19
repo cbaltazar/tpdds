@@ -4,7 +4,6 @@ namespace App\Model;
 
 use App\Providers\SingletonCuentas;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
 class FileManager
 {
@@ -19,14 +18,14 @@ class FileManager
         return $this->response;
     }
 
-    public function processFile(Request $request, $file)
+    public function processFile($file)
     {
         $listOfAccounts = $this->createAccountsList(
             $this->processJson(
                 $this->getFileContent($file)
                 )
         );
-        Session::put("ListaDeDatos", $listOfAccounts);
+        return $listOfAccounts;
     }
 
     public function createAccountsList($data){
