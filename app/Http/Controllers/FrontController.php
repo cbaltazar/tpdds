@@ -16,7 +16,11 @@ class FrontController extends Controller{
     }
 
     public function loadAccounts(){
-        return view('account_load');
+        $accountList = null;
+        if(Session::get("ListaDeDatos")){
+            $accountList =  Session::get("ListaDeDatos")->getListCuentas();
+        }
+        return view('account_load')->with("accounts", $accountList);
     }
 
     public function viewAccounts(Request $request)
@@ -28,9 +32,20 @@ class FrontController extends Controller{
         return view('accounts_view')->with("accounts", $accountList);
     }
 
-    public function accountDetail(){
-        return view('account_detail');
+    public function accountDetail($company=null){
+        $accountList = null;
+        $companyAccounts = array();
+        if(Session::get("ListaDeDatos")){
+            $accountList =  Session::get("ListaDeDatos")->getListCuentas();
+            foreach ($accountList as $account){
+                if ($account->getNombreEmpresa() == $company){
+                  $companyAccounts[] = $account;
+                }
+            }
+        }
+        return view('account_detail')->with("companyAccounts", $companyAccounts, $company);
     }
+
 //INDICATORS
     public function indicatorList(){
         return view('indicator_list');
