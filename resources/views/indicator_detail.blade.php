@@ -1,9 +1,9 @@
 @extends ('master')
 @section ('title','Editar Indicador')
 @section ('head')
-    <link href="css/plugins/summernote/summernote.css" rel="stylesheet">
-    <link href="css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
-    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="{{asset('css/plugins/summernote/summernote.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins/summernote/summernote-bs3.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
 @endsection
 @section ('content')
 <div class="wrapper wrapper-content animated fadeInUp">
@@ -51,8 +51,8 @@
 </div>
 @endsection
 @section ('scripts')
-    <script src="js/plugins/summernote/summernote.min.js"></script>
-    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <script src="{{asset('js/plugins/summernote/summernote.min.js')}}"></script>
+    <script src="{{asset('js/plugins/iCheck/icheck.min.js')}}"></script>
     <script>
         $(document).ready(function(){
             $('.summernote').summernote();

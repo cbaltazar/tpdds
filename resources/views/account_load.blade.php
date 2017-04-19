@@ -38,7 +38,7 @@
                 </div>
             </div>
 <!---->
-            <div class="ibox">
+            <div class="ibox animated">
                 <div class="ibox-title">
                     <h5>Listado de Empresas</h5>
                     <div class="ibox-tools">
@@ -58,7 +58,7 @@
                                         <td class="project-title">
                                             <a href="{{ url('accountDetail/'.$empresa) }}">{{ $empresa }}</a>
                                             <br/>
-                                            <small>Created at {{ $created }}</small>
+                                            <small>Creado el {{ $created }}</small>
                                         </td>
                                         <td class="project-actions">
                                             <a href="{{ url('accountDetail/'.$empresa) }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
@@ -102,7 +102,7 @@
       }, 1300);
 
         setTimeout(function () {
-            $(".alert-success").fadeOut(1500);
+            $(".alert-success").slideUp(1500);
         }, 2000);
     });
 </script>

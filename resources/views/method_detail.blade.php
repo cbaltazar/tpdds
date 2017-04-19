@@ -1,9 +1,9 @@
 @extends ('master')
 @section ('title','Editar Metodología')
 @section ('head')
-    <link href="css/plugins/summernote/summernote.css" rel="stylesheet">
-    <link href="css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
-    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="{{asset('css/plugins/summernote/summernote.css')}}" rel="stylesheet">
+<link href="{{asset('css/plugins/summernote/summernote-bs3.css')}}" rel="stylesheet">
+<link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
 @endsection
 @section ('content')
 <div class="wrapper wrapper-content animated fadeInUp">
@@ -20,7 +20,7 @@
                       </div>
                       <div class="hr-line-dashed"></div>
                       <div class="form-group"><label class="col-sm-2 control-label">Descripción</label>
-                          <div class="col-sm-10"><input type="text" class="form-control" placeholder="Descripción de la metodología" > <span class="help-block m-b-none">Este campo le permitirá dar una breve descripción de la metodología generado.</span></div>
+                          <div class="col-sm-10"><input type="text" class="form-control" placeholder="Descripción de la metodología" > <span class="help-block m-b-none">Este campo le permitirá dar una breve descripción de la metodología generada.</span></div>
                       </div>
                       <div class="hr-line-dashed"></div>
                       <div class="form-group"><label class="col-sm-2 control-label">Estado</label>
@@ -51,8 +51,8 @@
 </div>
 @endsection
 @section ('scripts')
-    <script src="js/plugins/summernote/summernote.min.js"></script>
-    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <script src="{{asset('js/plugins/summernote/summernote.min.js')}}"></script>
+    <script src="{{asset('js/plugins/iCheck/icheck.min.js')}}"></script>
     <script>
         $(document).ready(function(){
             $('.summernote').summernote();
