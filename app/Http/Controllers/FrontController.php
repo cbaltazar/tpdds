@@ -17,12 +17,16 @@ class FrontController extends Controller{
 
     public function loadAccounts(){
         $accountList = null;
+        $empresas = null;
+        $created = null;
         if(Session::get("ListaDeDatos")){
             $accountList =  Session::get("ListaDeDatos")->getListCuentas();
+            $empresas = $this->getEmpresasCargadas($accountList);
+            $created = Session::get("ListaDeDatos")->getCreated();
         }
-        $empresas = $this->getEmpresasCargadas($accountList);
 
-        return view('account_load')->with("empresas", $empresas)->with("created", Session::get("ListaDeDatos")->getCreated());
+
+        return view('account_load')->with("empresas", $empresas)->with("created", $created);
     }
 
     public function viewAccounts(Request $request)
