@@ -1,12 +1,13 @@
 Pasos para la instalacion del proyecto:
 
-1) instalar composer.
-2) clonar el repo desde https://bitbucket.org/dds2017/tpdds/
-3) copiar el archivo .env_example y renombrarlo como .env
-4) dentro del directorio raiz (tpdds) ejecutar composer install
-5) dentro del directorio raiz (tpdds) ejecutar php artisan key:generate
-6) ejecutar php artisan serve (se puede configurar el puerto agregando --port=xxxxx. Por defecto es el 8000).
-7) acceder mediante localhost:8000
+1) instalar PHP 5.6 o superior
+2) instalar composer (seleccionar la ruta de PHP en el paso 2)
+3) clonar el repo desde https://bitbucket.org/dds2017/tpdds/
+4) copiar el archivo .env_example y renombrarlo como .env
+5) dentro del directorio raiz (tpdds) ejecutar composer install
+6) dentro del directorio raiz (tpdds) ejecutar php artisan key:generate
+7) ejecutar php artisan serve (se puede configurar el puerto agregando --port=xxxxx. Por defecto es el 8000).
+8) acceder mediante localhost:8000
 
 Como correr los tests:
 
