@@ -44,12 +44,10 @@ class FileManager
         return $ListaDeDatos;
     }
 
-    //testGetFilecontent
     public function getFileContent($file){
         return file_get_contents($file);
     }
 
-    //testProcessJson
     public function processJson($fileContent){
         return json_decode($fileContent);
     }
