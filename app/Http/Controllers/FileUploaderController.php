@@ -11,9 +11,8 @@ class FileUploaderController extends Controller
 {
     public function store(Request $request){
         $fileManager = new FileManager();
-        Session::put("ListaDeDatos",
-                $fileManager->processFile($request->file("file")->getPathName())
-                );
-        return redirect('loadAccounts')->with('err', null);
+        $fileManager->processFile($request->file("file")->getPathName());
+
+        return redirect('loadAccounts')->with('status', 'Archivo cargado correctamente!');
     }
 }

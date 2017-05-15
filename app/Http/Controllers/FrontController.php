@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 use Input;
 use Validator;
 use Redirect;
-use Session;
 use App\Providers\SingletonCuentas;
 
 class FrontController extends Controller{
@@ -22,41 +21,34 @@ class FrontController extends Controller{
     }
 
     public function loadAccounts(){
-       /* $accountList = null;
-        $empresas = null;
-        $created = null;
-        if(Session::get("ListaDeDatos")){
-            $accountList =  Session::get("ListaDeDatos")->getListCuentas();
-            $empresas = $this->getEmpresasCargadas($accountList);
-            $created = Session::get("ListaDeDatos")->getCreated();
-        }*/
-
         $empresas = Empresa::all();
 
         return view('account_load')->with("empresas", $empresas);
     }
 
-    public function viewAccounts(Request $request)
-    {
-        $accountList = null;
-        if(Session::get("ListaDeDatos")){
-            $accountList =  Session::get("ListaDeDatos")->getListCuentas();
-        }
-        return view('accounts_view')->with("accounts", $accountList);
+    public function accountDetail($company=null){
+
+        $empresa = Empresa::where('nombre', $company)->first();
+        $cuentas = $empresa->getCuentas;
+
+        return view('account_detail')->with("companyAccounts", $cuentas);
     }
 
-    public function accountDetail($company=null){
-        $accountList = null;
-        $companyAccounts = array();
-        if(Session::get("ListaDeDatos")){
-            $accountList =  Session::get("ListaDeDatos")->getListCuentas();
-            foreach ($accountList as $account){
-                if ($account->getNombreEmpresa() == $company){
-                  $companyAccounts[] = $account;
-                }
-            }
+    public function viewAccounts(Request $request)
+    {
+        $empresas = Cuenta_Empresa::all();
+        $accountList = array();
+        foreach ($empresas as $empresa){
+            $e = new \stdClass();
+            $e->nombreEmpresa = Empresa::find($empresa->empresa_id)->nombre;
+            $e->nombreCuenta = Cuenta::find($empresa->cuenta_id)->nombre;
+            $e->periodo = $empresa->periodo;
+            $e->monto = $empresa->monto;
+
+            array_push($accountList, $e);
         }
-        return view('account_detail')->with("companyAccounts", $companyAccounts, $company);
+
+        return view('accounts_view')->with("accounts", $accountList);
     }
 
 //INDICATORS
@@ -74,31 +66,5 @@ class FrontController extends Controller{
 
     public function methodDetail(){
         return view('method_detail');
-    }
-
-    private function getEmpresasCargadas($accountList){
-        $empresas = array();
-        foreach ($accountList as $account){
-            if(!in_array($account->getNombreEmpresa(), $empresas)){
-                array_push($empresas, $account->getNombreEmpresa());
-            }
-        }
-        return $empresas;
-    }
-
-    public function pruebaBase(){
-        $empresa = Empresa::where('nombre', 'EMPRESA 8')->first();
-        if(!$empresa){
-            echo "no existe la empresa";
-        }
-        /*$cuenta = Cuenta::find(2);
-        $cuenta_empresa = new Cuenta_Empresa();
-        $cuenta_empresa->empresa_id = $empresa->id;
-        $cuenta_empresa->cuenta_id = $cuenta->id;
-        $cuenta_empresa->periodo = "2017/05/14";
-        $cuenta_empresa->monto = 234.56;
-        $cuenta_empresa->save();*/
-
-        return $empresa;
     }
 }
