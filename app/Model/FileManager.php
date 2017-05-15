@@ -30,9 +30,34 @@ class FileManager
     }
 
     public function createAccountsList($data){
+
+       foreach ($data as $d) {
+           $empresa = Empresa::where('nombre', $d->company)->first();
+           if (!$empresa){
+               $empresa = new Empresa();
+               $empresa->nombre = $d->company;
+               $empresa->save();
+           }
+
+           $cuenta = Cuenta::where('nombre', $d->account)->first();
+           if (!$cuenta){
+               $cuenta = new Cuenta();
+               $cuenta->nombre = $d->account;
+               $cuenta->save();
+           }
+
+           $cuenta_empresa = new Cuenta_Empresa();
+           $cuenta_empresa->cuenta_id = $cuenta->id;
+           $cuenta_empresa->empresa_id = $empresa->id;
+           $cuenta_empresa->periodo = $d->period;
+           $cuenta_empresa->monto = $d->amount;
+
+           $cuenta_empresa->save();
+       }
+
         $ListaDeDatos=SingletonCuentas::getInstance();
         foreach ($data as $ar) {
-            $cuenta=new EmpresaCuentasAux();
+            $cuenta=new EmpresaCuentas();
             $cuenta->setNombreEmpresa($ar->company);
             $cuenta->setNombreCuenta($ar->account);
             $cuenta->setPeriodo($ar->period);

@@ -27,3 +27,5 @@ Route::get('/methodList', 'FrontController@methodList');
 Route::get('/indicatorDetail', 'FrontController@indicatorDetail');
 
 Route::get('/indicatorList', 'FrontController@indicatorList');
+
+Route::get('/pruebaBase', 'FrontController@pruebaBase');

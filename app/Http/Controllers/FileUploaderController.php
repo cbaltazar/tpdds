@@ -14,6 +14,6 @@ class FileUploaderController extends Controller
         Session::put("ListaDeDatos",
                 $fileManager->processFile($request->file("file")->getPathName())
                 );
-        return redirect('loadAccounts?err=0');
+        return redirect('loadAccounts')->with('err', null);
     }
 }

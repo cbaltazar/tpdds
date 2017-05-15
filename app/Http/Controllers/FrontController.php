@@ -2,6 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Cuenta;
+use App\Model\Cuenta_Empresa;
+use App\Model\Empresa;
+use App\Model\Empresa_Cuenta;
+use App\Users2;
+use App\Role;
 use Illuminate\Http\Request;
 use Input;
 use Validator;
@@ -16,17 +22,18 @@ class FrontController extends Controller{
     }
 
     public function loadAccounts(){
-        $accountList = null;
+       /* $accountList = null;
         $empresas = null;
         $created = null;
         if(Session::get("ListaDeDatos")){
             $accountList =  Session::get("ListaDeDatos")->getListCuentas();
             $empresas = $this->getEmpresasCargadas($accountList);
             $created = Session::get("ListaDeDatos")->getCreated();
-        }
+        }*/
 
+        $empresas = Empresa::all();
 
-        return view('account_load')->with("empresas", $empresas)->with("created", $created);
+        return view('account_load')->with("empresas", $empresas);
     }
 
     public function viewAccounts(Request $request)
@@ -77,5 +84,21 @@ class FrontController extends Controller{
             }
         }
         return $empresas;
+    }
+
+    public function pruebaBase(){
+        $empresa = Empresa::where('nombre', 'EMPRESA 8')->first();
+        if(!$empresa){
+            echo "no existe la empresa";
+        }
+        /*$cuenta = Cuenta::find(2);
+        $cuenta_empresa = new Cuenta_Empresa();
+        $cuenta_empresa->empresa_id = $empresa->id;
+        $cuenta_empresa->cuenta_id = $cuenta->id;
+        $cuenta_empresa->periodo = "2017/05/14";
+        $cuenta_empresa->monto = 234.56;
+        $cuenta_empresa->save();*/
+
+        return $empresa;
     }
 }
