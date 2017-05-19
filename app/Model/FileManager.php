@@ -21,30 +21,17 @@ class FileManager
 
     public function processFile($file)
     {
-        $listOfAccounts = $this->createAccountsList(
+        $this->createAccountsList(
             $this->processJson(
                 $this->getFileContent($file)
                 )
         );
-        return $listOfAccounts;
     }
 
     public function createAccountsList($data){
-
        foreach ($data as $d) {
-           $empresa = Empresa::where('nombre', $d->company)->first();
-           if (!$empresa){
-               $empresa = new Empresa();
-               $empresa->nombre = $d->company;
-               $empresa->save();
-           }
-
-           $cuenta = Cuenta::where('nombre', $d->account)->first();
-           if (!$cuenta){
-               $cuenta = new Cuenta();
-               $cuenta->nombre = $d->account;
-               $cuenta->save();
-           }
+           $empresa = $this->getObject('App\Model\Empresa', $d->company);
+           $cuenta = $this->getObject('App\Model\Cuenta', $d->account);
 
            $cuenta_empresa = new Cuenta_Empresa();
            $cuenta_empresa->cuenta_id = $cuenta->id;
@@ -54,19 +41,6 @@ class FileManager
 
            $cuenta_empresa->save();
        }
-
-        $ListaDeDatos=SingletonCuentas::getInstance();
-        foreach ($data as $ar) {
-            $cuenta=new EmpresaCuentas();
-            $cuenta->setNombreEmpresa($ar->company);
-            $cuenta->setNombreCuenta($ar->account);
-            $cuenta->setPeriodo($ar->period);
-            $cuenta->setMonto($ar->amount);
-            $ListaDeDatos->addCuentasToList($cuenta);
-        }
-
-        $ListaDeDatos->setCreated(Carbon::now()->toDateTimeString());
-        return $ListaDeDatos;
     }
 
     public function getFileContent($file){
@@ -75,5 +49,15 @@ class FileManager
 
     public function processJson($fileContent){
         return json_decode($fileContent);
+    }
+
+    public function getObject($type, $name){
+        $object = $type::where('nombre', $name)->first();
+        if (!$object){
+            $object = new $type();
+            $object->nombre = $name;
+            $object->save();
+        }
+        return $object;
     }
 }

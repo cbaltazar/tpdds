@@ -38,9 +38,9 @@
                   @if( count($companyAccounts) > 0)
                       @foreach($companyAccounts as $account)
                           <tr>
-                              <td>{{ $account->getPeriodo() }}</td>
-                              <td>{{ $account->getNombreCuenta() }}</td>
-                              <td>{{ $account->getMonto() }}</td>
+                              <td>{{ $account->pivot->periodo }}</td>
+                              <td>{{ $account->nombre }}</td>
+                              <td>{{ $account->pivot->monto }}</td>
                           </tr>
                       @endforeach
                   @endif

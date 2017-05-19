@@ -6,13 +6,9 @@
 @section ('content')
     <div class="col-lg-12">
         <div class="wrapper wrapper-content animated fadeInUp">
-            @if ( Request::get('err') != null)
-                <div class="alert
-                @if(Request::get('err') == 0)
-                    alert-success"> Archivo cargado correctamente.
-                @else
-                    alert-danger"> Se ha producido un error al cargar el archivo. Vuelva a intentarlo.
-                @endif
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
                 </div>
             @endif
 <!---->
