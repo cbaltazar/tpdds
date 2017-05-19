@@ -10,7 +10,7 @@
 @section ('content')
         <div class="wrapper wrapper-content animated fadeInRight">
           <div class="row">
-              <div class="col-lg-12">
+              <div class="col-lg-6">
               <div class="ibox float-e-margins">
                   <div class="ibox-title">
                       <h5>Cuentas</h5>
@@ -52,6 +52,52 @@
 
                   </div>
               </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Indicadores</h5>
+                    <div class="ibox-tools">
+                        <label>Periodo:</label>
+                          <select>
+                          <!--LEVANTAR LOS AÑOS DISPONIBLES-->
+                            @for($i = 2005; $i < 2018; $i++)
+                              <option value={{$i}}>{{$i}}</option>
+                            @endfor
+                          </select>
+
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                <table class="table table-striped table-bordered table-hover dataTable" >
+                <thead>
+                <tr>
+                    <th>Indicador</th>
+                    <th>Valor</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <!--LEVANTAR LOS INDICADORES-->
+                  @for($i = 0; $i < 10; $i++)
+                    <tr>
+                      <td>ROI</td>
+                      <td>6.37%</td>
+                    </tr>
+                  @endfor
+                </tbody>
+                <tfoot>
+                </tfoot>
+                </table>
+
+                </div>
+            </div>
+
           </div>
           </div>
         </div>
