@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Empresa extends Model
 {
-    public function getCuentas(){
+    public function cuentas(){
         return $this->belongsToMany(Cuenta::class)->withPivot('periodo', 'monto');
     }
 }

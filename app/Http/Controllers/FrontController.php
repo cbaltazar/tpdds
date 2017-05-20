@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Cuenta;
 use App\Model\Cuenta_Empresa;
+use App\Model\Domain;
 use App\Model\Empresa;
 use Illuminate\Http\Request;
 use Input;
@@ -17,17 +18,12 @@ class FrontController extends Controller{
     }
 
     public function loadAccounts(){
-        $empresas = Empresa::all();
-
-        return view('account_load')->with("empresas", $empresas);
+        return view('account_load')->with("empresas", Domain::getInstance()->getCompanies());
     }
 
     public function accountDetail($company=null){
-
-        $empresa = Empresa::where('nombre', $company)->first();
-        $cuentas = $empresa->getCuentas;
-
-        return view('account_detail')->with("companyAccounts", $cuentas);
+        return view('account_detail')->with("companyAccounts",
+            Domain::getInstance()->getCompany($company)->cuentas);
     }
 
     public function viewAccounts(Request $request)
