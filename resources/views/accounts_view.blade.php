@@ -38,8 +38,8 @@
                       @foreach($accounts as $account)
                           <tr>
                               <td>{{ $account->nombreEmpresa }}</td>
-                              <td>{{ $account->nombreCuenta }}</td>
                               <td>{{ $account->periodo }}</td>
+                              <td>{{ $account->nombreCuenta }}</td>
                               <td>{{ $account->monto }}</td>
                           </tr>
                       @endforeach

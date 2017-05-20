@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Model\Utilities;
+
+use App\Model\Entities\Cuenta_Empresa;
+use App\Model\Domain\AccountsDomain;
+
+class FileManager
+{
+    private $filePath = null;
+    private $response = null;
+    private $domain = null;
+
+    function __construct()
+    {
+        $this->domain = AccountsDomain::getInstance();
+    }
+
+    public function getProcessedFile(){
+        return $this->response;
+    }
+
+    public function processFile($file)
+    {
+        $this->createAccountsList(
+            $this->processJson(
+                $this->getFileContent($file)
+                )
+        );
+    }
+
+    public function createAccountsList($data){
+        $this->domain->saveAccounts($data);
+    }
+
+    public function getFileContent($file){
+        return file_get_contents($file);
+    }
+
+    public function processJson($fileContent){
+        return json_decode($fileContent);
+    }
+}

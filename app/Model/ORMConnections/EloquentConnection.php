@@ -2,24 +2,23 @@
 
 namespace App\Model\ORMConnections;
 
-use App\Model\Empresa;
-
-class EloquentConnection
+class EloquentConnection implements IORMConnection
 {
     private $model = null;
 
-    function __construct($model)
-    {
-        $this->model = $model;
-    }
-
-    public function getAll(){
-        $model = $this->model;
+    public function getAll($model){
         return $model::all();
     }
 
-    public function findByColumnName($columnName, $value){
-        $model = $this->model;
+    public function findByColumnName($model, $columnName, $value){
         return $model::where($columnName, $value)->first();
+    }
+
+    public function findById($model, $id){
+        return $model::find($id);
+    }
+
+    public function saveEntity($entity){
+        $entity->save();
     }
 }
