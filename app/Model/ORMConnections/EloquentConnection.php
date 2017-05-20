@@ -4,8 +4,6 @@ namespace App\Model\ORMConnections;
 
 class EloquentConnection implements IORMConnection
 {
-    private $model = null;
-
     public function getAll($model){
         return $model::all();
     }

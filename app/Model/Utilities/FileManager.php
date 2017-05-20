@@ -2,7 +2,6 @@
 
 namespace App\Model\Utilities;
 
-use App\Model\Entities\Cuenta_Empresa;
 use App\Model\Domain\AccountsDomain;
 
 class FileManager
@@ -14,6 +13,10 @@ class FileManager
     function __construct()
     {
         $this->domain = AccountsDomain::getInstance();
+    }
+
+    public function getDomain(){
+        return $this->domain;
     }
 
     public function getProcessedFile(){

@@ -17,6 +17,10 @@ class AccountsDomain
         $this->ormConnection=$orm;
     }
 
+    public function getConnectionORM(){
+        return $this->ormConnection;
+    }
+
     static function getInstance(){
         if(AccountsDomain::$obj == null){
             AccountsDomain::$obj = new AccountsDomain(new EloquentConnection());
@@ -49,8 +53,8 @@ class AccountsDomain
 
     public function saveAccounts($data){
             foreach ($data as $d) {
-                $empresa = $this->getObject('App\Model\Entities\Empresa', $d->company);
-                $cuenta = $this->getObject('App\Model\Entities\Cuenta', $d->account);
+                $empresa = $this->getObject(Empresa::class, $d->company);
+                $cuenta = $this->getObject(Cuenta::class, $d->account);
 
                 $cuenta_empresa = new Cuenta_Empresa();
                 $cuenta_empresa->cuenta_id = $cuenta->id;
@@ -62,7 +66,7 @@ class AccountsDomain
     }
 
     public function getObject($type, $name){
-        $object = $type::where('nombre', $name)->first();
+        $object = $this->ormConnection->findByColumnName($type,'nombre',$name);
         if (!$object){
             $object = new $type();
             $object->nombre = $name;
