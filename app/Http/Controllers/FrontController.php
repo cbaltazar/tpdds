@@ -5,14 +5,10 @@ namespace App\Http\Controllers;
 use App\Model\Cuenta;
 use App\Model\Cuenta_Empresa;
 use App\Model\Empresa;
-use App\Model\Empresa_Cuenta;
-use App\Users2;
-use App\Role;
 use Illuminate\Http\Request;
 use Input;
 use Validator;
 use Redirect;
-use App\Providers\SingletonCuentas;
 
 class FrontController extends Controller{
 
