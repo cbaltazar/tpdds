@@ -23,6 +23,7 @@ Route::get('/methodDetail', 'FrontController@methodDetail');
 Route::get('/methodList', 'FrontController@methodList');
 
 //INDICATORS
+Route::post('/indicatorSave', 'IndicatorController@indicatorSave');
 
 Route::get('/indicatorDetail', 'FrontController@indicatorDetail');
 

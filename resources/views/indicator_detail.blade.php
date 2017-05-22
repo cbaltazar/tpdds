@@ -12,7 +12,8 @@
                   <h5>Editor de indicador</h5>
               </div>
               <div class="ibox-content">
-                  <form method="get" class="form-horizontal" name="indicator-form" action="">
+                  <form method="post" class="form-horizontal" name="indicator-form" action="{{url('indicatorSave')}}">
+                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
                       <div class="form-group"><label class="col-sm-2 control-label">Nombre *</label>
                           <div class="col-sm-10"><input type="text" name="name" id="name" class="form-control" placeholder="Nombre del indicador" ></div>
                       </div>
@@ -22,7 +23,7 @@
                       </div>
                       <div class="hr-line-dashed"></div>
                       <div class="form-group"><label class="col-sm-2 control-label">Estado</label>
-                              <div class="checkbox i-checks"><label> <input type="checkbox" name="status" id="status" value="" checked=""> <i></i> Activo </label></div>
+                              <div class="checkbox i-checks"><label> <input type="checkbox" name="status[]" id="status" value="" checked=""> <i></i> Activo </label></div>
                       </div>
                       <div class="hr-line-dashed"></div>
                       <div class="form-group" id="formula-group"><label class="col-sm-2 control-label">Fórmula *</label>
@@ -49,13 +50,15 @@
 @section ('scripts')
     <script src="{{asset('js/plugins/iCheck/icheck.min.js')}}"></script>
     <script src="{{asset('js/plugins/mathjs/math.min.js')}}"></script>
-<script src="{{asset('js/plugins/validate/jquery.validate.min.js')}}"></script>
+    <script src="{{asset('js/plugins/validate/jquery.validate.min.js')}}"></script>
     <script src="{{asset('js/indicator-validation.js')}}"></script>
 
     <script>
       var scope = {},
           formula = "",
-          indicators = ["ROI","utilidad","ganancia","Inversion"]; //Indicadores hardcodeados
+          indicators = {!! json_encode($variable) !!}
+
+      console.log(indicators);
 
       $(document).ready(function(){
           $('.i-checks').iCheck({
@@ -65,7 +68,7 @@
       });
 
       for (var i = 0; i < indicators.length; i++) {
-        indicators[i] = indicators[i].toUpperCase();
+        indicators[i] = indicators[i].replace(/\s+/g, '_').toUpperCase();
         scope[indicators[i]] = 1
       }
 

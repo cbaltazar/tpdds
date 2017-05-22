@@ -7,13 +7,9 @@ use App\Model\Entities\Cuenta_Empresa;
 use App\Model\Entities\Empresa;
 use App\Model\ORMConnections\EloquentConnection;
 
-class AccountsDomain
+class AccountsDomain extends Domain
 {
-    private $ormConnection = null;
-    private static $obj = null;
-
-    function __construct($orm)
-    {
+    function __construct($orm){
         $this->ormConnection=$orm;
     }
 
@@ -34,6 +30,15 @@ class AccountsDomain
 
     public function getCompany($name){
         return $this->ormConnection->findByColumnName(Empresa::class,'nombre',$name);
+    }
+
+    public function getAvailablesAccounts(){
+        $accounts = $this->ormConnection->getAll(Cuenta::class);
+        $availablesAccounts = array();
+        foreach ($accounts as $account) {
+            array_push($availablesAccounts,$account->nombre);
+        }
+        return $availablesAccounts;
     }
 
     public function getAccounts(){
@@ -63,15 +68,5 @@ class AccountsDomain
                 $cuenta_empresa->monto = $d->amount;
                 $this->ormConnection->saveEntity($cuenta_empresa);
             }
-    }
-
-    public function getObject($type, $name){
-        $object = $this->ormConnection->findByColumnName($type,'nombre',$name);
-        if (!$object){
-            $object = new $type();
-            $object->nombre = $name;
-            $this->ormConnection->saveEntity($object);
-        }
-        return $object;
     }
 }

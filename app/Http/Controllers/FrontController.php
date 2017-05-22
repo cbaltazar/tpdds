@@ -34,7 +34,8 @@ class FrontController extends Controller{
     }
 
     public function indicatorDetail(){
-        return view('indicator_detail');
+        $accounts = AccountsDomain::getInstance()->getAvailablesAccounts();
+        return view('indicator_detail')->with("variable", $accounts);
     }
 //MOTHODOLOGIES
     public function methodList(){
