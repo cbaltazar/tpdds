@@ -99,7 +99,7 @@
         });
 
         $('#saveIndicator').click( function(){
-            var node = math.parse($('#formula').val().replace(/\s/g,''));
+            var node = math.parse($('#formula').val().replace(/\s/g,'_'));
             var filtered = node.filter(function (node) {
                 return node.isSymbolNode;
             });

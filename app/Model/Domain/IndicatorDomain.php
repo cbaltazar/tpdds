@@ -39,4 +39,9 @@ class IndicatorDomain extends Domain
         }
         return $availablesIndicators;
     }
+
+    public function indicatorEvaluate(){
+        $indicador = Indicador::where('nombre', 'indicador2')->first();
+        var_dump($indicador->evaluateFormula());
+    }
 }

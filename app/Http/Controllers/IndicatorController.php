@@ -11,4 +11,8 @@ class IndicatorController extends Controller
         $indicators = IndicatorDomain::getInstance()->saveIndicator($request);
         return redirect('indicatorDetail')->with('status', 'Archivo cargado correctamente!');
     }
+
+    public function indicatorEvaluate(){
+        IndicatorDomain::getInstance()->indicatorEvaluate();
+    }
 }

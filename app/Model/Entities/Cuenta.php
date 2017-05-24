@@ -10,4 +10,8 @@ class Cuenta extends Model implements FormulaElement
     public function getEmpresas(){
         return $this->belongsToMany(Empresa::class);
     }
+
+    public function getValue(){
+        return rand();
+    }
 }
