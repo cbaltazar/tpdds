@@ -19,4 +19,9 @@ class EloquentConnection implements IORMConnection
     public function saveEntity($entity){
         $entity->save();
     }
+
+    public function deleteEntity($model, $id){
+        $entity = $model::find($id);
+        $entity->delete();
+    }
 }

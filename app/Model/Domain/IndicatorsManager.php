@@ -20,15 +20,29 @@ class IndicatorsManager extends DomainManager
         return IndicatorsManager::$obj;
     }
 
-    public function saveIndicator($data){
-        $indicator = new Indicador();
+    public function saveIndicator($data, $id){
+        $indicator = null;
+
+        if( $id != null){
+            $indicator = $this->getIndicator($id);
+        }else{
+            $indicator = new Indicador();
+        }
+
         $indicator->nombre = $data->input('name');
         $indicator->descripcion = $data->input('description');
         is_array($data->status) ? $indicator->activo = 1:$indicator->activo = 0;
         $indicator->formula = $data->input('formula');
         $indicator->elementosDeFormula = $data->formulaElements;
-        
+
         $this->ormConnection->saveEntity($indicator);
+
+        return "Indicador cargado con exito!";
+    }
+
+    public function deleteIndicator($id){
+        $this->ormConnection->deleteEntity(Indicador::class, $id);
+        return "Indicador borrado con exito";
     }
 
     public function getAvailablesIndicators(){

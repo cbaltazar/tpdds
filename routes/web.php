@@ -17,8 +17,9 @@ Route::get('/indicatorList', 'FrontController@indicatorList');
 Route::get('/indicatorDetail/{id?}', 'FrontController@indicatorDetail');
 
 //ABM INDICATORS
-Route::post('/indicatorSave', 'IndicatorController@indicatorSave');
-Route::get('/indicatorEvaluate', 'IndicatorController@indicatorEvaluate');
+Route::post('/indicatorSave/{id?}', 'IndicatorController@indicatorSave');
+Route::get('/indicatorDelete/{id}', 'IndicatorController@indicatorDelete');
+Route::post('/indicatorEvaluate', 'IndicatorController@indicatorEvaluate');
 
 //METODOLOGIES
 Route::get('/methodDetail', 'FrontController@methodDetail');

@@ -3,6 +3,11 @@
 @section ('content')
             <div class="col-lg-12">
                 <div class="wrapper wrapper-content animated fadeInUp">
+                    @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
                     <div class="ibox">
                         <div class="ibox-title">
                             <h5>Listado de Indicadores</h5>
@@ -30,7 +35,7 @@
                                                 <td class="project-actions">
                                                     <a href="{{ url('indicatorDetail/'.$indicator->id) }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
                                                     <a href="{{ url('indicatorDetail/'.$indicator->id) }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
-                                                    <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
+                                                    <a href="{{ url('indicatorDelete/'.$indicator->id) }}" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -44,4 +49,14 @@
                     </div>
                 </div>
             </div>
+@endsection
+
+@section ('scripts')
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                $(".alert-success").slideUp(1500);
+            }, 2000);
+        });
+    </script>
 @endsection
