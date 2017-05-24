@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Domain\AccountsDomain;
+use App\Model\Domain\IndicatorDomain;
 use Illuminate\Http\Request;
 use Input;
 use Validator;
@@ -34,8 +35,10 @@ class FrontController extends Controller{
     }
 
     public function indicatorDetail(){
-        $accounts = AccountsDomain::getInstance()->getAvailablesAccounts();
-        return view('indicator_detail')->with("variable", $accounts);
+        $accountsMannager = AccountsDomain::getInstance();
+        $indicatorsMannager = IndicatorDomain::getInstance();
+        $elements = array_merge($accountsMannager->getAvailablesAccounts(), $indicatorsMannager->getAvailablesIndicators());
+        return view('indicator_detail')->with("variable", $elements);
     }
 //MOTHODOLOGIES
     public function methodList(){

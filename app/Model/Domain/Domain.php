@@ -7,7 +7,6 @@ use App\Model\ORMConnections\EloquentConnection;
 abstract class Domain
 {
     protected $ormConnection = null;
-    protected static $obj = null;
 
     static abstract function getInstance();
 

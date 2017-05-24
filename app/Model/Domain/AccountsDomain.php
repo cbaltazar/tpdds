@@ -9,6 +9,8 @@ use App\Model\ORMConnections\EloquentConnection;
 
 class AccountsDomain extends Domain
 {
+    protected static $obj = null;
+
     function __construct($orm){
         $this->ormConnection=$orm;
     }
