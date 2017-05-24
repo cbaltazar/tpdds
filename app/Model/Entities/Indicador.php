@@ -9,22 +9,20 @@ class Indicador extends Model implements FormulaElement
 {
     protected $table="indicadores";
 
-    public function evaluateFormula(){
+    public function evaluateFormula( $data ){
         $elementos = explode(",",$this->elementosDeFormula);
-        echo "Formula: ".$this->formula."<br><br>";
+
         foreach ($elementos as $elemento){
             $elemento = str_replace("_", " ", $elemento);
-            echo "Elemento encontrado: ".$elemento."<br><br>";
             $elem = $this->getElement($elemento);
-            $this->formula = str_replace($elemento, $elem->getValue(), $this->formula);
-            echo "Reemplazando, la formula queda: ".$this->formula."<br><br>";
+            $this->formula = str_replace($elemento, $elem->getValue($data), $this->formula);
         }
 
-        return $this->formula;
+        return eval('return '.$this->formula.';');
     }
 
-    public function getValue(){
-        return $this->evaluateFormula();
+    public function getValue($data){
+        return $this->evaluateFormula($data);
     }
 
     //SACAR FUNCION A UNA CLASE. NO ES RESPONSABILIDAD DEL INDICADOR, DECIDIR DE QUE CLASE ES EL ELEMENTO.

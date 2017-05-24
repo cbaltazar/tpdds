@@ -4,6 +4,7 @@ namespace App\Model\Domain;
 
 use App\Model\Entities\Indicador;
 use App\Model\ORMConnections\EloquentConnection;
+use Illuminate\Validation\Rules\In;
 
 class IndicatorsManager extends DomainManager
 {
@@ -62,8 +63,8 @@ class IndicatorsManager extends DomainManager
         return $this->ormConnection->findById(Indicador::class, $id);
     }
 
-    public function indicatorEvaluate(){
-        $indicador = Indicador::where('nombre', 'indicador2')->first();
-        var_dump($indicador->evaluateFormula());
+    public function indicatorEvaluate($request){
+        $indicator = $this->ormConnection->findById(Indicador::class, $request->input('indicator_id'));
+        return $indicator->evaluateFormula( $request->input() );
     }
 }

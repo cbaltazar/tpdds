@@ -18,7 +18,7 @@ class IndicatorController extends Controller
         return redirect('indicatorList')->with('status', $status);
     }
 
-    public function indicatorEvaluate(){
-        IndicatorsManager::getInstance()->indicatorEvaluate();
+    public function indicatorEvaluate(Request $request){
+        return IndicatorsManager::getInstance()->indicatorEvaluate($request);
     }
 }

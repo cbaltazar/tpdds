@@ -11,7 +11,10 @@ class Cuenta extends Model implements FormulaElement
         return $this->belongsToMany(Empresa::class);
     }
 
-    public function getValue(){
-        return rand();
+    public function getValue( $data ){
+        $valor = Cuenta_Empresa::where('cuenta_id', $this->id)
+                                ->where('empresa_id', $data['company'])
+                                ->where('periodo', $data['period'])->first()->monto;
+        return $valor;
     }
 }
