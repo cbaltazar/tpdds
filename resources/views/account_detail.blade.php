@@ -1,5 +1,5 @@
 @extends ('master')
-@section ('title', Request::segment(2))
+@section ('title', $companyName)
 @section ('head')
 <!-- Data Tables Styles -->
 <link href="{{asset('css/plugins/dataTables/dataTables.bootstrap.css')}}" rel="stylesheet">
@@ -59,7 +59,7 @@
                     <h5>Indicadores</h5>
                     <div class="ibox-tools">
                         <label>Periodo:</label>
-                          <select>
+                          <select id="indicatorPeriod">
                           <!--LEVANTAR LOS AÑOS DISPONIBLES-->
                             @for($i = 2005; $i < 2018; $i++)
                               <option value={{$i}}>{{$i}}</option>
@@ -118,6 +118,10 @@
             "tableTools": {
                 "sSwfPath": "{{asset('js/plugins/dataTables/swf/copy_csv_xls_pdf.swf')}}"
             }
+        });
+
+        $('#indicatorPeriod').change(function(){
+           alert($('#indicatorPeriod').val());
         });
     });
 </script>

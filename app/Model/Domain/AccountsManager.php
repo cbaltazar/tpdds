@@ -30,8 +30,8 @@ class AccountsManager extends DomainManager
         return $this->ormConnection->getAll(Empresa::class);
     }
 
-    public function getCompany($name){
-        return $this->ormConnection->findByColumnName(Empresa::class,'nombre',$name);
+    public function getCompany($id){
+        return $this->ormConnection->findById(Empresa::class,$id);
     }
 
     public function getAvailablesAccounts(){

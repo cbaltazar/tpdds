@@ -20,8 +20,8 @@ class FrontController extends Controller{
     }
 
     public function accountDetail($company=null){
-        return view('account_detail')->with("companyAccounts",
-            AccountsManager::getInstance()->getCompany($company)->cuentas);
+        $company = AccountsManager::getInstance()->getCompany($company);
+        return view('account_detail')->with("companyName", $company->nombre)->with("companyAccounts",$company->cuentas);
     }
 
     public function viewAccounts(Request $request)
