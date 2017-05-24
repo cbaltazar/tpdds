@@ -8,5 +8,5 @@ namespace App\Model\Domain\FormulaElements;
 
 interface FormulaElement
 {
-
+    public function getValue();
 }

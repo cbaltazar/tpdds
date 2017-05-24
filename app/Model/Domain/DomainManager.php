@@ -4,7 +4,7 @@ namespace App\Model\Domain;
 
 use App\Model\ORMConnections\EloquentConnection;
 
-abstract class Domain
+abstract class DomainManager
 {
     protected $ormConnection = null;
 

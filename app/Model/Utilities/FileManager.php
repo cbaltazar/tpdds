@@ -2,7 +2,7 @@
 
 namespace App\Model\Utilities;
 
-use App\Model\Domain\AccountsDomain;
+use App\Model\Domain\AccountsManager;
 
 class FileManager
 {
@@ -12,7 +12,7 @@ class FileManager
 
     function __construct()
     {
-        $this->domain = AccountsDomain::getInstance();
+        $this->domain = AccountsManager::getInstance();
     }
 
     public function getDomain(){

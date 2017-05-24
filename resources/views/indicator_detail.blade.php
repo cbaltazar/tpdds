@@ -18,20 +18,26 @@
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="form-group"><label class="col-sm-2 control-label">Nombre *</label>
                                 <div class="col-sm-10"><input type="text" name="name" id="name" class="form-control"
-                                                              placeholder="Nombre del indicador"></div>
+                                                              placeholder="Nombre del indicador" value="{{$indicatorObject->nombre or " "}}"></div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group"><label class="col-sm-2 control-label">Descripción</label>
                                 <div class="col-sm-10"><input type="text" name="description" id="description"
                                                               class="form-control"
-                                                              placeholder="Descripción del indicador"> <span
+                                                              placeholder="Descripción del indicador"
+                                                              value="{{$indicatorObject->descripcion or " "}}" > <span
                                             class="help-block m-b-none">Este campo le permitirá dar una breve descripción del indicador generado.</span>
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group"><label class="col-sm-2 control-label">Estado</label>
                                 <div class="checkbox i-checks"><label> <input type="checkbox" name="status[]"
-                                                                              id="status" value="" checked=""> <i></i>
+                                                                              id="status" value=""
+                                        @if($indicatorObject != null)
+                                            @if($indicatorObject->activo == 1)
+                                                checked
+                                            @endif
+                                        @endif > <i></i>
                                         Activo </label></div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -39,7 +45,8 @@
                                     *</label>
                                 <div class="col-sm-10">
                                     <input name="formula" id="formula" type="text" class="form-control"
-                                           placeholder="Fórmula del indicador">
+                                           placeholder="Fórmula del indicador"
+                                           value="{{$indicatorObject->formula or " "}}" >
                                     <span class="help-block m-b-none" id="message"></span>
                                 </div>
                             </div>
@@ -69,7 +76,7 @@
         var formula = "";
         var indicators = JSON.parse('{!! json_encode($variable) !!}');
 
-      console.log(indicators);
+        console.log(indicators);
 
         $(document).ready(function () {
             $('.i-checks').iCheck({

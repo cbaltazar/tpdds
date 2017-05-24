@@ -7,7 +7,7 @@ use App\Model\Entities\Cuenta_Empresa;
 use App\Model\Entities\Empresa;
 use App\Model\ORMConnections\EloquentConnection;
 
-class AccountsDomain extends Domain
+class AccountsManager extends DomainManager
 {
     protected static $obj = null;
 
@@ -20,10 +20,10 @@ class AccountsDomain extends Domain
     }
 
     static function getInstance(){
-        if(AccountsDomain::$obj == null){
-            AccountsDomain::$obj = new AccountsDomain(new EloquentConnection());
+        if(AccountsManager::$obj == null){
+            AccountsManager::$obj = new AccountsManager(new EloquentConnection());
         }
-        return AccountsDomain::$obj;
+        return AccountsManager::$obj;
     }
 
     public function getCompanies(){

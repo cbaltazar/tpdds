@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Domain\AccountsDomain;
-use App\Model\Domain\IndicatorDomain;
+use App\Model\Domain\AccountsManager;
+use App\Model\Domain\IndicatorsManager;
 use Illuminate\Http\Request;
 use Input;
 use Validator;
@@ -16,29 +16,32 @@ class FrontController extends Controller{
     }
 
     public function loadAccounts(){
-        return view('account_load')->with("empresas", AccountsDomain::getInstance()->getCompanies());
+        return view('account_load')->with("empresas", AccountsManager::getInstance()->getCompanies());
     }
 
     public function accountDetail($company=null){
         return view('account_detail')->with("companyAccounts",
-            AccountsDomain::getInstance()->getCompany($company)->cuentas);
+            AccountsManager::getInstance()->getCompany($company)->cuentas);
     }
 
     public function viewAccounts(Request $request)
     {
-        return view('accounts_view')->with("accounts", AccountsDomain::getInstance()->getAccounts());
+        return view('accounts_view')->with("accounts", AccountsManager::getInstance()->getAccounts());
     }
 
 //INDICATORS
     public function indicatorList(){
-        return view('indicator_list');
+        return view('indicator_list')->with("indicators", IndicatorsManager::getInstance()->getIndicators());
     }
 
-    public function indicatorDetail(){
-        $accountsMannager = AccountsDomain::getInstance();
-        $indicatorsMannager = IndicatorDomain::getInstance();
-        $elements = array_merge($accountsMannager->getAvailablesAccounts(), $indicatorsMannager->getAvailablesIndicators());
-        return view('indicator_detail')->with("variable", $elements);
+    public function indicatorDetail($id=null){
+        $accounts = AccountsManager::getInstance()->getAvailablesAccounts();
+        $indicators = IndicatorsManager::getInstance()->getAvailablesIndicators();
+
+        $indicatorObject = IndicatorsManager::getInstance()->getIndicator($id);
+
+        return view('indicator_detail')->with("variable", array_merge($accounts, $indicators))
+                                             ->with("indicatorObject", $indicatorObject);
     }
 //MOTHODOLOGIES
     public function methodList(){

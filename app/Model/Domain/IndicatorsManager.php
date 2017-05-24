@@ -5,7 +5,7 @@ namespace App\Model\Domain;
 use App\Model\Entities\Indicador;
 use App\Model\ORMConnections\EloquentConnection;
 
-class IndicatorDomain extends Domain
+class IndicatorsManager extends DomainManager
 {
     protected static $obj = null;
 
@@ -14,10 +14,10 @@ class IndicatorDomain extends Domain
     }
 
     static function getInstance(){
-        if(IndicatorDomain::$obj == null){
-            IndicatorDomain::$obj = new IndicatorDomain(new EloquentConnection());
+        if(IndicatorsManager::$obj == null){
+            IndicatorsManager::$obj = new IndicatorsManager(new EloquentConnection());
         }
-        return IndicatorDomain::$obj;
+        return IndicatorsManager::$obj;
     }
 
     public function saveIndicator($data){
@@ -38,6 +38,14 @@ class IndicatorDomain extends Domain
             array_push($availablesIndicators,$indicator->nombre);
         }
         return $availablesIndicators;
+    }
+
+    public function getIndicators(){
+        return $this->ormConnection->getAll(Indicador::class);
+    }
+
+    public function getIndicator($id){
+        return $this->ormConnection->findById(Indicador::class, $id);
     }
 
     public function indicatorEvaluate(){
