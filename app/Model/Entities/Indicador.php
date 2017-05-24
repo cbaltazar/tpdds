@@ -4,6 +4,7 @@ namespace App\Model\Entities;
 
 use App\Model\Domain\FormulaElements\FormulaElement;
 use Illuminate\Database\Eloquent\Model;
+use Mockery\Exception;
 
 class Indicador extends Model implements FormulaElement
 {
@@ -15,7 +16,13 @@ class Indicador extends Model implements FormulaElement
         foreach ($elementos as $elemento){
             $elemento = str_replace("_", " ", $elemento);
             $elem = $this->getElement($elemento);
-            $this->formula = str_replace($elemento, $elem->getValue($data), $this->formula);
+
+            if($elem->getValue($data) >= 0){
+                $this->formula = str_replace($elemento, $elem->getValue($data), $this->formula);
+            }else{
+                $this->formula = 0;
+                break;
+            }
         }
 
         return eval('return '.$this->formula.';');

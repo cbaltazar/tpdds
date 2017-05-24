@@ -3,6 +3,7 @@
 namespace App\Model\Domain;
 
 use App\Model\Entities\Indicador;
+use App\Model\Entities\Empresa;
 use App\Model\ORMConnections\EloquentConnection;
 use Illuminate\Validation\Rules\In;
 
@@ -64,7 +65,21 @@ class IndicatorsManager extends DomainManager
     }
 
     public function indicatorEvaluate($request){
-        $indicator = $this->ormConnection->findById(Indicador::class, $request->input('indicator_id'));
-        return $indicator->evaluateFormula( $request->input() );
+        $indicators = $this->ormConnection->getAll(Indicador::class);
+        $results = array();
+        foreach ($indicators as $indicator){
+            $result = new \stdClass();
+
+            $empresa = $this->ormConnection->findById(Empresa::class, $request->input('company'));
+
+            $result->company = $empresa->nombre;
+            $result->indicator = $indicator->nombre;
+            $result->period = $request->input('period');
+            $result->value = $indicator->evaluateFormula( $request->input() );
+
+            array_push($results, $result);
+        }
+
+        return json_encode($results);
     }
 }
