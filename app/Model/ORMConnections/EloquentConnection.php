@@ -12,6 +12,10 @@ class EloquentConnection implements IORMConnection
         return $model::where($columnName, $value)->first();
     }
 
+    public function findAllByColumnName($model, $columnName, $value){
+        return $model::where($columnName, $value)->get();
+    }
+
     public function findById($model, $id){
         return $model::find($id);
     }

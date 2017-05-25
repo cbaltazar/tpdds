@@ -59,7 +59,7 @@
                                         <td class="project-actions">
                                             <a href="{{ url('accountDetail/'.$empresa->id) }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
                                             <a href="{{ url('accountDetail/'.$empresa->id) }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
-                                            <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
+                                            <a href="{{ url('deleteCompany/'.$empresa->id) }}" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
                                         </td>
                                     </tr>
                                 @endforeach

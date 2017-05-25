@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Model\Domain;
+namespace App\Model\Domain\DomainManagers;
 
 use App\Model\Entities\Cuenta;
 use App\Model\Entities\Cuenta_Empresa;
 use App\Model\Entities\Empresa;
 use App\Model\ORMConnections\EloquentConnection;
+use Illuminate\Foundation\Console\EventMakeCommand;
 
 class AccountsManager extends DomainManager
 {
@@ -13,10 +14,7 @@ class AccountsManager extends DomainManager
 
     function __construct($orm){
         $this->ormConnection=$orm;
-    }
-
-    public function getConnectionORM(){
-        return $this->ormConnection;
+        $this->model = Cuenta::class;
     }
 
     static function getInstance(){
@@ -26,24 +24,8 @@ class AccountsManager extends DomainManager
         return AccountsManager::$obj;
     }
 
-    public function getCompanies(){
-        return $this->ormConnection->getAll(Empresa::class);
-    }
-
-    public function getCompany($id){
-        return $this->ormConnection->findById(Empresa::class,$id);
-    }
-
-    public function getAvailablesAccounts(){
-        $accounts = $this->ormConnection->getAll(Cuenta::class);
-        $availablesAccounts = array();
-        foreach ($accounts as $account) {
-            array_push($availablesAccounts,$account->nombre);
-        }
-        return $availablesAccounts;
-    }
-
-    public function getAccounts(){
+    //Override
+    public function getAll(){
         $empresas = $this->ormConnection->getAll(Cuenta_Empresa::class);
         $accountList = array();
         foreach ($empresas as $empresa){
@@ -58,7 +40,7 @@ class AccountsManager extends DomainManager
         return $accountList;
     }
 
-    public function saveAccounts($data){
+    public function saveElement($data, $id=null){
             foreach ($data as $d) {
                 $empresa = $this->getObject(Empresa::class, $d->company);
                 $cuenta = $this->getObject(Cuenta::class, $d->account);
@@ -70,5 +52,17 @@ class AccountsManager extends DomainManager
                 $cuenta_empresa->monto = $d->amount;
                 $this->ormConnection->saveEntity($cuenta_empresa);
             }
+    }
+
+    public function saveMessage()
+    {
+        return "Cuentas actualizadas con exito!";
+    }
+
+    function deleteRelations($id){}
+
+    public function deleteMessage()
+    {
+        return "Cuenta borrada con exito!";
     }
 }

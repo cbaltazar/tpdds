@@ -37,9 +37,9 @@
                   @if( count($accounts) > 0)
                       @foreach($accounts as $account)
                           <tr>
-                              <td>{{ $account->nombreEmpresa }}</td>
+                              <td>{{ $account->empresa->nombre }}</td>
                               <td>{{ $account->periodo }}</td>
-                              <td>{{ $account->nombreCuenta }}</td>
+                              <td>{{ $account->cuenta->nombre }}</td>
                               <td>{{ $account->monto }}</td>
                           </tr>
                       @endforeach

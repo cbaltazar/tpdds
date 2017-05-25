@@ -2,7 +2,7 @@
 
 namespace App\Model\Utilities;
 
-use App\Model\Domain\AccountsManager;
+use App\Model\Domain\DomainManagers\AccountsManager;
 
 class FileManager
 {
@@ -33,7 +33,7 @@ class FileManager
     }
 
     public function createAccountsList($data){
-        $this->domain->saveAccounts($data);
+        $this->domain->save($data, null);
     }
 
     public function getFileContent($file){

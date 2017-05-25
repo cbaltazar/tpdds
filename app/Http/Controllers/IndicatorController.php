@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Entities\Indicador;
 use Illuminate\Http\Request;
-use App\Model\Domain\IndicatorsManager;
+use App\Model\Domain\DomainManagers\IndicatorsManager;
 
 class IndicatorController extends Controller
 {
     public function indicatorSave(Request $request, $id=null){
-        $status = IndicatorsManager::getInstance()->saveIndicator($request, $id);
+        $domainManager = IndicatorsManager::getInstance();
+        $status = $domainManager->save($request, $id);
         return redirect('indicatorList')->with('status', $status);
     }
 
     public function indicatorDelete($id=null){
-        $status = IndicatorsManager::getInstance()->deleteIndicator($id);
+        $domainManager = IndicatorsManager::getInstance();
+        $status = $domainManager->delete($id);
         return redirect('indicatorList')->with('status', $status);
     }
 

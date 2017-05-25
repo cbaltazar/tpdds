@@ -2,11 +2,19 @@
 
 namespace App\Model\Domain\FormulaElements;
 
-/*
- * CREAR ELEMENTOS DE FORMULA PARA IMPLEMENTAR EL COMPOSITE
- * NO USAR LAS ENTIDADES!!!*/
 
-interface FormulaElement
+abstract class FormulaElement
 {
-    public function getValue($data);
+    public abstract function getValue( $data );
+
+    public static function getElement( $entity )
+    {
+        switch ( get_class($entity) ){
+            case 'App\Model\Entities\Cuenta':
+                return new AccountElement($entity);
+                break;
+            default:
+                return new IndicatorElement($entity);
+        }
+    }
 }

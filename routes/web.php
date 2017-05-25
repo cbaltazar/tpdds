@@ -10,7 +10,10 @@ Route::get('/viewAccounts', 'FrontController@viewAccounts');
 Route::get('/accountDetail/{company?}', 'FrontController@accountDetail');
 
 //ABM ACCOUNT
-Route::post('/store', 'FileUploaderController@store');
+Route::post('/store', 'AccountController@store');
+
+//ABM COMPANIES
+Route::get('/deleteCompany/{id}', 'CompanyController@deleteCompany');
 
 //INDICATORS
 Route::get('/indicatorList', 'FrontController@indicatorList');

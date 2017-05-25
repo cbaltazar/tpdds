@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Model\Domain;
+namespace App\Model\Domain\DomainManagers;
 
+use App\Model\Domain\FormulaElements\IndicatorElement;
 use App\Model\Entities\Indicador;
 use App\Model\Entities\Empresa;
 use App\Model\ORMConnections\EloquentConnection;
@@ -10,9 +11,11 @@ use Illuminate\Validation\Rules\In;
 class IndicatorsManager extends DomainManager
 {
     protected static $obj = null;
+    protected $model;
 
     function __construct($orm){
         $this->ormConnection=$orm;
+        $this->model = Indicador::class;
     }
 
     static function getInstance(){
@@ -22,9 +25,9 @@ class IndicatorsManager extends DomainManager
         return IndicatorsManager::$obj;
     }
 
-    public function saveIndicator($data, $id){
-        $indicator = null;
 
+    public function saveElement($data, $id){
+        $indicator = null;
         if( $id != null){
             $indicator = $this->getIndicator($id);
         }else{
@@ -42,40 +45,28 @@ class IndicatorsManager extends DomainManager
         return "Indicador cargado con exito!";
     }
 
-    public function deleteIndicator($id){
-        $this->ormConnection->deleteEntity(Indicador::class, $id);
-        return "Indicador borrado con exito";
+    public function saveMessage()
+    {
+        return "Indicador guardado con exito!";
     }
 
-    public function getAvailablesIndicators(){
-        $indicators = $this->ormConnection->getAll(Indicador::class);
-        $availablesIndicators = array();
-        foreach ($indicators as $indicator) {
-            array_push($availablesIndicators,$indicator->nombre);
-        }
-        return $availablesIndicators;
-    }
+    function deleteRelations($id){}
 
-    public function getIndicators(){
-        return $this->ormConnection->getAll(Indicador::class);
-    }
-
-    public function getIndicator($id){
-        return $this->ormConnection->findById(Indicador::class, $id);
-    }
+    public function deleteMessage(){}
 
     public function indicatorEvaluate($request){
-        $indicators = $this->ormConnection->getAll(Indicador::class);
+        $indicators = $this->getAll();
         $results = array();
         foreach ($indicators as $indicator){
             $result = new \stdClass();
 
-            $empresa = $this->ormConnection->findById(Empresa::class, $request->input('company'));
+            $indicatorElement = new IndicatorElement($indicator);
+            $result->value = $indicatorElement->evaluateFormula( $request->input() );
 
+            $empresa = $this->ormConnection->findById(Empresa::class, $request->input('company'));
             $result->company = $empresa->nombre;
             $result->indicator = $indicator->nombre;
             $result->period = $request->input('period');
-            $result->value = $indicator->evaluateFormula( $request->input() );
 
             array_push($results, $result);
         }
