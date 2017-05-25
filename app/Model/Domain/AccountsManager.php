@@ -26,6 +26,8 @@ class AccountsManager extends DomainManager
         return AccountsManager::$obj;
     }
 
+    //commit de prueba!!!
+
     public function getCompanies(){
         return $this->ormConnection->getAll(Empresa::class);
     }
