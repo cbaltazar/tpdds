@@ -7,30 +7,23 @@ use App\Model\Domain\DomainManagers\IndicatorsManager;
 
 class IndicatorElement extends FormulaElement
 {
-    private $formula;
-    private $elementosDeFormula;
-
     function __construct($indicator)
     {
-        $this->formula = $indicator->formula;
-        $this->elementosDeFormula = $indicator->elementosDeFormula;
+        $this->model = $indicator;
     }
 
     public function evaluateFormula( $data ){
-        $elementos = explode(",",$this->elementosDeFormula);
-
+        $elementos = explode(",",$this->getFormulaElements());
         foreach ($elementos as $elemento){
-            $elemento = str_replace("_", " ", $elemento);
-            $elem = FormulaElement::getElement( IndicatorsManager::getInstance()->getByName($elemento) );
+            $elem = FormulaElement::getElement( IndicatorsManager::getInstance()->getFromulaElement($elemento) );
             if($elem->getValue($data) >= 0){
-                $this->formula = str_replace($elemento, $elem->getValue($data), $this->formula);
+                $this->setFormula(str_replace($elem->getName(), $elem->getValue($data), $this->getFormula()));
             }else{
-                $this->formula = 0;
+                $this->setFormula(0);
                 break;
             }
         }
-
-        return eval('return '.$this->formula.';');
+        return round(eval('return '.$this->getFormula().';'), 2);
     }
 
     public function getValue($data){

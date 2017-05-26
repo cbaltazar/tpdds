@@ -23,14 +23,6 @@ abstract class DomainManager
         return $this->ormConnection->findById( $this->model,$id);
     }
 
-    public function getByName($name){
-            $retorno = Cuenta::where('nombre', $name)->first();
-            if(!$retorno){
-                $retorno = Indicador::where('nombre', $name)->first();
-            }
-            return $retorno;
-    }
-
     public function save($data, $id){
         $this->saveElement($data, $id);
         return $this->saveMessage();
@@ -47,7 +39,10 @@ abstract class DomainManager
         $availablesElements = array();
 
         foreach ($elements as $element) {
-            array_push($availablesElements,$element->nombre);
+            $obj = new \stdClass();
+            $obj->id = $element->id;
+            $obj->nombre = $element->nombre;
+            array_push($availablesElements,$obj);
         }
         return $availablesElements;
     }
@@ -60,5 +55,13 @@ abstract class DomainManager
             $this->ormConnection->saveEntity($object);
         }
         return $object;
+    }
+
+    public function getFromulaElement($id){
+        $retorno = Cuenta::find($id);
+        if(!$retorno){
+            $retorno = Indicador::find($id);
+        }
+        return $retorno;
     }
 }

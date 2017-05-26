@@ -55,7 +55,7 @@
                             <div class="form-group">
                                 <div class="col-sm-4 col-sm-offset-5">
                                     <button class="btn btn-white" type="submit">Cancelar</button>
-                                    <button class="btn btn-primary" id="saveIndicator" onclick="validarFormula()">Guardar</button>
+                                    <button class="btn btn-primary" id="saveIndicator" >Guardar</button>
                                 </div>
                             </div>
                         </form>
@@ -76,8 +76,6 @@
         var formula = "";
         var indicators = JSON.parse('{!! json_encode($variable) !!}');
 
-        console.log(indicators);
-
         $(document).ready(function () {
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',
@@ -86,8 +84,8 @@
         });
 
         for (var i = 0; i < indicators.length; i++) {
-            indicators[i] = indicators[i].replace(/\s+/g,'');
-            scope[indicators[i]] = 1
+            indicators[i].nombre = indicators[i].nombre.replace(/\s+/g,'');
+            scope[indicators[i].nombre] = 1
         }
 
         $('#formula').on('input', function () {
@@ -106,12 +104,21 @@
         });
 
         $('#saveIndicator').click( function(){
+            $('#formula').val($('#formula').val().trim());
             var node = math.parse($('#formula').val().replace(/\s/g,'_'));
             var filtered = node.filter(function (node) {
                 return node.isSymbolNode;
             });
-            $('#formulaElements').val(filtered.toString());
-        });
 
+            var idsFiltered = [];
+            indicators.forEach(function(value){
+                filtered.forEach(function(elem){
+                    if( elem.toString().replace("_", "") === value.nombre ){
+                        idsFiltered.push(value.id);
+                    }
+                });
+            });
+            $('#formulaElements').val(idsFiltered.toString());
+        });
     </script>
 @endsection

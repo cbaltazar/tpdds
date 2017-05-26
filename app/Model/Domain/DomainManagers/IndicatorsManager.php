@@ -57,16 +57,19 @@ class IndicatorsManager extends DomainManager
     public function indicatorEvaluate($request){
         $indicators = $this->getAll();
         $results = array();
+
         foreach ($indicators as $indicator){
             $result = new \stdClass();
-
             $indicatorElement = new IndicatorElement($indicator);
-            $result->value = $indicatorElement->evaluateFormula( $request->input() );
-
             $empresa = $this->ormConnection->findById(Empresa::class, $request->input('company'));
             $result->company = $empresa->nombre;
             $result->indicator = $indicator->nombre;
             $result->period = $request->input('period');
+            if($indicator->activo == 1){
+                $result->value = $indicatorElement->evaluateFormula($request->input());
+            }else{
+                $result->value = 0;
+            }
 
             array_push($results, $result);
         }

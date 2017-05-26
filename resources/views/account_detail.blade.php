@@ -82,14 +82,8 @@
                     <th>Valor</th>
                 </tr>
                 </thead>
-                <tbody>
-                  <!--LEVANTAR LOS INDICADORES-->
-                  @for($i = 0; $i < 10; $i++)
-                    <tr>
-                      <td>ROI</td>
-                      <td>6.37%</td>
-                    </tr>
-                  @endfor
+                <tbody id="indicator-values-conteiner">
+
                 </tbody>
                 <tfoot>
                 </tfoot>
@@ -111,6 +105,30 @@
 <script src="{{asset('js/plugins/dataTables/dataTables.tableTools.min.js')}}"></script>
 
 <script>
+    function calculateIndicator(){
+        $('#indicator-values-conteiner').empty();
+        var id = window.location.href.split("/")[4];
+        var data = {};
+        data.company = id;
+        data.period = $('#indicatorPeriod').val();
+
+        $.ajax({
+            url: '/api/indicatorEvaluate',
+            type: 'post',
+            dataType: 'json',
+            data: data,
+            success: function ( obj ) {
+                obj.forEach(function (value) {
+                    $('#indicator-values-conteiner').append('<tr><td>'+
+                        value.indicator +
+                        '</td><td>'+
+                        value.value +
+                        '</td></tr>');
+                })
+            }
+        });
+    }
+
     $(document).ready(function() {
         $('.dataTable').dataTable({
             responsive: true,
@@ -119,9 +137,9 @@
                 "sSwfPath": "{{asset('js/plugins/dataTables/swf/copy_csv_xls_pdf.swf')}}"
             }
         });
-
+        calculateIndicator();
         $('#indicatorPeriod').change(function(){
-           alert($('#indicatorPeriod').val());
+            calculateIndicator();
         });
     });
 </script>
