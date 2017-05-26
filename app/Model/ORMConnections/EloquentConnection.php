@@ -20,6 +20,10 @@ class EloquentConnection implements IORMConnection
         return $model::find($id);
     }
 
+    public function findWhere($model, $where){
+        return $model::where($where)->first();
+    }
+
     public function saveEntity($entity){
         $entity->save();
     }

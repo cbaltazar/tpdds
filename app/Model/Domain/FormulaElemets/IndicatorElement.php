@@ -7,9 +7,10 @@ use App\Model\Domain\DomainManagers\IndicatorsManager;
 
 class IndicatorElement extends FormulaElement
 {
-    function __construct($indicator)
+    function __construct($indicator, $dm)
     {
         $this->model = $indicator;
+        $this->domainManager = $dm;
     }
 
     public function evaluateFormula( $data ){

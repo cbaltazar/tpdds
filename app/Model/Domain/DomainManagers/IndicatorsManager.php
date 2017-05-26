@@ -62,7 +62,7 @@ class IndicatorsManager extends DomainManager
 
         foreach ($indicators as $indicator){
             $result = new \stdClass();
-            $indicatorElement = new IndicatorElement($indicator);
+            $indicatorElement = new IndicatorElement($indicator, IndicatorsManager::getInstance());
             $empresa = $this->ormConnection->findById(Empresa::class, $request->input('company'));
             $result->company = $empresa->nombre;
             $result->indicator = $indicator->nombre;

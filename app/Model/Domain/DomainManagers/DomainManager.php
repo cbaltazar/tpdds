@@ -25,6 +25,10 @@ abstract class DomainManager
         return $obj;
     }
 
+    public function getWhere($where){
+        return $obj = $this->ormConnection->findWhere( $this->model, $where);
+    }
+
     public function save($data, $id){
         $this->saveElement($data, $id);
         return $this->saveMessage();
