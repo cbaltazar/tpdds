@@ -9,7 +9,7 @@ class CompanyController extends Controller
 {
     public function deleteCompany($id){
         $domainMannager = CompaniesManager::getInstance();
-        $status = $domainMannager->deleteElement($id);
+        $status = $domainMannager->delete($id);
         return redirect('loadAccounts')->with('status', $status);
     }
 }

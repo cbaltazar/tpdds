@@ -34,7 +34,7 @@ abstract class DomainManager
         return $this->saveMessage();
     }
 
-    public function deleteElement($id){
+    public function delete($id){
         $this->deleteRelations($id);
         $this->ormConnection->deleteEntity( $this->model, $id);
         return $this->deleteMessage();
