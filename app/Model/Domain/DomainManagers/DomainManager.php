@@ -4,6 +4,7 @@ namespace App\Model\Domain\DomainManagers;
 
 use App\Model\Entities\Cuenta;
 use App\Model\Entities\Indicador;
+use App\Exceptions\CustomExceptions\DomainException;
 
 abstract class DomainManager
 {
@@ -20,7 +21,8 @@ abstract class DomainManager
     }
 
     public function getOne($id){
-        return $this->ormConnection->findById( $this->model,$id);
+        $obj = $this->ormConnection->findById( $this->model,$id);
+        return $obj;
     }
 
     public function save($data, $id){
@@ -50,7 +52,8 @@ abstract class DomainManager
     public function getObject($type, $name){
         $object = $this->ormConnection->findByColumnName($type,'nombre',$name);
         if (!$object){
-            $object = new $type();
+            $factoryName = $type."Factory";
+            $object = new $factoryName();
             $object->nombre = $name;
             $this->ormConnection->saveEntity($object);
         }

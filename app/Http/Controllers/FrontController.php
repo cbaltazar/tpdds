@@ -25,6 +25,7 @@ class FrontController extends Controller{
     public function accountDetail($company=null){
         $domainManager = CompaniesManager::getInstance();
         $company = $domainManager->getOne($company);
+
         return view('account_detail')->with("companyName", $company->nombre)->with("companyAccounts",$company->cuentas);
     }
 

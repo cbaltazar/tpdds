@@ -7,6 +7,7 @@ use App\Model\Entities\Indicador;
 use App\Model\Entities\Empresa;
 use App\Model\ORMConnections\EloquentConnection;
 use Illuminate\Validation\Rules\In;
+use App\Model\Entities\Factories\IndicatorFactory;
 
 class IndicatorsManager extends DomainManager
 {
@@ -31,7 +32,8 @@ class IndicatorsManager extends DomainManager
         if( $id != null){
             $indicator = $this->getIndicator($id);
         }else{
-            $indicator = new Indicador();
+            $indicatorFactory = new IndicatorFactory();
+            $indicator = $indicatorFactory->createObject();
         }
 
         $indicator->nombre = $data->input('name');
