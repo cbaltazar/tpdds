@@ -4,12 +4,12 @@ namespace App\Model\Domain\DomainManagers;
 
 use App\Model\Entities\Cuenta;
 use App\Model\Entities\Indicador;
-use App\Exceptions\CustomExceptions\DomainException;
 
 abstract class DomainManager
 {
     protected $ormConnection = null;
     protected $model = null;
+    protected $fatoryPath = '\\App\\Model\\Entities\\Factories\\';
 
     abstract function deleteMessage();
     abstract function saveElement($data, $id);
@@ -56,9 +56,8 @@ abstract class DomainManager
     public function getObject($type, $name){
         $object = $this->ormConnection->findByColumnName($type,'nombre',$name);
         if (!$object){
-            $factoryName = $type."Factory";
-            echo $factoryName;
-            $object = new $factoryName();
+            $factory = $this->getFactory($type);
+            $object = $factory->createObject();
             $object->nombre = $name;
             $this->ormConnection->saveEntity($object);
         }
@@ -71,5 +70,13 @@ abstract class DomainManager
             $retorno = Indicador::find($id);
         }
         return $retorno;
+    }
+
+    private function getFactory($type){
+        $namespace = explode("\\", $type);
+        $namespace[count($namespace)-1] = 'Factories\\'.$namespace[count($namespace)-1]."Factory";
+        $factory = implode('\\', $namespace);
+
+        return new $factory;
     }
 }

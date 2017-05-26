@@ -7,7 +7,7 @@ use App\Model\Entities\Cuenta_Empresa;
 use App\Model\Entities\Empresa;
 use App\Model\ORMConnections\EloquentConnection;
 use Illuminate\Foundation\Console\EventMakeCommand;
-use App\Model\Entities\Factories\CuentaEmpresaFactory;
+use App\Model\Entities\Factories\Cuenta_EmpresaFactory;
 
 class AccountsManager extends DomainManager
 {
@@ -45,7 +45,7 @@ class AccountsManager extends DomainManager
             foreach ($data as $d) {
                 $empresa = $this->getObject(Empresa::class, $d->company);
                 $cuenta = $this->getObject(Cuenta::class, $d->account);
-                $entityFactory = new CuentaEmpresaFactory();
+                $entityFactory = new Cuenta_EmpresaFactory();
                 $cuenta_empresa = $entityFactory->createObject();
                 $cuenta_empresa->cuenta_id = $cuenta->id;
                 $cuenta_empresa->empresa_id = $empresa->id;
