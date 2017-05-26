@@ -1,14 +1,14 @@
 <?php
 
-use App\Model\Entities\Factories\CompanyFactory;
+use App\Model\Entities\Factories\EmpresaFactory;
 
-class CompanyFactoryTest extends PHPUnit_Framework_TestCase
+class EmpresaFactoryTest extends PHPUnit_Framework_TestCase
 {
     private $object;
 
     protected function setUp()
     {
-        $this->object = new CompanyFactory();
+        $this->object = new EmpresaFactory();
     }
 
     public function testCreateObjectEmpresa()

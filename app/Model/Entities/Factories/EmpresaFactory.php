@@ -11,7 +11,7 @@ namespace App\Model\Entities\Factories;
 use App\Model\Entities\Empresa;
 
 
-class CompanyFactory extends EntityFactory
+class EmpresaFactory extends EntityFactory
 {
     public function createObject()
     {

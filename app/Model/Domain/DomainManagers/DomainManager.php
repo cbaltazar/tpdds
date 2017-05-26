@@ -57,6 +57,7 @@ abstract class DomainManager
         $object = $this->ormConnection->findByColumnName($type,'nombre',$name);
         if (!$object){
             $factoryName = $type."Factory";
+            echo $factoryName;
             $object = new $factoryName();
             $object->nombre = $name;
             $this->ormConnection->saveEntity($object);

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: amansilla
- * Date: 26/05/17
- * Time: 17:45
- */
 
 use App\Model\Domain\FormulaElements\AccountElement;
 

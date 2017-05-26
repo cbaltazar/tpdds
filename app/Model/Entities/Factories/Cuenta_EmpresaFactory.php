@@ -4,7 +4,7 @@ namespace App\Model\Entities\Factories;
 
 use App\Model\Entities\Cuenta_Empresa;
 
-class AccountCompanyFactory extends EntityFactory
+class Cuenta_EmpresaFactory extends EntityFactory
 {
     public function createObject()
     {
