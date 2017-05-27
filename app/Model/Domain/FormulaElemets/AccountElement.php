@@ -2,8 +2,6 @@
 
 namespace App\Model\Domain\FormulaElements;
 
-use App\Model\Entities\Cuenta_Empresa;
-
 class AccountElement extends FormulaElement
 {
     function __construct( $accountEntity, $dm )

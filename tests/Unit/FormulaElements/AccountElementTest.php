@@ -1,8 +1,9 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use App\Model\Domain\FormulaElements\AccountElement;
 
-class AccountElementTest extends PHPUnit_Framework_TestCase
+class AccountElementTest extends TestCase
 {
     private $dmMock;
     private $accountMock;
@@ -17,6 +18,6 @@ class AccountElementTest extends PHPUnit_Framework_TestCase
     }
 
     public function testGetValue(){
-
+        $accountElement = new AccountElement($this->accountMock, $this->dmMock);
     }
 }
