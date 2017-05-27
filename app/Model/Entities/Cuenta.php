@@ -11,4 +11,8 @@ class Cuenta extends Model
     public function getEmpresas(){
         return $this->belongsToMany(Empresa::class);
     }
+
+    public function getId(){
+        return $this->id;
+    }
 }

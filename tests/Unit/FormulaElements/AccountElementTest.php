@@ -5,19 +5,33 @@ use App\Model\Domain\FormulaElements\AccountElement;
 
 class AccountElementTest extends TestCase
 {
-    private $dmMock;
-    private $accountMock;
+    private $domainManager;
+    private $model;
+    private $accountCompanyMock;
 
     protected function setUp()
     {
-        $this->accountMock = Mockery::mock('App\Domain\DomainManagers\AccountCompanyRelationManager');
-        $this->accountMock->shouldReceive('monto')->once()->andReturn(123);
+        /*
+         * Que necesita AccountElement?
+         * un modelo Cuenta y un AccountCompanyManager, que a su vez necesita un Cuenta_Empresa.
+         * */
+        $this->accountCompanyMock = Mockery::mock('App\Model\Entities\Cuenta_Empresa');
+        $this->accountCompanyMock->shouldReceive('getMonto')->once()->andReturn(123);
 
-        $this->dmMock = Mockery::mock('App\Domain\DomainManagers\AccountCompanyRelationManager');
-        $this->dmMock->shouldReceive('getWhere')->once()->andReturn($this->accountMock);
+        $this->model = Mockery::mock('App\Model\Entities\Cuenta');
+        $this->model->shouldReceive('getId')->once()->andReturn(1);
+
+        $this->domainManager = Mockery::mock('App\Domain\DomainManagers\AccountManager');
+        $this->domainManager->shouldReceive('getWhere')->once()->andReturn($this->accountCompanyMock);
     }
 
     public function testGetValue(){
-        $accountElement = new AccountElement($this->accountMock, $this->dmMock);
+        $data = array();
+        $data['company'] = 'Facebook';
+        $data['period'] = '2017';
+
+        $accountElement = new AccountElement($this->model, $this->domainManager);
+        $this->assertEquals(123, $accountElement->getValue($data));
+        $accountElement->getValue($data);
     }
 }

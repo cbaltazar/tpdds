@@ -12,10 +12,10 @@ class AccountElement extends FormulaElement
 
     public function getValue( $data ){
         $result = -1;
-        $cuenta = $this->domainManager->getWhere( $this->getConditions($data) );
+        $accountCopanyRelation = $this->domainManager->getWhere( $this->getConditions($data) );
 
-        if($cuenta != null){
-            $result = $cuenta->monto;
+        if($accountCopanyRelation != null){
+            $result = $accountCopanyRelation->getMonto();
         }
 
         return $result;
@@ -24,7 +24,7 @@ class AccountElement extends FormulaElement
     private function getConditions($data){
         $where = array();
 
-        $account_id = ['cuenta_id', '=', $this->model->id];
+        $account_id = ['cuenta_id', '=', $this->model->getId()];
         $company_id = ['empresa_id', '=', $data['company']];
         $period = ['periodo', '=', $data['period']];
 
