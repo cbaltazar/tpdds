@@ -30,7 +30,7 @@ class IndicatorsManager extends DomainManager
     public function saveElement($data, $id){
         $indicator = null;
         if( $id != null){
-            $indicator = $this->getIndicator($id);
+            $indicator = $this->getOne($id);
         }else{
             $indicatorFactory = new IndicadorFactory();
             $indicator = $indicatorFactory->createObject();
@@ -70,7 +70,7 @@ class IndicatorsManager extends DomainManager
             if($indicator->activo == 1){
                 $result->value = $indicatorElement->evaluateFormula($request->input());
             }else{
-                $result->value = 0;
+                $result->value = "Inactivo";
             }
 
             array_push($results, $result);
