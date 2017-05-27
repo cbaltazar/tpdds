@@ -2,19 +2,25 @@
 
 namespace App\Model\Domain\DomainManagers;
 
-use App\Model\Entities\Cuenta;
-use App\Model\Entities\Indicador;
-
 abstract class DomainManager
 {
+    //Atributes
     protected $ormConnection = null;
     protected $model = null;
-    protected $fatoryPath = '\\App\\Model\\Entities\\Factories\\';
 
+    //Templates methods.
     abstract function deleteMessage();
     abstract function saveElement($data, $id);
     abstract function saveMessage();
     abstract function deleteRelations($id);
+
+    //Getters and Setters
+    public function getOrmConnection(){
+        return $this->ormConnection;
+    }
+    public function setOrmConnection($orm){
+        $this->ormConnection = $orm;
+    }
 
     public function getAll(){
         return $this->ormConnection->getAll( $this->model );
@@ -65,11 +71,7 @@ abstract class DomainManager
     }
 
     public function getFromulaElement($id){
-        $retorno = Cuenta::find($id);
-        if(!$retorno){
-            $retorno = Indicador::find($id);
-        }
-        return $retorno;
+        return $this->ormConnection->findFormulaElementEntity($id);
     }
 
     private function getFactory($type){

@@ -32,4 +32,12 @@ class EloquentConnection implements IORMConnection
         $entity = $model::find($id);
         $entity->delete();
     }
+
+    public function findFormulaElementEntity($id){
+        $retorno = Cuenta::find($id);
+        if(!$retorno){
+            $retorno = Indicador::find($id);
+        }
+        return $retorno;
+    }
 }
