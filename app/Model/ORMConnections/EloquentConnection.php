@@ -2,6 +2,9 @@
 
 namespace App\Model\ORMConnections;
 
+use App\Model\Entities\Cuenta;
+use App\Model\Entities\Indicador;
+
 class EloquentConnection implements IORMConnection
 {
     public function getAll($model){
