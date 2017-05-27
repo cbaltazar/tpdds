@@ -118,13 +118,19 @@
             dataType: 'json',
             data: data,
             success: function ( obj ) {
-                obj.forEach(function (value) {
-                    $('#indicator-values-conteiner').append('<tr><td>'+
-                        value.indicator +
-                        '</td><td>'+
-                        value.value +
-                        '</td></tr>');
-                })
+                if(obj.length > 0){
+                    obj.forEach(function (value) {
+                        $('#indicator-values-conteiner').append('<tr><td>'+
+                            value.indicator +
+                            '</td><td>'+
+                            value.value +
+                            '</td></tr>');
+                    });
+                }else {
+                    $('#indicator-values-conteiner').append('<tr><td> ' +
+                        'No hay indicadores para calcular ' +
+                        '</td>'+ '</tr>');
+                }
             }
         });
     }
