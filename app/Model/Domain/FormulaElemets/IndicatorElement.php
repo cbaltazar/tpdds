@@ -14,7 +14,18 @@ class IndicatorElement extends FormulaElement
     }
 
     public function evaluateFormula( $data ){
-        $elementos = explode(",",$this->getFormulaElements());
+        if($this->getFormulaElementsNames()){
+            $this->replaceFormulaElementValue($data);
+        }
+        return round(eval('return '.$this->getFormula().';'), 2);
+    }
+
+    public function getValue($data){
+        return $this->evaluateFormula($data);
+    }
+
+    private function replaceFormulaElementValue($data){
+        $elementos = explode(",",$this->getFormulaElementsNames());
         foreach ($elementos as $elemento){
             $elem = FormulaElement::getElement( IndicatorsManager::getInstance()->getFromulaElement($elemento) );
             if($elem->getValue($data) >= 0){
@@ -24,10 +35,5 @@ class IndicatorElement extends FormulaElement
                 break;
             }
         }
-        return round(eval('return '.$this->getFormula().';'), 2);
-    }
-
-    public function getValue($data){
-        return $this->evaluateFormula($data);
     }
 }

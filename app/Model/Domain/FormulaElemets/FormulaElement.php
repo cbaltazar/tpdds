@@ -22,7 +22,7 @@ abstract class FormulaElement
         return $this->model->formula;
     }
 
-    public function getFormulaElements(){
+    public function getFormulaElementsNames(){
         return $this->model->elementosDeFormula;
     }
 
