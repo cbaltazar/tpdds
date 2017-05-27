@@ -33,8 +33,8 @@ class AccountsManager extends DomainManager
             $e = new \stdClass();
             $e->nombreEmpresa = $this->ormConnection->findById(Empresa::class, $empresa->empresa_id)->nombre;
             $e->nombreCuenta = $this->ormConnection->findById(Cuenta::class, $empresa->cuenta_id)->nombre;
-            $e->periodo = $empresa->periodo;
-            $e->monto = $empresa->monto;
+            $e->periodo = $empresa->getPeriodo();
+            $e->monto = $empresa->getMonto();
 
             array_push($accountList, $e);
         }
@@ -47,8 +47,8 @@ class AccountsManager extends DomainManager
                 $cuenta = $this->getObject(Cuenta::class, $d->account);
                 $entityFactory = new Cuenta_EmpresaFactory();
                 $cuenta_empresa = $entityFactory->createObject();
-                $cuenta_empresa->cuenta_id = $cuenta->id;
-                $cuenta_empresa->empresa_id = $empresa->id;
+                $cuenta_empresa->cuenta_id = $cuenta->getId();
+                $cuenta_empresa->empresa_id = $empresa->getId();
                 $cuenta_empresa->periodo = $d->period;
                 $cuenta_empresa->monto = $d->amount;
                 $this->ormConnection->saveEntity($cuenta_empresa);

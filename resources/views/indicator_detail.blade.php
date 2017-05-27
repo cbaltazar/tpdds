@@ -54,7 +54,7 @@
                             <span class="col-sm-2 col-sm-offset-10 help-block"><i>* Campo obligatorio.</i></span>
                             <div class="form-group">
                                 <div class="col-sm-4 col-sm-offset-5">
-                                    <button class="btn btn-white" type="submit">Cancelar</button>
+                                    <button class="btn btn-white">Cancelar</button>
                                     <button class="btn btn-primary" id="saveIndicator" >Guardar</button>
                                 </div>
                             </div>

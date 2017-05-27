@@ -19,4 +19,8 @@ class Cuenta_Empresa extends Model
     public function getMonto(){
         return $this->monto;
     }
+
+    public function getPeriodo(){
+        return $this->periodo;
+    }
 }

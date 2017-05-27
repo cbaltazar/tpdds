@@ -9,4 +9,12 @@ class Empresa extends Model
     public function cuentas(){
         return $this->belongsToMany(Cuenta::class)->withPivot('periodo', 'monto');
     }
+
+    public function getId(){
+        return $this->id;
+    }
+
+    public function getNombre(){
+        return $this->nombre;
+    }
 }

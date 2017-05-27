@@ -52,8 +52,8 @@ abstract class DomainManager
 
         foreach ($elements as $element) {
             $obj = new \stdClass();
-            $obj->id = $element->id;
-            $obj->nombre = $element->nombre;
+            $obj->id = $element->getId();
+            $obj->nombre = $element->getNombre();
             array_push($availablesElements,$obj);
         }
         return $availablesElements;

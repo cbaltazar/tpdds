@@ -9,4 +9,12 @@ use Mockery\Exception;
 class Indicador extends Model
 {
     protected $table="indicadores";
+
+    public function getId(){
+        return $this->id;
+    }
+
+    public function getNombre(){
+        return $this->nombre;
+    }
 }
