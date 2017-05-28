@@ -1,13 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Adrian
- * Date: 5/25/2017
- * Time: 2:07 AM
- */
+
+/*
+ * AccountCompanyRelationManager: se encarga de manejar la tabla de relaciones cuenta-empresa.
+ * */
 
 namespace App\Model\Domain\DomainManagers;
-
 
 use App\Model\Entities\Cuenta_Empresa;
 use App\Model\ORMConnections\EloquentConnection;

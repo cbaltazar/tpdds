@@ -9,7 +9,6 @@ use App\Model\Domain\FormulaElements\IndicatorElement;
 use App\Model\Entities\Indicador;
 use App\Model\Entities\Empresa;
 use App\Model\ORMConnections\EloquentConnection;
-use App\Model\Entities\Factories\IndicadorFactory;
 
 class IndicatorsManager extends DomainManager
 {
