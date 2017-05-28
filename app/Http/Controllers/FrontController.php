@@ -24,7 +24,12 @@ class FrontController extends Controller{
         $domainManager = CompaniesManager::getInstance();
         $company = $domainManager->getOne($company);
 
-        return view('company_detail')->with("companyName", $company->nombre)->with("companyAccounts",$company->cuentas);
+        $domainManager = AccountCompanyRelationManager::getInstance();
+        $periods = $domainManager->getColumn("periodo");
+
+        return view('company_detail')->with("companyName", $company->nombre)
+                                          ->with("companyAccounts",$company->cuentas)
+                                          ->with("indicatorsPeriods", $periods);
     }
 
     public function accountDetail($company=null){

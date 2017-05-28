@@ -27,6 +27,10 @@ class EloquentConnection implements IORMConnection
         return $model::where($where)->first();
     }
 
+    public function getDistinct($model, $column){
+       return $model::distinct()->get([$column]);
+    }
+
     public function saveEntity($entity){
         $entity->save();
     }

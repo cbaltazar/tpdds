@@ -35,6 +35,10 @@ abstract class DomainManager
         return $obj = $this->ormConnection->findWhere( $this->model, $where);
     }
 
+    public function getColumn($column){
+        return $this->ormConnection->getDistinct($this->model, $column);
+    }
+
     public function save($data, $id){
         $this->saveElement($data, $id);
         return $this->saveMessage();

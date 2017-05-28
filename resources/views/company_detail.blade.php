@@ -58,9 +58,9 @@
                         <label>Periodo:</label>
                           <select id="indicatorPeriod">
                           <!--LEVANTAR LOS AÑOS DISPONIBLES-->
-                            @for($i = 2005; $i < 2018; $i++)
-                              <option value={{$i}}>{{$i}}</option>
-                            @endfor
+                            @foreach($indicatorsPeriods as $indicatorPeriod)
+                              <option value={{$indicatorPeriod->periodo}}>{{$indicatorPeriod->periodo}}</option>
+                            @endforeach
                           </select>
 
                         <a class="collapse-link">
