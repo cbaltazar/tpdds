@@ -85,8 +85,4 @@ abstract class DomainManager
 
         return new $factory;
     }
-
-    public function getColumn($column){
-        return $this->ormConnection->getDistinct($this->model, $column);
-    }
 }
