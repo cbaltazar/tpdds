@@ -17,7 +17,7 @@
         <h3 class="font-bold">Ups! Pagina no encontrada.</h3>
 
         <div class="error-desc">
-            La página que estás buscando no existe dentro ¿Dónde invierto?,<br/>
+            La página que estás buscando no existe dentro de ¿Dónde invierto?,<br/>
             Puedes volver a la página principal. <br/><a href="{{ url('/') }}" class="btn btn-primary m-t">Home</a>
         </div>
     </div>
@@ -27,5 +27,4 @@
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
 
 </body>
-
 </html>

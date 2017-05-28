@@ -2,12 +2,11 @@
 
 //GENERAL
 Route::get('/lockscreen', 'FrontController@lockscreen');
-Route::get('/', function(){ return redirect('/loadAccounts'); });
+Route::get('/', function(){ return redirect('/companyList'); });
 
-//ACCOUNT
-Route::get('/loadAccounts', 'FrontController@loadAccounts');
-Route::get('/viewAccounts', 'FrontController@viewAccounts');
-Route::get('/accountDetail/{company?}', 'FrontController@accountDetail');
+//COMPANIES
+Route::get('/companyList', 'FrontController@companyList');
+Route::get('/companyDetail/{company?}', 'FrontController@companyDetail');
 
 //ABM ACCOUNT
 Route::post('/store', 'AccountController@store');

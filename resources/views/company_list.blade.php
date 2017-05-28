@@ -1,5 +1,5 @@
 @extends ('master')
-@section ('title','Cargar Cuentas')
+@section ('title','Empresas')
 @section ('head')
 <link href="{{asset('css/plugins/toastr/toastr.min.css')}}" rel="stylesheet">
 @endsection
@@ -11,7 +11,7 @@
                     {{ session('status') }}
                 </div>
             @endif
-<!---->
+<!--upload modal-->
             <div class="modal inmodal fade" id="uploadModal" tabindex="-1" role="dialog"  aria-hidden="true">
                 <div class="modal-dialog modal-md">
                     <div class="modal-content">
@@ -33,7 +33,28 @@
                     </div>
                 </div>
             </div>
-<!---->
+<!--fin modal-->
+
+<!--confirm modal-->
+            <div class="modal inmodal fade" id="confirmModal" tabindex="-1" role="dialog"  aria-hidden="true">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title">Confirmar acción</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>¿Está seguro de que desea <strong>Eliminar</strong> esta empresa?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
+                            <a type="button" class="btn btn-primary confirm" href="">Aceptar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--fin modal-->
+
             <div class="ibox animated">
                 <div class="ibox-title">
                     <h5>Listado de Empresas</h5>
@@ -52,14 +73,16 @@
                                             <span class="label label-primary">activo</span>
                                         </td>
                                         <td class="project-title">
-                                            <a href="{{ url('accountDetail/'.$empresa->nombre) }}">{{ $empresa->nombre }}</a>
+                                            <a href="{{ url('companyDetail/'.$empresa->nombre) }}">{{ $empresa->nombre }}</a>
                                             <br/>
-                                            <small>Creado el {{ $empresa->created_at }}</small>
+                                            <small>Creada el {{ $empresa->created_at }}</small>
                                         </td>
                                         <td class="project-actions">
-                                            <a href="{{ url('accountDetail/'.$empresa->id) }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
-                                            <a href="{{ url('accountDetail/'.$empresa->id) }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
-                                            <a href="{{ url('deleteCompany/'.$empresa->id) }}" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
+                                            <a href="{{ url('companyDetail/'.$empresa->id) }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
+                                            <a href="" id="{{ $empresa->id }}" data-toggle="modal" data-target="#confirmModal" class="btn btn-white btn-sm btn-delete"><i class="fa fa-trash"></i> Borrar </a>
+
+
+                                            <!--a href="{{ url('deleteCompany/'.$empresa->id) }}" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a-->
                                         </td>
                                     </tr>
                                 @endforeach
@@ -72,34 +95,20 @@
                     </div>
                 </div>
             </div>
-
-
-
-<!---->
         </div>
     </div>
 @endsection
 
 @section ('scripts')
-<!-- FileStyle -->
 <script src="{{asset('js/plugins/fileStyle/bootstrap-filestyle.min.js')}}"></script>
-<!-- Toastr -->
-<script src="js/plugins/toastr/toastr.min.js"></script>
-<script>
-    $(document).ready(function () {
-      setTimeout(function() {
-          toastr.options = {
-              closeButton: true,
-              progressBar: true,
-              showMethod: 'slideDown',
-              timeOut: 4000
-          };
-          toastr.success('Tu asesor de inversiones online', 'Bienvenido a ¿Dónde Invierto?');
-      }, 1300);
+<script src="{{asset('js/plugins/toastr/toastr.min.js')}}"></script>
+<script src="{{asset('js/messenger.js')}}"></script>
 
-        setTimeout(function () {
-            $(".alert-success").slideUp(1500);
-        }, 2000);
-    });
+
+<script>
+$(".btn-delete").click(function(e){
+  $(".confirm").attr('href',"{{ url('deleteCompany/')}}"+"/"+$(this).attr('id'));
+})
 </script>
+
 @endsection

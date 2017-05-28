@@ -30,10 +30,9 @@
                                                 <td class="project-title">
                                                     <a href="{{ url('indicatorDetail') }}">{{ $indicator->nombre }}</a>
                                                     <br/>
-                                                    <small>{{ $indicator->created_at }}</small>
+                                                    <small>Creado el {{ $indicator->created_at }}</small>
                                                 </td>
                                                 <td class="project-actions">
-                                                    <a href="{{ url('indicatorDetail/'.$indicator->id) }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
                                                     <a href="{{ url('indicatorDetail/'.$indicator->id) }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
                                                     <a href="{{ url('indicatorDelete/'.$indicator->id) }}" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
                                                 </td>

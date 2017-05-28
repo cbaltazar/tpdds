@@ -1,0 +1,48 @@
+Metodologias
+
+boolean o ponderaciones
+
+evaluar las las reglas sobre todas las empresas obteniendo Valor
+
+
+Indicador(ROI)
+Operador(>,<,=)
+Periodo (levantar todos los peridos) 
+
+
+
+
+EJEMPLO
+ROE		>			en ultimos 10 años
+Deuda		<			Siempre
+Margen 		Creciente		en ultimos 10 años
+Antiguedad	>
+Antiguedad	>	10años
+
+
+
+Regla | ROI>1000|	    |		durante los ultimos | n | años		Boolean
+Regla | >ROI                |		durante los ultimos | n | años		Boolean
+Regla | >ROI                |		durante los ultimos | n | años		Boolean
+Regla | promedio(ROI)>1000  |		durante los ultimos | n | años		Boolean
+Regla | mediana(ROI)>1000   |		durante los ultimos | n | años		Boolean
+Regla | sumatoria(ROI)>1000 |		durante los ultimos | n | años		Boolean
+Regla | ROI creciente       |		durante los ultimos | n | años		Boolean
+Regla | ROI decreciente     |		durante los ultimos | n | años		Boolean
+
+
+
+Debe devolver un listado ponderado
+
+
+ - Antiguedad va a ser un indicador por defecto del sitema
+
+
+
+
+
+
+Indicador >< q un valor, durante los últimos N años (con N>=1)
+Indicador >< que el de otra empresa
+Promedio, mediana o sumatoria de un indicador ><  q un valor
+Indicador sea siempre o casi siempre creciente o decreciente durante un período

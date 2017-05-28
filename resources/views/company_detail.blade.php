@@ -1,10 +1,10 @@
 @extends ('master')
 @section ('title', $companyName)
 @section ('head')
-<!-- Data Tables Styles -->
 <link href="{{asset('css/plugins/dataTables/dataTables.bootstrap.css')}}" rel="stylesheet">
 <link href="{{asset('css/plugins/dataTables/dataTables.responsive.css')}}" rel="stylesheet">
 <link href="{{asset('css/plugins/dataTables/dataTables.tableTools.min.css')}}" rel="stylesheet">
+<link href="{{asset('css/plugins/dataTables/dataTables.styles.css')}}" rel="stylesheet">
 @endsection
 
 @section ('content')
@@ -17,9 +17,6 @@
                       <div class="ibox-tools">
                           <a class="collapse-link">
                               <i class="fa fa-chevron-up"></i>
-                          </a>
-                          <a class="close-link">
-                              <i class="fa fa-times"></i>
                           </a>
                       </div>
                   </div>
@@ -69,9 +66,6 @@
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
                         </a>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -82,101 +76,61 @@
                     <th>Valor</th>
                 </tr>
                 </thead>
-                <tbody id="indicator-values-conteiner">
-
-                </tbody>
+                <tbody id="indicator-values-conteiner"></tbody>
                 <tfoot>
                 </tfoot>
                 </table>
-
                 </div>
             </div>
-
           </div>
           </div>
         </div>
 @endsection
 
 @section ('scripts')
-<!-- Data Tables -->
 <script src="{{asset('js/plugins/dataTables/jquery.dataTables.js')}}"></script>
 <script src="{{asset('js/plugins/dataTables/dataTables.bootstrap.js')}}"></script>
 <script src="{{asset('js/plugins/dataTables/dataTables.responsive.js')}}"></script>
 <script src="{{asset('js/plugins/dataTables/dataTables.tableTools.min.js')}}"></script>
-
 <script>
-    function calculateIndicator(){
-        $('#indicator-values-conteiner').empty();
-        var id = window.location.href.split("/")[4];
-        var data = {};
-        data.company = id;
-        data.period = $('#indicatorPeriod').val();
 
-        $.ajax({
-            url: '/api/indicatorEvaluate',
-            type: 'post',
-            dataType: 'json',
-            data: data,
-            success: function ( obj ) {
-                if(obj.length > 0){
-                    obj.forEach(function (value) {
-                        $('#indicator-values-conteiner').append('<tr><td>'+
-                            value.indicator +
-                            '</td><td>'+
-                            value.value +
-                            '</td></tr>');
-                    });
-                }else {
-                    $('#indicator-values-conteiner').append('<tr><td> ' +
-                        'No hay indicadores para calcular ' +
-                        '</td>'+ '</tr>');
-                }
-            }
-        });
-    }
+function calculateIndicator(){
+    $('#indicator-values-conteiner').empty();
+    var id = window.location.href.split("/")[4];
+    var data = {};
+    data.company = id;
+    data.period = $('#indicatorPeriod').val();
 
-    $(document).ready(function() {
-        $('.dataTable').dataTable({
-            responsive: true,
-            "dom": 'T<"clear">lfrtip',
-            "tableTools": {
-                "sSwfPath": "{{asset('js/plugins/dataTables/swf/copy_csv_xls_pdf.swf')}}"
-            }
-        });
-        calculateIndicator();
-        $('#indicatorPeriod').change(function(){
-            calculateIndicator();
-        });
+    $.ajax({
+        url: '/api/indicatorEvaluate',
+        type: 'post',
+        dataType: 'json',
+        data: data,
+        success: function ( obj ) {
+            obj.forEach(function (value) {
+                $('#indicator-values-conteiner').append('<tr><td>'+
+                    value.indicator +
+                    '</td><td>'+
+                    value.value +
+                    '</td></tr>');
+            })
+        }
     });
+}
+
+$(document).ready(function() {
+    $('.dataTable').dataTable({
+        responsive: true,
+        "dom": 'T<"clear">lfrtip',
+        "tableTools": {
+            "sSwfPath": "{{asset('js/plugins/dataTables/swf/copy_csv_xls_pdf.swf')}}"
+        }
+    });
+    calculateIndicator();
+    $('#indicatorPeriod').change(function(){
+        calculateIndicator();
+    });
+});
+
 </script>
-<style>
-    body.DTTT_Print {
-        background: #fff;
-
-    }
-    .DTTT_Print #page-wrapper {
-        margin: 0;
-        background:#fff;
-    }
-
-    button.DTTT_button, div.DTTT_button, a.DTTT_button {
-        border: 1px solid #e7eaec;
-        background: #fff;
-        color: #676a6c;
-        box-shadow: none;
-        padding: 6px 8px;
-    }
-    button.DTTT_button:hover, div.DTTT_button:hover, a.DTTT_button:hover {
-        border: 1px solid #d2d2d2;
-        background: #fff;
-        color: #676a6c;
-        box-shadow: none;
-        padding: 6px 8px;
-    }
-
-    .dataTables_filter label {
-        margin-right: 5px;
-
-    }
-</style>
 @endsection

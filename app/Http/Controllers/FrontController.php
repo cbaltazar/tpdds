@@ -17,21 +17,16 @@ class FrontController extends Controller{
         return view('lockscreen');
     }
 
-    public function loadAccounts(){
+    public function companyList(){
         $domainManager = CompaniesManager::getInstance();
-        return view('account_load')->with("empresas", $domainManager->getAll());
+        return view('company_list')->with("empresas", $domainManager->getAll());
     }
 
-    public function accountDetail($company=null){
+    public function companyDetail($company=null){
         $domainManager = CompaniesManager::getInstance();
         $company = $domainManager->getOne($company);
 
-        return view('account_detail')->with("companyName", $company->nombre)->with("companyAccounts",$company->cuentas);
-    }
-
-    public function viewAccounts(Request $request)
-    {   $domainManager = AccountCompanyRelationManager::getInstance();
-        return view('accounts_view')->with("accounts", $domainManager->getAll());
+        return view('company_detail')->with("companyName", $company->nombre)->with("companyAccounts",$company->cuentas);
     }
 
 //INDICATORS

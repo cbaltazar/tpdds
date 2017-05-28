@@ -10,6 +10,6 @@ class CompanyController extends Controller
     public function deleteCompany($id){
         $domainMannager = CompaniesManager::getInstance();
         $status = $domainMannager->delete($id);
-        return redirect('loadAccounts')->with('status', $status);
+        return redirect('companyList')->with('status', $status);
     }
 }

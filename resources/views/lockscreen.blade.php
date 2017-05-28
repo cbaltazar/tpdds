@@ -18,7 +18,7 @@
             </div>
             <h3>¿Dónde invierto?</h3>
             <p>Bienvenido a ¿Dónde invierto?, necesitas ingresar tu contraseña para acceder a la aplicación</p>
-            <form class="m-t" role="form" action={{ url('loadAccounts') }}>
+            <form class="m-t" role="form" action={{ url('companyList') }}>
                 <div class="form-group">
                     <input type="password" class="form-control" placeholder="******" required="">
                 </div>

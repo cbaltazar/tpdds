@@ -34,7 +34,7 @@
                                             <small>Created 14.08.2014</small>
                                         </td>
                                         <td class="project-actions">
-                                            <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
+
                                             <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
                                             <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
                                         </td>
@@ -49,7 +49,7 @@
                                             <small>Created 11.08.2014</small>
                                         </td>
                                         <td class="project-actions">
-                                            <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
+
                                             <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
                                             <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
                                         </td>
@@ -64,7 +64,7 @@
                                             <small>Created 10.08.2014</small>
                                         </td>
                                         <td class="project-actions">
-                                            <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
+
                                             <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
                                             <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
                                         </td>
@@ -79,7 +79,7 @@
                                             <small>Created 22.07.2014</small>
                                         </td>
                                         <td class="project-actions">
-                                          <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
+
                                           <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
                                           <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
                                         </td>
@@ -94,7 +94,7 @@
                                             <small>Created 14.07.2014</small>
                                         </td>
                                         <td class="project-actions">
-                                          <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
+
                                           <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
                                           <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
                                         </td>
@@ -109,7 +109,7 @@
                                             <small>Created 14.08.2014</small>
                                         </td>
                                         <td class="project-actions">
-                                            <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
+
                                             <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
                                             <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
                                         </td>
@@ -124,7 +124,7 @@
                                             <small>Created 11.08.2014</small>
                                         </td>
                                         <td class="project-actions">
-                                            <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
+
                                             <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
                                             <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
                                         </td>
@@ -139,7 +139,7 @@
                                             <small>Created 10.08.2014</small>
                                         </td>
                                         <td class="project-actions">
-                                          <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
+
                                           <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
                                           <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
                                         </td>
@@ -154,7 +154,7 @@
                                             <small>Created 22.07.2014</small>
                                         </td>
                                         <td class="project-actions">
-                                          <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
+
                                           <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
                                           <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
                                         </td>
@@ -169,7 +169,7 @@
                                             <small>Created 14.07.2014</small>
                                         </td>
                                         <td class="project-actions">
-                                          <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
+
                                           <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
                                           <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
                                         </td>

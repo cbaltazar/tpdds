@@ -35,28 +35,13 @@
                     <div class="logo-element">DI?</div>
                 </li>
                 <li> <!--class="active"-->
-                    <a href="index.html"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Cuentas</span> <span
-                                class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li class="active"><a href="{{ url('loadAccounts') }}">Cargar cuentas</a></li>
-                        <li><a href="{{ url('viewAccounts') }}">Ver cuentas</a></li>
-                    </ul>
+                    <a href="{{ url('companyList') }}"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Empresas</span></a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-calculator"></i> <span class="nav-label">Indicadores</span><span
-                                class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a href="{{ url('indicatorList') }}">Ver indicadores</a></li>
-                        <li><a href="{{ url('indicatorDetail') }}">Editar indicador</a></li>
-                    </ul>
+                    <a href="{{ url('indicatorList') }}"><i class="fa fa-calculator"></i> <span class="nav-label">Indicadores</span></a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Metodologías</span><span
-                                class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a href="{{ url('methodList') }}">Ver metodologías</a></li>
-                        <li><a href="{{ url('methodDetail') }}">Editar metodología</a></li>
-                    </ul>
+                    <a href="{{ url('methodList') }}"><i class="fa fa-edit"></i> <span class="nav-label">Metodologías</span></a>
                 </li>
             </ul>
         </div>
@@ -85,7 +70,7 @@
                 <h2>@yield('title')</h2>
                 <ol class="breadcrumb">
                     <li>
-                        <a href="{{ url('loadAccounts') }}">Home</a>
+                        <a href="{{ url('companyList') }}">Home</a>
                     </li>
                     <li class="active">
                         <strong>@yield('title')</strong>
