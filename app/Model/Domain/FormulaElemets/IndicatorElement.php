@@ -1,8 +1,12 @@
 <?php
 
+/*
+ * AccountElement: maneja el elemento de formula, cuando este es un Indicador. Devuelve la formula
+ * Implementa el patron Composite.
+ * */
+
 namespace App\Model\Domain\FormulaElements;
 
-use App\Model\Domain\DomainManagers\DomainManager;
 use App\Model\Domain\DomainManagers\IndicatorsManager;
 
 class IndicatorElement extends FormulaElement
@@ -25,7 +29,7 @@ class IndicatorElement extends FormulaElement
     }
 
     private function replaceFormulaElementValue($data){
-        $elementos = explode(",",$this->getFormulaElementsNames());
+        $elementos = explode(",",$this->getFormulaElementsIds());
         foreach ($elementos as $elemento){
             $elem = FormulaElement::getElement( IndicatorsManager::getInstance()->getFromulaElement($elemento) );
             if($elem->getValue($data) >= 0){

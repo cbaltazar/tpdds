@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * AccountElement: maneja el elemento de formula, cuando este es una Cuenta. Devuelve el monto.
+ * */
+
 namespace App\Model\Domain\FormulaElements;
 
 class AccountElement extends FormulaElement

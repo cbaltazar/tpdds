@@ -1,10 +1,14 @@
 <?php
 
+/*
+ * FormulaElement: clase abstracta para agrupar a los elementos que componen una formula,
+ * que pueden ser Cuentas e Indicadores.
+ *
+ * */
+
 namespace App\Model\Domain\FormulaElements;
 
-
 use App\Model\Domain\DomainManagers\AccountCompanyRelationManager;
-use App\Model\Domain\DomainManagers\AccountsManager;
 use App\Model\Domain\DomainManagers\IndicatorsManager;
 
 abstract class FormulaElement
@@ -13,6 +17,10 @@ abstract class FormulaElement
     protected $domainManager;
 
     public abstract function getValue( $data );
+
+    public function setDomainManager($dm){
+        $this->domainManager = $dm;
+    }
 
     public function getName(){
         return $this->model->nombre;
@@ -26,13 +34,8 @@ abstract class FormulaElement
         return $this->model->formula = $formula;
     }
 
-    public function getFormulaElementsNames(){
+    public function getFormulaElementsIds(){
         return $this->model->elementosDeFormula;
-    }
-
-
-    public function setDomainManager($dm){
-        $this->domainManager = $dm;
     }
 
     public static function getElement( $entity )
