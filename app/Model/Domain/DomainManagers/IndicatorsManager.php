@@ -1,12 +1,14 @@
 <?php
-
+/*
+ * IndicatorManager: se encarga de realizar las acciones relacionadas con los indicadores.
+ * Implementa el patron Singleton.
+ * */
 namespace App\Model\Domain\DomainManagers;
 
 use App\Model\Domain\FormulaElements\IndicatorElement;
 use App\Model\Entities\Indicador;
 use App\Model\Entities\Empresa;
 use App\Model\ORMConnections\EloquentConnection;
-use Illuminate\Validation\Rules\In;
 use App\Model\Entities\Factories\IndicadorFactory;
 
 class IndicatorsManager extends DomainManager
@@ -19,6 +21,8 @@ class IndicatorsManager extends DomainManager
         $this->model = Indicador::class;
     }
 
+    /*getInstance: devuelve la instancia de la clase.
+     * */
     static function getInstance(){
         if(IndicatorsManager::$obj == null){
             IndicatorsManager::$obj = new IndicatorsManager(new EloquentConnection());
@@ -26,13 +30,14 @@ class IndicatorsManager extends DomainManager
         return IndicatorsManager::$obj;
     }
 
-
+    /*saveElement: guarda el indicador en caso de ser nuevo o lo actualiza.
+     * */
     public function saveElement($data, $id){
         $indicator = null;
         if( $id != null){
             $indicator = $this->getOne($id);
         }else{
-            $indicatorFactory = new IndicadorFactory();
+            $indicatorFactory = $this->getFactory(Indicador::class);
             $indicator = $indicatorFactory->createObject();
         }
 
@@ -43,26 +48,31 @@ class IndicatorsManager extends DomainManager
         $indicator->elementosDeFormula = $data->formulaElements;
 
         $this->ormConnection->saveEntity($indicator);
-
-        return "Indicador cargado con exito!";
     }
 
+    /* Devuelve el mensaje de guardado de indicadores.
+     * */
     public function saveMessage()
     {
         return "Indicador guardado con exito!";
     }
 
+    /*se agregan porque es abstracto en la clase padre, pero no se implementa ya que no se necesita
+      en esa clase
+    */
     function deleteRelations($id){}
-
     public function deleteMessage(){}
 
+    /*indicatorEvaluate: evalua todos los indicadores, para una empresa y un periodo dados.
+     * */
     public function indicatorEvaluate($request){
         $indicators = $this->getAll();
         $results = array();
 
         foreach ($indicators as $indicator){
             $result = new \stdClass();
-            $indicatorElement = new IndicatorElement($indicator, IndicatorsManager::getInstance());
+            $formulaElementFactory = $this->getFactory(IndicatorElement::class);
+            $indicatorElement = $formulaElementFactory->createObject($indicator, IndicatorsManager::getInstance());
             $empresa = $this->ormConnection->findById(Empresa::class, $request->input('company'));
             $result->company = $empresa->nombre;
             $result->indicator = $indicator->nombre;

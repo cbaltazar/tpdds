@@ -145,11 +145,11 @@ abstract class DomainManager
 
     /* getFactory: devuelve la fabrica que crea el objeto del modelo necesario.
      * */
-    private function getFactory($type){
-        $namespace = explode("\\", $type);
+    public function getFactory($type){
+        $namespace = explode("\\", $type, 3);
         $namespace[count($namespace)-1] = 'Factories\\'.$namespace[count($namespace)-1]."Factory";
         $factory = implode('\\', $namespace);
 
-        return new $factory;
+        return new $factory();
     }
 }

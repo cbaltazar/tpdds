@@ -21,6 +21,8 @@ class AccountsManager extends DomainManager
         $this->model = Cuenta::class;
     }
 
+    /*getInstance: devuelve la instancia de la clase.
+     * */
     static function getInstance(){
         if(AccountsManager::$obj == null){
             AccountsManager::$obj = new AccountsManager(new EloquentConnection());
@@ -28,11 +30,15 @@ class AccountsManager extends DomainManager
         return AccountsManager::$obj;
     }
 
+    /*
+     * saveElement: guarda las cuentas que se cargan en el archivo. En la tabla de relaciones guarda
+     * empresa, cuenta, monto y periodo, y en la tabla de cuentas, crea una nueva entidad.
+     * */
     public function saveElement($data, $id=null){
             foreach ($data as $d) {
                 $empresa = $this->getObject(Empresa::class, $d->company);
                 $cuenta = $this->getObject(Cuenta::class, $d->account);
-                $entityFactory = new Cuenta_EmpresaFactory();
+                $entityFactory = $this->getFactory(Cuenta_Empresa::class);
                 $cuenta_empresa = $entityFactory->createObject();
                 $cuenta_empresa->cuenta_id = $cuenta->getId();
                 $cuenta_empresa->empresa_id = $empresa->getId();
@@ -42,13 +48,18 @@ class AccountsManager extends DomainManager
             }
     }
 
+    /* Devuelve el mensaje de guardado de cuentas.
+     * */
     public function saveMessage()
     {
         return "Cuentas actualizadas con exito!";
     }
 
+    /*se agrega debido a la herencia, pero no se implementa ya que este manager no lo necesita*/
     function deleteRelations($id){}
 
+    /* Devuelve el mensaje de borrado de cuentas.
+     * */
     public function deleteMessage()
     {
         return "Cuenta borrada con exito!";

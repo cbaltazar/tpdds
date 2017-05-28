@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: amansilla
- * Date: 26/05/17
- * Time: 12:46
- */
 
-namespace App\Model\Entities\Factories;
+namespace App\Model\Factories\Entities;
 
 use App\Model\Entities\Empresa;
 

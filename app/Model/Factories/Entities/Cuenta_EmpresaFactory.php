@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\Entities\Factories;
+namespace App\Model\Factories\Entities;
 
 use App\Model\Entities\Cuenta_Empresa;
 
