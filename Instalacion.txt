@@ -1,14 +1,29 @@
+___           _        _            _
+|_ _|_ __  ___| |_ __ _| | __ _  ___(_) ___  _ __
+ | || '_ \/ __| __/ _` | |/ _` |/ __| |/ _ \| '_ \
+ | || | | \__ \ || (_| | | (_| | (__| | (_) | | | |
+|___|_| |_|___/\__\__,_|_|\__,_|\___|_|\___/|_| |_|
+
+=======================================
 Pasos para la instalacion del proyecto:
+=======================================
 
-1) instalar PHP 5.6 o superior
-2) instalar composer (seleccionar la ruta de PHP en el paso 2)
-3) clonar el repo desde https://bitbucket.org/dds2017/tpdds/
-4) copiar el archivo .env_example y renombrarlo como .env
-5) dentro del directorio raiz (tpdds) ejecutar composer install
-6) dentro del directorio raiz (tpdds) ejecutar php artisan key:generate
-7) ejecutar php artisan serve (se puede configurar el puerto agregando --port=xxxxx. Por defecto es el 8000).
-8) acceder mediante localhost:8000
+01) Instalar PHP 5.6 o superior
+02) Instalar MySQL/MariaDB
+03) Instalar composer (seleccionar la ruta de PHP en el paso 2)
+04) Clonar el repo desde https://github.com/cbaltazar/tpdds
+05) Copiar el archivo .env_example y renombrarlo como .env
+06) Crear la base de datos
+07) Configurar los datos de la DB en el archivo ".env"
+08) Configurar los datos de la DB en el archivo "config/database.php"
+09) Dentro del directorio raiz del proyecto ejecutar "composer install"
+10) Dentro del directorio raiz del proyecto ejecutar php "artisan key:generate"
+11) Dentro del directorio raiz del proyecto ejecutar "php artisan migrate"
+12) Dentro del directorio raiz del proyecto ejecutar "php artisan serve" (puerto configurable agregando --port=xxxxx. Por defecto 8000).
+13) Acceder a la aplicación mediante localhost:8000
 
-Como correr los tests:
+=======================================
+Cómo correr los tests:
+=======================================
 
-1) desde la raiz del proyecto, ejecutar: vendor/bin/phpunit tests/Unit/"nombre del test"
+1) Dentro del directorio raiz del proyecto ejecutar: vendor/bin/phpunit tests/Unit/"nombre del test"
