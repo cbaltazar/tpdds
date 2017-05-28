@@ -54,7 +54,11 @@ class IndicatorsManager extends DomainManager
 
     function deleteRelations($id){}
 
-    public function deleteMessage(){}
+    public function deleteMessage()
+    {
+        return "Indicador borrado con exito!";
+    }
+
 
     public function indicatorEvaluate($request){
         $indicators = $this->getAll();

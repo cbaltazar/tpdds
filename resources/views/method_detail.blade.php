@@ -1,5 +1,5 @@
 @extends ('master')
-@section ('title','Editar Metodología')
+@section ('title','Ver Metodología')
 @section ('head')
 <link href="{{asset('css/plugins/summernote/summernote.css')}}" rel="stylesheet">
 <link href="{{asset('css/plugins/summernote/summernote-bs3.css')}}" rel="stylesheet">

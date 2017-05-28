@@ -43,4 +43,8 @@ class EloquentConnection implements IORMConnection
         }
         return $retorno;
     }
+
+    public function getDistinct($model, $column){
+        return $model::distinct()->get([$column]);
+    }
 }
