@@ -22,13 +22,14 @@ abstract class FormulaElement
         return $this->model->formula;
     }
 
+    public function setFormula($formula){
+        return $this->model->formula = $formula;
+    }
+
     public function getFormulaElementsNames(){
         return $this->model->elementosDeFormula;
     }
 
-    public function setFormula($formula){
-        $this->model->formula = $formula;
-    }
 
     public function setDomainManager($dm){
         $this->domainManager = $dm;

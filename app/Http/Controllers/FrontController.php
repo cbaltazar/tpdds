@@ -7,9 +7,6 @@ use App\Model\Domain\DomainManagers\AccountCompanyRelationManager;
 use App\Model\Domain\DomainManagers\IndicatorsManager;
 use App\Model\Domain\DomainManagers\CompaniesManager;
 use Illuminate\Http\Request;
-use Input;
-use Validator;
-use Redirect;
 
 class FrontController extends Controller{
 
