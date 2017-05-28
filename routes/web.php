@@ -13,8 +13,8 @@ Route::get('/accountDetail/{company?}', 'FrontController@accountDetail');
 Route::post('/store', 'FileUploaderController@store');
 
 //INDICATORS
-Route::get('/indicatorList', 'FrontController@indicatorList');
-Route::get('/indicatorDetail/{id?}', 'FrontController@indicatorDetail');
+Route::get('/indicatorList', 'IndicatorController@indicatorList');
+Route::get('/indicatorDetail/{id?}', 'IndicatorController@indicatorDetail');
 
 //ABM INDICATORS
 Route::post('/indicatorSave/{id?}', 'IndicatorController@indicatorSave');

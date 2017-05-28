@@ -33,7 +33,7 @@ class FileManager
     }
 
     public function createAccountsList($data){
-        $this->domain->saveAccounts($data);
+        $this->domain->saveEntity($data);
     }
 
     public function getFileContent($file){

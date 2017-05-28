@@ -9,6 +9,8 @@ use App\Model\ORMConnections\EloquentConnection;
 
 class AccountsManager extends DomainManager
 {
+
+/*  Este código se movio a DomainManager
     protected static $obj = null;
 
     function __construct($orm){
@@ -25,9 +27,10 @@ class AccountsManager extends DomainManager
         }
         return AccountsManager::$obj;
     }
-
+*/
     //commit de prueba!!!
 
+  /* metodos de company pasados a companyManager
     public function getCompanies(){
         return $this->ormConnection->getAll(Empresa::class);
     }
@@ -35,17 +38,46 @@ class AccountsManager extends DomainManager
     public function getCompany($id){
         return $this->ormConnection->findById(Empresa::class,$id);
     }
-
-    public function getAvailablesAccounts(){
-        $accounts = $this->ormConnection->getAll(Cuenta::class);
-        $availablesAccounts = array();
-        foreach ($accounts as $account) {
-            array_push($availablesAccounts,$account->nombre);
-        }
-        return $availablesAccounts;
+   */
+   function __construct($orm){
+        $this->ormConnection=$orm;
     }
+  public static function getInstance(){
+   if(AccountsManager::$obj == null){
+       AccountsManager::$obj = new AccountsManager(new EloquentConnection());
+   }
+   return AccountsManager::$obj;
+  }
+   public function getEntity($id){
 
-    public function getAccounts(){
+   }
+   public function saveEntity($data){
+           foreach ($data as $d) {
+               $empresa = $this->getObject(Empresa::class, $d->company);
+               $cuenta = $this->getObject(Cuenta::class, $d->account);
+
+               $cuenta_empresa = new Cuenta_Empresa();
+               $cuenta_empresa->cuenta_id = $cuenta->id;
+               $cuenta_empresa->empresa_id = $empresa->id;
+               $cuenta_empresa->periodo = $d->period;
+               $cuenta_empresa->monto = $d->amount;
+               $this->ormConnection->saveEntity($cuenta_empresa);
+           }
+   }
+   public function deleteEntity($data)
+   {
+
+   }
+   public function getAllEntities(){
+       $accounts = $this->ormConnection->getAll(Cuenta::class);
+       $availablesAccounts = array();
+       foreach ($accounts as $account) {
+           array_push($availablesAccounts,$account->nombre);
+       }
+       return $availablesAccounts;
+     }
+
+  /*  public function getAllEntities(){
         $empresas = $this->ormConnection->getAll(Cuenta_Empresa::class);
         $accountList = array();
         foreach ($empresas as $empresa){
@@ -60,17 +92,12 @@ class AccountsManager extends DomainManager
         return $accountList;
     }
 
-    public function saveAccounts($data){
-            foreach ($data as $d) {
-                $empresa = $this->getObject(Empresa::class, $d->company);
-                $cuenta = $this->getObject(Cuenta::class, $d->account);
-
-                $cuenta_empresa = new Cuenta_Empresa();
-                $cuenta_empresa->cuenta_id = $cuenta->id;
-                $cuenta_empresa->empresa_id = $empresa->id;
-                $cuenta_empresa->periodo = $d->period;
-                $cuenta_empresa->monto = $d->amount;
-                $this->ormConnection->saveEntity($cuenta_empresa);
-            }
-    }
+    public function getAvailablesAccounts(){
+        $accounts = $this->ormConnection->getAll(Cuenta::class);
+        $availablesAccounts = array();
+        foreach ($accounts as $account) {
+            array_push($availablesAccounts,$account->nombre);
+        }
+        return $availablesAccounts;
+    }*/
 }

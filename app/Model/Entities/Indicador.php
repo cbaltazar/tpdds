@@ -8,7 +8,7 @@ use Mockery\Exception;
 
 class Indicador extends Model implements FormulaElement
 {
-    protected $table="indicadores";
+   protected $table="indicadores";
 
     public function evaluateFormula( $data ){
         $elementos = explode(",",$this->elementosDeFormula);
