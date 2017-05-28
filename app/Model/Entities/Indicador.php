@@ -8,7 +8,7 @@ use Mockery\Exception;
 
 class Indicador extends Model
 {
-    protected $table="indicadores";
+   protected $table="indicadores";
 
     public function getId(){
         return $this->id;

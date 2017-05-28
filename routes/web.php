@@ -23,8 +23,8 @@ Route::post('/store', 'AccountController@store');
 Route::get('/deleteCompany/{id}', 'CompanyController@deleteCompany');
 
 //INDICATORS
-Route::get('/indicatorList', 'FrontController@indicatorList');
-Route::get('/indicatorDetail/{id?}', 'FrontController@indicatorDetail');
+Route::get('/indicatorList', 'IndicatorController@indicatorList');
+Route::get('/indicatorDetail/{id?}', 'IndicatorController@indicatorDetail');
 
 //ABM INDICATORS
 Route::post('/indicatorSave/{id?}', 'IndicatorController@indicatorSave');
