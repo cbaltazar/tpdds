@@ -1,12 +1,15 @@
 <?php
 
+/*
+ * AccountsManager: se encarga del manejo de cuentas.
+ * Implementa el patron Singleton.
+ * */
 namespace App\Model\Domain\DomainManagers;
 
 use App\Model\Entities\Cuenta;
 use App\Model\Entities\Cuenta_Empresa;
 use App\Model\Entities\Empresa;
 use App\Model\ORMConnections\EloquentConnection;
-use Illuminate\Foundation\Console\EventMakeCommand;
 use App\Model\Entities\Factories\Cuenta_EmpresaFactory;
 
 class AccountsManager extends DomainManager
@@ -23,22 +26,6 @@ class AccountsManager extends DomainManager
             AccountsManager::$obj = new AccountsManager(new EloquentConnection());
         }
         return AccountsManager::$obj;
-    }
-
-    //Override
-    public function getAll(){
-        $empresas = $this->ormConnection->getAll(Cuenta_Empresa::class);
-        $accountList = array();
-        foreach ($empresas as $empresa){
-            $e = new \stdClass();
-            $e->nombreEmpresa = $this->ormConnection->findById(Empresa::class, $empresa->empresa_id)->nombre;
-            $e->nombreCuenta = $this->ormConnection->findById(Cuenta::class, $empresa->cuenta_id)->nombre;
-            $e->periodo = $empresa->getPeriodo();
-            $e->monto = $empresa->getMonto();
-
-            array_push($accountList, $e);
-        }
-        return $accountList;
     }
 
     public function saveElement($data, $id=null){

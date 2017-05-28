@@ -1,5 +1,8 @@
 <?php
 
+//php
+Route::get('/phpinfo', function(){ return phpinfo(); });
+
 //GENERAL
 Route::get('/lockscreen', 'FrontController@lockscreen');
 Route::get('/', function(){ return redirect('/companyList'); });

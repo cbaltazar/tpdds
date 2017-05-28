@@ -1,8 +1,9 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use App\Model\Entities\Factories\EmpresaFactory;
 
-class EmpresaFactoryTest extends PHPUnit_Framework_TestCase
+class EmpresaFactoryTest extends TestCase
 {
     private $object;
 

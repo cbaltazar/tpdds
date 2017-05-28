@@ -6,7 +6,6 @@ use App\Model\Domain\DomainManagers\AccountsManager;
 use App\Model\Domain\DomainManagers\AccountCompanyRelationManager;
 use App\Model\Domain\DomainManagers\IndicatorsManager;
 use App\Model\Domain\DomainManagers\CompaniesManager;
-use Illuminate\Http\Request;
 
 class FrontController extends Controller{
 
@@ -14,17 +13,26 @@ class FrontController extends Controller{
         return view('lockscreen');
     }
 
+    /*
+     * Consulta el manager de empresas, que se conecta con el ORM y se trae todos las empresas
+     * de la base, para mostrarlas en el listado.
+     *
+     */
     public function companyList(){
-        /*Consulta el manager de empresas, que se conecta con el ORM y se trae todos las empresas de la base, para mostrarlas en el listado.*/
         $domainManager = CompaniesManager::getInstance();
         return view('company_list')->with("empresas", $domainManager->getAll());
     }
 
+    /*
+     * Consulta al manager de empresas, el cual devuelve la empresa seleccionada
+     *
+     */
     public function companyDetail($company=null){
         $domainManager = CompaniesManager::getInstance();
         $company = $domainManager->getOne($company);
 
         $domainManager = AccountCompanyRelationManager::getInstance();
+        /*Consulta al AccountCompanyRelationManager, los periodos existentes en la base de datos*/
         $periods = $domainManager->getColumn("periodo");
 
         return view('company_detail')->with("companyName", $company->nombre)
@@ -32,29 +40,24 @@ class FrontController extends Controller{
                                           ->with("indicatorsPeriods", $periods);
     }
 
-    public function accountDetail($company=null){
-        /*Consulta el manager de empresas para traerse los detalles de la cuenta seleccionada.*/
-        $domainManager = CompaniesManager::getInstance();
-        $company = $domainManager->getOne($company);
-
-        return view('account_detail')->with("companyName", $company->nombre)->with("companyAccounts",$company->cuentas);
-    }
-
-    public function viewAccounts(Request $request){
-        /*Se comunica con el manager de Cuenta Empresa, para obtener las empresas con sus respectivas cuentas, pero ordenado por cuentas.*/
-        $domainManager = AccountCompanyRelationManager::getInstance();
-        return view('accounts_view')->with("accounts", $domainManager->getAll());
-    }
-
 //INDICATORS
+
+    /*
+     * Utiliza el manager de indicadores para obtener la lista de los indicadores disponibles.
+     *
+     */
     public function indicatorList(){
-        /*Utiliza el manager de indicadores para obtener la lista de los indicadores disponibles.*/
         $domainManager = IndicatorsManager::getInstance();
         return view('indicator_list')->with("indicators", $domainManager->getAll());
     }
 
+    /*
+     * Utiliza el manager de indicadores para obtener los detalles de un indicador dado.
+     * Tambien utiliza el manager de Cuentas, para obter las cuentas disponibles y asi validar
+     * la carga de formulas de indicadores
+     *
+     */
     public function indicatorDetail($id=null){
-        /*-*/
         $accounts = AccountsManager::getInstance()->getAvailablesElements();
         $indicators = IndicatorsManager::getInstance()->getAvailablesElements();
 

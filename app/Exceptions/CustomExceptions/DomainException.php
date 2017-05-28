@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Exceptions\CustomExceptions;
+use Exception;
 
 class DomainException extends Exception
 {

@@ -2,21 +2,19 @@
 
 namespace App\Model\Utilities;
 
-use App\Model\Domain\DomainManagers\AccountsManager;
-
 class FileManager
 {
     private $filePath = null;
     private $response = null;
-    private $domain = null;
+    private $domainManager = null;
 
-    function __construct()
+    function __construct($manager)
     {
-        $this->domain = AccountsManager::getInstance();
+        $this->domainManager = $manager;
     }
 
     public function getDomain(){
-        return $this->domain;
+        return $this->domainManager;
     }
 
     public function getProcessedFile(){
@@ -33,7 +31,7 @@ class FileManager
     }
 
     public function createAccountsList($data){
-        $this->domain->save($data, null);
+        $this->domainManager->save($data, null);
     }
 
     public function getFileContent($file){

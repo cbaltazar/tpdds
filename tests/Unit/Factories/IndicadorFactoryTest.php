@@ -1,8 +1,9 @@
 <?php
 
 use App\Model\Entities\Factories\IndicadorFactory;
+use PHPUnit\Framework\TestCase;
 
-class IndicadorFactoryTest extends PHPUnit_Framework_TestCase
+class IndicadorFactoryTest extends TestCase
 {
     private $object;
 
