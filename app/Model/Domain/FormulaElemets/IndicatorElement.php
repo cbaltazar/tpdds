@@ -18,7 +18,7 @@ class IndicatorElement extends FormulaElement
     }
 
     public function evaluateFormula( $data ){
-        if($this->getFormulaElementsNames()){
+        if($this->getFormulaElementsIds()){
             $this->replaceFormulaElementValue($data);
         }
         return round(eval('return '.$this->getFormula().';'), 2);
