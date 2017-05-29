@@ -57,7 +57,6 @@
                     <div class="ibox-tools">
                         <label>Periodo:</label>
                           <select id="indicatorPeriod">
-                          <!--LEVANTAR LOS AÑOS DISPONIBLES-->
                             @foreach($indicatorsPeriods as $indicatorPeriod)
                               <option value={{$indicatorPeriod->periodo}}>{{$indicatorPeriod->periodo}}</option>
                             @endforeach
@@ -76,7 +75,16 @@
                     <th>Valor</th>
                 </tr>
                 </thead>
-                <tbody id="indicator-values-conteiner"></tbody>
+                <tbody id="indicator-values-container">
+                  <tr>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </tbody>
                 <tfoot>
                 </tfoot>
                 </table>
@@ -94,30 +102,6 @@
 <script src="{{asset('js/plugins/dataTables/dataTables.tableTools.min.js')}}"></script>
 <script>
 
-function calculateIndicator(){
-    $('#indicator-values-conteiner').empty();
-    var id = window.location.href.split("/")[4];
-    var data = {};
-    data.company = id;
-    data.period = $('#indicatorPeriod').val();
-
-    $.ajax({
-        url: '/api/indicatorEvaluate',
-        type: 'post',
-        dataType: 'json',
-        data: data,
-        success: function ( obj ) {
-            obj.forEach(function (value) {
-                $('#indicator-values-conteiner').append('<tr><td>'+
-                    value.indicator +
-                    '</td><td>'+
-                    value.value +
-                    '</td></tr>');
-            })
-        }
-    });
-}
-
 $(document).ready(function() {
     $('.dataTable').dataTable({
         responsive: true,
@@ -131,6 +115,30 @@ $(document).ready(function() {
         calculateIndicator();
     });
 });
+
+function calculateIndicator(){
+    $('#indicator-values-container').empty();
+    var id = window.location.href.split("/")[4];
+    var data = {};
+    data.company = id;
+    data.period = $('#indicatorPeriod').val();
+
+    $.ajax({
+        url: '/api/indicatorEvaluate',
+        type: 'post',
+        dataType: 'json',
+        data: data,
+        success: function ( obj ) {
+            obj.forEach(function (value) {
+                $('#indicator-values-container').append('<tr><td>'+
+                    value.indicator +
+                    '</td><td>'+
+                    value.value +
+                    '</td></tr>');
+            })
+        }
+    });
+}
 
 </script>
 @endsection

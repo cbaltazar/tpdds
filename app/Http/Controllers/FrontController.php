@@ -36,8 +36,8 @@ class FrontController extends Controller{
         $periods = $domainManager->getColumn("periodo");
 
         return view('company_detail')->with("companyName", $company->nombre)
-                                          ->with("companyAccounts",$company->cuentas)
-                                          ->with("indicatorsPeriods", $periods);
+                                     ->with("companyAccounts",$company->cuentas)
+                                     ->with("indicatorsPeriods", $periods);
     }
 
 //INDICATORS

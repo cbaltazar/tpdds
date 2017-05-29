@@ -60,6 +60,7 @@ class IndicatorsManager extends DomainManager
       en esa clase
     */
     function deleteRelations($id){}
+
     public function deleteMessage(){}
 
     /*indicatorEvaluate: evalua todos los indicadores, para una empresa y un periodo dados.

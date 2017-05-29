@@ -1,5 +1,5 @@
 @extends ('master')
-@section ('title','Editar Indicador')
+@section ('title','Ver Indicador')
 @section ('head')
     <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
 @endsection

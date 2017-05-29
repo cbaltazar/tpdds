@@ -78,11 +78,8 @@
                                             <small>Creada el {{ $empresa->created_at }}</small>
                                         </td>
                                         <td class="project-actions">
-                                            <a href="{{ url('companyDetail/'.$empresa->id) }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
+                                            <a href="{{ url('companyDetail/'.$empresa->id) }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
                                             <a href="" id="{{ $empresa->id }}" data-toggle="modal" data-target="#confirmModal" class="btn btn-white btn-sm btn-delete"><i class="fa fa-trash"></i> Borrar </a>
-
-
-                                            <!--a href="{{ url('deleteCompany/'.$empresa->id) }}" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a-->
                                         </td>
                                     </tr>
                                 @endforeach
