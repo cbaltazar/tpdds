@@ -39,18 +39,11 @@ class DomainManagerTest extends TestCase
         $this->assertEquals('App\Model\Domain\FormulaElements\AccountElement', $accountElement);
     }
 
-/*
+    public function testGetFactory(){
 
-        public function getObjectFormulaElement( $entity )
-        {
-            switch ( get_class($entity) ){
-                case 'App\Model\Entities\Cuenta':
-                    return new AccountElement($entity, AccountCompanyRelationManager::getInstance());
-                    break;
-                default:
-                    return new IndicatorElement($entity, IndicatorsManager::getInstance());
-            }
-        }
+    }
+
+/*
 
         public function getFactory($type){
             $namespace = explode("\\", $type, 3);

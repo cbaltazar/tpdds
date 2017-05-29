@@ -13,7 +13,6 @@ use App\Model\ORMConnections\EloquentConnection;
 class IndicatorsManager extends DomainManager
 {
     protected static $obj = null;
-    protected $model;
 
     function __construct($orm){
         $this->ormConnection=$orm;
