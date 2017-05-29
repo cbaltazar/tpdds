@@ -13,6 +13,7 @@ class IndicatorElement extends FormulaElement
     {
         $this->model = $indicator;
         $this->domainManager = $dm;
+        $this->formula = $this->model->getFormula();
     }
 
     public function evaluateFormula( $data ){

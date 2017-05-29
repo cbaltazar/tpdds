@@ -15,6 +15,7 @@ abstract class FormulaElement
 {
     protected $model;
     protected $domainManager;
+    protected $formula;
 
     public abstract function getValue( $data );
 
@@ -27,11 +28,11 @@ abstract class FormulaElement
     }
 
     public function getFormula(){
-        return $this->model->getFormula();
+        return $this->formula;
     }
 
     public function setFormula($formula){
-        return $this->model->formula = $formula;
+        $this->formula = $formula;
     }
 
     public function getFormulaElementsIds(){

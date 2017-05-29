@@ -8,6 +8,9 @@
 
 namespace App\Model\Domain\DomainManagers;
 
+use App\Model\Domain\FormulaElements\AccountElement;
+use App\Model\Domain\FormulaElements\IndicatorElement;
+
 abstract class DomainManager
 {
     /*

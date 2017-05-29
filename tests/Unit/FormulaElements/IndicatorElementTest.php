@@ -12,14 +12,15 @@ class IndicatorElementTest extends TestCase
 
     protected function setUp(){
         $this->objectModel = Mockery::mock('App\Model\Entities\Cuenta');
+        $this->objectModel->shouldReceive('getFormula')->once()->andReturn('cuenta1*2');
 
         $this->objectAccountElement = Mockery::mock('App\Model\Domain\FormulaElements\AccountElement');
         $this->objectAccountElement->shouldReceive('getValue')->once()->andReturn("555");
         $this->objectAccountElement->shouldReceive('getName')->once()->andReturn("cuenta1");
-        $this->objectAccountElement->shouldReceive('getId')->once()->andReturn("1");
 
-        $this->model = Mockery::mock('App\Model\Entities\Indicadores');
+        $this->model = Mockery::mock('App\Model\Entities\Indicador');
         $this->model->shouldReceive('getElementosDeFormula')->once()->andReturn("1");
+        $this->model->shouldReceive('getFormula')->once()->andReturn("cuenta1*2");
 
         $this->domainManager = Mockery::mock('App\Domain\DomainManagers\IndicatorManager');
         $this->domainManager->shouldReceive('getFromulaElement')->once()->andReturn($this->objectModel);
@@ -32,6 +33,6 @@ class IndicatorElementTest extends TestCase
         $data['period'] = '2017';
 
         $indicatorElement = new IndicatorElement($this->model, $this->domainManager);
-        $indicatorElement->evaluateFormula($data);
+        $this->assertEquals(1110, $indicatorElement->evaluateFormula($data));
     }
 }
