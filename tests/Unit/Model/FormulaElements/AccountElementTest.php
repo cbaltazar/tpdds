@@ -11,10 +11,6 @@ class AccountElementTest extends TestCase
 
     protected function setUp()
     {
-        /*
-         * Que necesita AccountElement?
-         * un modelo Cuenta y un AccountCompanyManager, que a su vez necesita un Cuenta_Empresa.
-         * */
         $this->accountCompanyMock = Mockery::mock('App\Model\Entities\Cuenta_Empresa');
         $this->accountCompanyMock->shouldReceive('getMonto')->once()->andReturn(123);
 
