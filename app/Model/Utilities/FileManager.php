@@ -4,7 +4,6 @@ namespace App\Model\Utilities;
 
 class FileManager
 {
-    private $filePath = null;
     private $response = null;
     private $domainManager = null;
 

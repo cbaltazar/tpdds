@@ -1,18 +1,17 @@
 <?php
 
-namespace Tests\Unit;
-
 use PHPUnit\Framework\TestCase;
-
 use App\Model\Utilities\FileManager;
 
 class FileManagerTest extends TestCase
 {
     private $object;
+    private $dm;
 
     protected function setUp()
     {
-        $this->object = new FileManager();
+        $this->dm = Mockery::mock('App\Model\Domain\AccountManager');
+        $this->object = new FileManager($this->dm);
     }
 
     private function getObject(){
@@ -32,7 +31,7 @@ class FileManagerTest extends TestCase
     {
         return [
             [
-                __DIR__ . DIRECTORY_SEPARATOR,
+                __DIR__ . DIRECTORY_SEPARATOR.'cuentas.json',
                 "[{\"company\":\"Facebook Inc.\",\"period\":2016,\"account\":\"Discontinued Operations(B)\",\"amount\":0}]"]
         ];
     }
