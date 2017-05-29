@@ -31,6 +31,6 @@ class AccountCompanyRelationManager extends DomainManager
 
     function saveElement($data, $id){}
 
-    function saveMessage(){}
+    function saveMessage($saved){}
 
 }

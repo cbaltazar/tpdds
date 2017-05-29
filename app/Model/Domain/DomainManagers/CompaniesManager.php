@@ -49,5 +49,5 @@ class CompaniesManager extends DomainManager
 
     public function saveElement($data, $id){}
 
-    public function saveMessage(){}
+    public function saveMessage($saved){}
 }

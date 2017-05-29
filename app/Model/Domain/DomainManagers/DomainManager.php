@@ -26,7 +26,7 @@ abstract class DomainManager
      * */
     abstract function deleteMessage();
     abstract function saveElement($data, $id);
-    abstract function saveMessage();
+    abstract function saveMessage($saved);
     abstract function deleteRelations($id);
 
     /*
@@ -91,8 +91,7 @@ abstract class DomainManager
      Utiliza el metodo saveElement, que es implementado en cada clase hija.
     */
     public function save($data, $id){
-        $this->saveElement($data, $id);
-        return $this->saveMessage();
+        return $this->saveMessage( $this->saveElement($data, $id) );
     }
 
     /* delete: borra el elemento cuyo id es pasado como parametro.

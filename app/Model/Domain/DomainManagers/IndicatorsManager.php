@@ -50,7 +50,7 @@ class IndicatorsManager extends DomainManager
 
     /* Devuelve el mensaje de guardado de indicadores.
      * */
-    public function saveMessage()
+    public function saveMessage($saved)
     {
         return "Indicador guardado con exito!";
     }
@@ -69,22 +69,26 @@ class IndicatorsManager extends DomainManager
         $results = array();
 
         foreach ($indicators as $indicator){
-            $result = new \stdClass();
-            $formulaElementFactory = $this->getFactory(IndicatorElement::class);
-            $indicatorElement = $formulaElementFactory->createObject($indicator, IndicatorsManager::getInstance());
-            $empresa = $this->ormConnection->findById(Empresa::class, $request->input('company'));
-            $result->company = $empresa->getNombre();
-            $result->indicator = $indicator->getNombre();
-            $result->period = $request->input('period');
-            if($indicator->activo == 1){
-                $result->value = $indicatorElement->evaluateFormula($request->input());
-            }else{
-                $result->value = "Inactivo";
-            }
-
-            array_push($results, $result);
+            array_push($results, $this->prepareIndicator($indicator, $request));
         }
 
         return json_encode($results);
+    }
+
+    public function prepareIndicator($indicator, $request){
+        $result = new \stdClass();
+        $formulaElementFactory = $this->getFactory(IndicatorElement::class);
+        $indicatorElement = $formulaElementFactory->createObject($indicator, IndicatorsManager::getInstance());
+        $empresa = $this->ormConnection->findById(Empresa::class, $request->input('company'));
+        $result->company = $empresa->getNombre();
+        $result->indicator = $indicator->getNombre();
+        $result->period = $request->input('period');
+        if($indicator->activo == 1){
+            $result->value = $indicatorElement->evaluateFormula($request->input());
+        }else{
+            $result->value = "Inactivo";
+        }
+
+        return $result;
     }
 }

@@ -40,17 +40,7 @@ class DomainManagerTest extends TestCase
     }
 
     public function testGetFactory(){
-
+        $this->assertEquals('App\Model\Factories\Entities\EmpresaFactory', get_class($this->domainManager->getFactory( 'App\Model\Entities\Empresa' )));
     }
-
-/*
-
-        public function getFactory($type){
-            $namespace = explode("\\", $type, 3);
-            $namespace[count($namespace)-1] = 'Factories\\'.$namespace[count($namespace)-1]."Factory";
-            $factory = implode('\\', $namespace);
-
-            return new $factory();
-        }*/
 
 }

@@ -46,13 +46,17 @@ class AccountsManager extends DomainManager
                 $cuenta_empresa->monto = $d->amount;
                 $this->ormConnection->saveEntity($cuenta_empresa);
             }
+
+            return 1;
     }
 
     /* Devuelve el mensaje de guardado de cuentas.
      * */
-    public function saveMessage()
-    {
-        return "Cuentas actualizadas con exito!";
+    public function saveMessage( $saved )
+    {   $message = "Error al actualizar las cuentas.";
+        if($saved == 1)
+            $message = "Cuentas actualizadas con exito!";
+        return $message;
     }
 
     /*se agrega debido a la herencia, pero no se implementa ya que este manager no lo necesita*/

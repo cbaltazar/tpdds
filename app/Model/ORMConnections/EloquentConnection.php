@@ -32,12 +32,12 @@ class EloquentConnection implements IORMConnection
     }
 
     public function saveEntity($entity){
-        $entity->save();
+        return $entity->save();
     }
 
     public function deleteEntity($model, $id){
         $entity = $model::find($id);
-        $entity->delete();
+        return $entity->delete();
     }
 
     public function findFormulaElementEntity($id){

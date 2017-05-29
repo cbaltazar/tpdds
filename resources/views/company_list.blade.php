@@ -73,7 +73,7 @@
                                             <span class="label label-primary">activo</span>
                                         </td>
                                         <td class="project-title">
-                                            <a href="{{ url('companyDetail/'.$empresa->nombre) }}">{{ $empresa->nombre }}</a>
+                                            <a href="{{ url('companyDetail/'.$empresa->id) }}">{{ $empresa->nombre }}</a>
                                             <br/>
                                             <small>Creada el {{ $empresa->created_at }}</small>
                                         </td>
