@@ -10,3 +10,4 @@ Homestead.yaml
 .env
 /config/database.php
 composer.json
+/tests/coverage
