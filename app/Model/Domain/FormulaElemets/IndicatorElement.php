@@ -7,8 +7,6 @@
 
 namespace App\Model\Domain\FormulaElements;
 
-use App\Model\Domain\DomainManagers\IndicatorsManager;
-
 class IndicatorElement extends FormulaElement
 {
     function __construct($indicator, $dm)
@@ -30,8 +28,10 @@ class IndicatorElement extends FormulaElement
 
     private function replaceFormulaElementValue($data){
         $elementos = explode(",",$this->getFormulaElementsIds());
+
         foreach ($elementos as $elemento){
-            $elem = FormulaElement::getElement( IndicatorsManager::getInstance()->getFromulaElement($elemento) );
+            $entityFormulaElement = $this->domainManager->getFromulaElement($elemento);
+            $elem = $this->domainManager->getObjectFormulaElement($entityFormulaElement);
             if($elem->getValue($data) >= 0){
                 $this->setFormula(str_replace($elem->getName(), $elem->getValue($data), $this->getFormula()));
             }else{

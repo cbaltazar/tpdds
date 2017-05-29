@@ -1,6 +1,6 @@
 <?php
 
-use App\Model\Entities\Factories\IndicadorFactory;
+use App\Model\Factories\Entities\IndicadorFactory;
 use PHPUnit\Framework\TestCase;
 
 class IndicadorFactoryTest extends TestCase

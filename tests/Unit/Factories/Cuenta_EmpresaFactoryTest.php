@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use App\Model\Entities\Factories\Cuenta_EmpresaFactory;
+use App\Model\Factories\Entities\Cuenta_EmpresaFactory;
 
 class Cuenta_EmpresaFactoryTest extends TestCase
 {

@@ -23,11 +23,11 @@ abstract class FormulaElement
     }
 
     public function getName(){
-        return $this->model->nombre;
+        return $this->model->getNombre();
     }
 
     public function getFormula(){
-        return $this->model->formula;
+        return $this->model->getFormula();
     }
 
     public function setFormula($formula){
@@ -35,17 +35,6 @@ abstract class FormulaElement
     }
 
     public function getFormulaElementsIds(){
-        return $this->model->elementosDeFormula;
-    }
-
-    public static function getElement( $entity )
-    {
-        switch ( get_class($entity) ){
-            case 'App\Model\Entities\Cuenta':
-                return new AccountElement($entity, AccountCompanyRelationManager::getInstance());
-                break;
-            default:
-                return new IndicatorElement($entity, IndicatorsManager::getInstance());
-        }
+        return $this->model->getElementosDeFormula();
     }
 }

@@ -143,6 +143,20 @@ abstract class DomainManager
         return $this->ormConnection->findFormulaElementEntity($id);
     }
 
+    /*getObjectFormulaElement: devuelve un objeto elemento de formula, para obtener su valor y reemplazarlo
+    en la expresion.
+     * */
+    public function getObjectFormulaElement( $entity )
+    {
+        switch ( get_class($entity) ){
+            case 'App\Model\Entities\Cuenta':
+                return new AccountElement($entity, AccountCompanyRelationManager::getInstance());
+                break;
+            default:
+                return new IndicatorElement($entity, IndicatorsManager::getInstance());
+        }
+    }
+
     /* getFactory: devuelve la fabrica que crea el objeto del modelo necesario.
      * */
     public function getFactory($type){

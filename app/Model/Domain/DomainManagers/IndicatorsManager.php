@@ -74,8 +74,8 @@ class IndicatorsManager extends DomainManager
             $formulaElementFactory = $this->getFactory(IndicatorElement::class);
             $indicatorElement = $formulaElementFactory->createObject($indicator, IndicatorsManager::getInstance());
             $empresa = $this->ormConnection->findById(Empresa::class, $request->input('company'));
-            $result->company = $empresa->nombre;
-            $result->indicator = $indicator->nombre;
+            $result->company = $empresa->getNombre();
+            $result->indicator = $indicator->getNombre();
             $result->period = $request->input('period');
             if($indicator->activo == 1){
                 $result->value = $indicatorElement->evaluateFormula($request->input());

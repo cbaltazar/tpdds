@@ -17,4 +17,12 @@ class Indicador extends Model
     public function getNombre(){
         return $this->nombre;
     }
+
+    public function getElementosDeFormula(){
+        return $this->elementosDeFormula;
+    }
+
+    public function getFormula(){
+        return $this->formula;
+    }
 }
