@@ -140,7 +140,7 @@ abstract class DomainManager
         return $object;
     }
 
-    /* getFormulaElement: Devuelve el elemento de dominio, que es parte de la formula de un indicador.
+    /* getFormulaElement: Devuelve el elemento de dominio  (entidad), que es parte de la formula de un indicador.
      * */
     public function getFromulaElement($id){
         return $this->ormConnection->findFormulaElementEntity($id);
