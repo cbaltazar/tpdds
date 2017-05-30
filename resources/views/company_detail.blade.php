@@ -108,6 +108,13 @@
 <script>
 
 $(document).ready(function() {
+    calculateIndicator();
+    $('#indicatorPeriod').change(function(){
+        calculateIndicator();
+    });
+});
+
+function prepareDataTable(){
     $('.dataTable').dataTable({
         responsive: true,
         "dom": 'T<"clear">lfrtip',
@@ -115,11 +122,7 @@ $(document).ready(function() {
             "sSwfPath": "{{asset('js/plugins/dataTables/swf/copy_csv_xls_pdf.swf')}}"
         }
     });
-    calculateIndicator();
-    $('#indicatorPeriod').change(function(){
-        calculateIndicator();
-    });
-});
+}
 
 function calculateIndicator(){
     $('#indicator-values-container').empty();
@@ -143,6 +146,7 @@ function calculateIndicator(){
                     i++;
                 });
             }
+            prepareDataTable();
         }
     });
 }
