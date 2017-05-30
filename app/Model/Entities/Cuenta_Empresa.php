@@ -23,4 +23,23 @@ class Cuenta_Empresa extends Model
     public function getPeriodo(){
         return $this->periodo;
     }
+
+    public function setCuentaId($id){
+        $this->cuenta_id = $id;
+    }
+
+    public function setEmpresaId($id){
+        $this->empresa_id = $id;
+    }
+
+    public function setMonto($monto){
+        $this->monto = $monto;
+    }
+
+    public function setPeriodo($periodo){
+        $this->periodo = $periodo;
+    }
+
+
+
 }

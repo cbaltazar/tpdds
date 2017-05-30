@@ -36,19 +36,24 @@ class AccountsManager extends DomainManager
      * */
     public function saveElement($data, $id=null){
             foreach ($data as $d) {
-                $empresa = $this->getObject(Empresa::class, $d->company);
-                $cuenta = $this->getObject(Cuenta::class, $d->account);
-                $entityFactory = $this->getFactory(Cuenta_Empresa::class);
-                $cuenta_empresa = $entityFactory->createObject();
-                $cuenta_empresa->cuenta_id = $cuenta->getId();
-                $cuenta_empresa->empresa_id = $empresa->getId();
-                $cuenta_empresa->periodo = $d->period;
-                $cuenta_empresa->monto = $d->amount;
-                $saved = $this->ormConnection->saveEntity($cuenta_empresa);
-                echo $saved."<br>";
+                $this->saveAccountCompanyElement($d);
             }
-
             return 1;
+    }
+
+    public function saveAccountCompanyElement($d){
+        $empresa = $this->getObject(Empresa::class, $d->company);
+        $cuenta = $this->getObject(Cuenta::class, $d->account);
+        $entityFactory = $this->getFactory(Cuenta_Empresa::class);
+        $cuenta_empresa = $entityFactory->createObject();
+        $cuenta_empresa->setCuentaId($cuenta->getId());
+        $cuenta_empresa->setEmpresaId($empresa->getId());
+        $cuenta_empresa->setPeriodo($d->period);
+        $cuenta_empresa->setMonto($d->amount);
+
+        $saved = $this->ormConnection->saveEntity($cuenta_empresa);
+
+        return $cuenta_empresa;
     }
 
     /* Devuelve el mensaje de guardado de cuentas.
