@@ -28,16 +28,22 @@ class FrontController extends Controller{
      *
      */
     public function companyDetail($company=null){
+        /*Obtengo los detalles de la compania*/
         $domainManager = CompaniesManager::getInstance();
         $company = $domainManager->getOne($company);
 
-        $domainManager = AccountCompanyRelationManager::getInstance();
         /*Consulta al AccountCompanyRelationManager, los periodos existentes en la base de datos*/
+        $domainManager = AccountCompanyRelationManager::getInstance();
         $periods = $domainManager->getColumn("periodo");
+
+        /*Obtengo la cantidad de indicadores disponibles, para armar la tabla.*/
+        $domainManager = IndicatorsManager::getInstance();
+        $indicatorsCount = $domainManager->getQuantity("activo",1);
 
         return view('company_detail')->with("companyName", $company->nombre)
                                      ->with("companyAccounts",$company->cuentas)
-                                     ->with("indicatorsPeriods", $periods);
+                                     ->with("indicatorsPeriods", $periods)
+                                     ->with("indicatorsCount", $indicatorsCount);
     }
 
 //INDICATORS

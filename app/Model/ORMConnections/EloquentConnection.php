@@ -31,6 +31,10 @@ class EloquentConnection implements IORMConnection
        return $model::distinct()->get([$column]);
     }
 
+    public function countWhere($model, $columnName, $value){
+        return $model::where($columnName, $value)->count();
+    }
+
     public function saveEntity($entity){
         return $entity->save();
     }

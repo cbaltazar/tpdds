@@ -44,7 +44,8 @@ class AccountsManager extends DomainManager
                 $cuenta_empresa->empresa_id = $empresa->getId();
                 $cuenta_empresa->periodo = $d->period;
                 $cuenta_empresa->monto = $d->amount;
-                $this->ormConnection->saveEntity($cuenta_empresa);
+                $saved = $this->ormConnection->saveEntity($cuenta_empresa);
+                echo $saved."<br>";
             }
 
             return 1;

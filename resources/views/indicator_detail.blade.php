@@ -17,12 +17,13 @@
                             <input type="hidden" name="formulaElements" id="formulaElements" value="">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="form-group"><label class="col-sm-2 control-label">Nombre *</label>
-                                <div class="col-sm-10"><input @if( $indicatorObject->predefinido == 1) disabled @endif type="text" name="name" id="name" class="form-control"
+                                <div class="col-sm-10"><input
+                                            @if( $indicatorObject != null and $indicatorObject->predefinido == 1) disabled @endif type="text" name="name" id="name" class="form-control"
                                                               placeholder="Nombre del indicador" value="{{$indicatorObject->nombre or " "}}"></div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group"><label class="col-sm-2 control-label">Descripción</label>
-                                <div class="col-sm-10"><input @if( $indicatorObject->predefinido == 1) disabled @endif type="text" name="description" id="description"
+                                <div class="col-sm-10"><input @if( $indicatorObject != null and $indicatorObject->predefinido == 1) disabled @endif type="text" name="description" id="description"
                                                               class="form-control"
                                                               placeholder="Descripción del indicador"
                                                               value="{{$indicatorObject->descripcion or " "}}" > <span
@@ -31,7 +32,7 @@
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group"><label class="col-sm-2 control-label">Estado</label>
-                                <div class="checkbox i-checks"><label> <input @if( $indicatorObject->predefinido == 1) disabled @endif type="checkbox" name="status[]"
+                                <div class="checkbox i-checks"><label> <input @if( $indicatorObject != null and $indicatorObject->predefinido == 1) disabled @endif type="checkbox" name="status[]"
                                                                               id="status" value=""
                                         @if($indicatorObject != null)
                                             @if($indicatorObject->activo == 1)
@@ -44,7 +45,7 @@
                             <div class="form-group" id="formula-group"><label class="col-sm-2 control-label">Fórmula
                                     *</label>
                                 <div class="col-sm-10">
-                                    <input @if( $indicatorObject->predefinido == 1) disabled @endif name="formula" id="formula" type="text" class="form-control"
+                                    <input @if( $indicatorObject != null and $indicatorObject->predefinido == 1) disabled @endif name="formula" id="formula" type="text" class="form-control"
                                            placeholder="Fórmula del indicador"
                                            value="{{$indicatorObject->formula or " "}}" >
                                     <span class="help-block m-b-none" id="message"></span>
@@ -55,7 +56,7 @@
                             <div class="form-group">
                                 <div class="col-sm-4 col-sm-offset-5">
                                     <input type="button" class="btn btn-white" onclick="location.href='{{URL::previous()}}';" value="Cancelar"></input>
-                                    <button class="btn btn-primary" id="saveIndicator" @if( $indicatorObject->predefinido == 1) disabled @endif >Guardar</button>
+                                    <button class="btn btn-primary" id="saveIndicator" @if( $indicatorObject != null and $indicatorObject->predefinido == 1) disabled @endif >Guardar</button>
                                 </div>
                             </div>
                         </form>

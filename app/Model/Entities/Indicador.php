@@ -14,6 +14,10 @@ class Indicador extends Model
         return $this->id;
     }
 
+    public function isActive(){
+        return $this->activo;
+    }
+
     public function getNombre(){
         return $this->nombre;
     }

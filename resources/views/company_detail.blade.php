@@ -75,15 +75,20 @@
                     <th>Valor</th>
                 </tr>
                 </thead>
-                <tbody id="indicator-values-container">
-                  <tr>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                  </tr>
+                <tbody>
+                  @if($indicatorsCount > 0)
+                      @for($i=0; $i<$indicatorsCount; $i++)
+                          <tr>
+                            <td id="name{{$i}}"></td>
+                            <td id="value{{$i}}"></td>
+                          </tr>
+                      @endfor
+                  @else
+                      <tr>
+                          <td>No hay indicadores para calcular.</td>
+                          <td></td>
+                      </tr>
+                  @endif
                 </tbody>
                 <tfoot>
                 </tfoot>
@@ -129,13 +134,15 @@ function calculateIndicator(){
         dataType: 'json',
         data: data,
         success: function ( obj ) {
-            obj.forEach(function (value) {
-                $('#indicator-values-container').append('<tr><td>'+
-                    value.indicator +
-                    '</td><td>'+
-                    value.value +
-                    '</td></tr>');
-            })
+            if( obj.length > 0){
+                var i = 0;
+                obj.forEach(function (value) {
+                    $('#name'+i).text(value.indicator);
+                    $('#value'+i).text(value.value);
+                    console.log($('#name'+i).text());
+                    i++;
+                });
+            }
         }
     });
 }

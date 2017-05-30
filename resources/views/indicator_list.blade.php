@@ -57,7 +57,7 @@
                                                 </td>
                                                 <td class="project-actions">
                                                     <a href="{{ url('indicatorDetail/'.$indicator->id) }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
-                                                    <a href="#" id="{{$indicator->id}}" data-toggle="modal" data-target="#confirmModal" class="btn btn-white btn-sm btn-delete"><i class="fa fa-trash"></i> Borrar </a>
+                                                    <a href="#" id="{{$indicator->id}}" data-toggle="modal" data-target="#confirmModal" class="btn btn-white btn-sm btn-delete @if( $indicator->predefinido == 1)disabled @endif"><i class="fa fa-trash"></i> Borrar </a>
                                                 </td>
                                             </tr>
                                         @endforeach

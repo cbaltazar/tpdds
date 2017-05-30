@@ -69,7 +69,9 @@ class IndicatorsManager extends DomainManager
         $results = array();
 
         foreach ($indicators as $indicator){
-            array_push($results, $this->prepareIndicator($indicator, $request));
+            if($indicator->isActive()){
+                array_push($results, $this->prepareIndicator($indicator, $request));
+            }
         }
 
         return json_encode($results);
@@ -83,7 +85,7 @@ class IndicatorsManager extends DomainManager
         $result->company = $empresa->getNombre();
         $result->indicator = $indicator->getNombre();
         $result->period = $request->input('period');
-        if($indicator->activo == 1){
+        if($indicator->isActive() == 1){
             $result->value = $indicatorElement->evaluateFormula($request->input());
         }else{
             $result->value = "Inactivo";

@@ -83,6 +83,12 @@ abstract class DomainManager
         return $this->ormConnection->getDistinct($this->model, $column);
     }
 
+    /* getCount: devuelve la cantidad de elementos de la entidad en cuestion
+     * */
+    public function getQuantity($column, $value){
+        return $this->ormConnection->countWhere($this->model,$column, $value);
+    }
+
     /*
      * Metodos para guardar y borrar objetos de la base de datos.
     /*--------------------------------------------------------------------
