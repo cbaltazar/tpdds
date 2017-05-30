@@ -1,35 +1,40 @@
 <?php
-/*
- * IndicatorManager: se encarga de realizar las acciones relacionadas con los indicadores.
- * Implementa el patron Singleton.
- * */
-namespace App\Model\Domain\DomainManagers;
 
-use App\Model\Domain\FormulaElements\IndicatorElement;
-use App\Model\Entities\Indicador;
-use App\Model\Entities\Empresa;
-use App\Model\ORMConnections\EloquentConnection;
+use PHPUnit\Framework\TestCase;
+use App\Model\Domain\DomainManagers\IndicatorsManager;
+use \Illuminate\Http\Request;
 
-class IndicatorsManager extends DomainManager
+class IndicatorsManagerTest extends TestCase
 {
-    protected static $obj = null;
+    protected $indicatorManager = null;
+    protected $request = null;
 
-    function __construct($orm){
-        $this->ormConnection=$orm;
-        $this->model = Indicador::class;
+    protected function setUp(){
+        $this->request = Mockery::mock('\Illuminate\Http\Request')->makePartial();
+        $this->request->shouldReceive('input')->times(3)->andReturn('Indic1', 'Descripcion', 'Cuenta1+555');
+
+        $indicatorEntity = Mockery::mock('App\Model\Entities\Indicador')->makePartial();
+
+        $factory = Mockery::mock('App\Model\Factories\Entities\IndicadorFactoy')->makePartial();
+        $factory->shouldReceive('createObject')->once()->andReturn($indicatorEntity);
+
+        $this->orm = Mockery::mock('App\Model\ORMConnections\EloquentConnection')->makePartial();
+        $this->orm->shouldReceive('findById')->once()->andReturn($indicatorEntity);
+
+        $this->indicatorManager = Mockery::mock('App\Model\Domain\DomainManagers\IndicatorsManager')->makePartial();
+        $this->indicatorManager->setOrmConnection($this->orm);
     }
 
-    /*getInstance: devuelve la instancia de la clase.
-     * */
-    static function getInstance(){
-        if(IndicatorsManager::$obj == null){
-            IndicatorsManager::$obj = new IndicatorsManager(new EloquentConnection());
-        }
-        return IndicatorsManager::$obj;
+    public function testGetInstance(){
+        $instance = IndicatorsManager::getInstance();
+        $this->assertEquals("App\Model\Domain\DomainManagers\IndicatorsManager",get_class($instance));
     }
 
-    /*saveElement: guarda el indicador en caso de ser nuevo o lo actualiza.
-     * */
+    public function testSaveElement(){
+        var_dump($this->indicatorManager->saveElement($this->request, 1));
+    }
+    /*
+
     public function saveElement($data, $id){
         $indicator = null;
         if( $id != null){
@@ -45,25 +50,18 @@ class IndicatorsManager extends DomainManager
         $indicator->formula = $data->input('formula');
         $indicator->elementosDeFormula = $data->formulaElements;
 
-        return $this->ormConnection->saveEntity($indicator);
+        $this->ormConnection->saveEntity($indicator);
     }
 
-    /* Devuelve el mensaje de guardado de indicadores.
-     * */
     public function saveMessage($saved)
     {
         return "Indicador guardado con exito!";
     }
 
-    /*se agregan porque es abstracto en la clase padre, pero no se implementa ya que no se necesita
-      en esa clase
-    */
     function deleteRelations($id){}
 
     public function deleteMessage(){}
 
-    /*indicatorEvaluate: evalua todos los indicadores, para una empresa y un periodo dados.
-     * */
     public function indicatorEvaluate($request){
         $indicators = $this->getAll();
         $results = array();
@@ -93,4 +91,5 @@ class IndicatorsManager extends DomainManager
 
         return $result;
     }
+    */
 }

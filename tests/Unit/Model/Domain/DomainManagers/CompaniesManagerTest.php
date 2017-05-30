@@ -29,11 +29,9 @@ class CompaniesManagerTest extends TestCase
         $this->companiesManager->setOrmConnection($this->orm);
         $this->assertEquals(1, $this->companiesManager->deleteRelations(null));
     }
-    /*
 
-    public function deleteMessage()
-    {
-        return "Empresa borrada con exito!";
+    public function testDeleteMessage(){
+        $instance = CompaniesManager::getInstance();
+        $this->assertEquals("Empresa borrada con exito!", $instance->deleteMessage());
     }
-    */
 }
