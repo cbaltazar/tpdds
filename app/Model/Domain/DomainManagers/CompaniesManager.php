@@ -36,8 +36,10 @@ class CompaniesManager extends DomainManager
     {
         $relations = $this->ormConnection->findAllByColumnName(Cuenta_Empresa::class,'empresa_id', $id);
         foreach ($relations as $relation){
-            $this->ormConnection->deleteEntity(Cuenta_Empresa::class, $relation->id);
+            $this->ormConnection->deleteEntity(Cuenta_Empresa::class, $relation->getId());
         }
+
+        return 1;
     }
 
     /* deleteMessage: devuelve el mensaje luego de borrar la entidad.

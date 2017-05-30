@@ -16,6 +16,10 @@ class Cuenta_Empresa extends Model
         return $this->hasOne(Cuenta::class, 'id', 'cuenta_id');
     }
 
+    public function getId(){
+        return $this->id;
+    }
+
     public function getMonto(){
         return $this->monto;
     }
