@@ -112,9 +112,11 @@ $(document).ready(function() {
     $('#indicatorPeriod').change(function(){
         calculateIndicator();
     });
+    prepared=false
 });
 
 function prepareDataTable(){
+    prepared=true;
     $('.dataTable').dataTable({
         responsive: true,
         "dom": 'T<"clear">lfrtip',
@@ -142,11 +144,10 @@ function calculateIndicator(){
                 obj.forEach(function (value) {
                     $('#name'+i).text(value.indicator);
                     $('#value'+i).text(value.value);
-                    console.log($('#name'+i).text());
                     i++;
                 });
             }
-            prepareDataTable();
+            if(!prepared) prepareDataTable();
         }
     });
 }
