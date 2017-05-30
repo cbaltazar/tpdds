@@ -51,7 +51,7 @@
                                                     </span>
                                                 </td>
                                                 <td class="project-title">
-                                                    <a href="{{ url('indicatorDetail') }}">{{ $indicator->nombre }}</a>
+                                                    <a href="{{ url('indicatorDetail/'.$indicator->id) }}">{{ $indicator->nombre }}</a>
                                                     <br/>
                                                     <small>Creado el {{ $indicator->created_at }}</small>
                                                 </td>
