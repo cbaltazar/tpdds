@@ -43,14 +43,15 @@
                                         @foreach($indicators as $indicator)
                                             <tr>
                                                 <td class="project-status">
-                                                    <span class="label @if( $indicator->activo == 1) label-primary @else label-warning @endif">
-                                                         @if( $indicator->activo == 1) Activo @else Inactivo @endif
+                                                    <span class="label
+                                                        @if( $indicator->predefinido == 1) label-danger"> predefinido
+                                                        @else
+                                                        @if( $indicator->activo == 1) label-primary"> activo @else label-plain"> inactivo @endif
+                                                        @endif
                                                     </span>
                                                 </td>
                                                 <td class="project-title">
-                                                    <a href="{{ url('indicatorDetail') }}">{{ $indicator->nombre }}
-                                                        @if( $indicator->predefinido == 1) (Predefinido) @endif
-                                                    </a>
+                                                    <a href="{{ url('indicatorDetail') }}">{{ $indicator->nombre }}</a>
                                                     <br/>
                                                     <small>Creado el {{ $indicator->created_at }}</small>
                                                 </td>

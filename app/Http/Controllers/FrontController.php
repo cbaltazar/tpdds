@@ -64,7 +64,7 @@ class FrontController extends Controller{
         $indicatorObject = IndicatorsManager::getInstance()->getOne($id);
 
         return view('indicator_detail')->with("variable", array_merge($accounts, $indicators))
-                                             ->with("indicatorObject", $indicatorObject);
+                                       ->with("indicatorObject", $indicatorObject);
     }
 
 
