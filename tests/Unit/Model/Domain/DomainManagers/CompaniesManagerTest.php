@@ -31,14 +31,6 @@ class CompaniesManagerTest extends TestCase
     }
     /*
 
-    public function deleteRelations($id)
-    {
-        $relations = $this->ormConnection->findAllByColumnName(Cuenta_Empresa::class,'empresa_id', $id);
-        foreach ($relations as $relation){
-            $this->ormConnection->deleteEntity(Cuenta_Empresa::class, $relation->id);
-        }
-    }
-
     public function deleteMessage()
     {
         return "Empresa borrada con exito!";

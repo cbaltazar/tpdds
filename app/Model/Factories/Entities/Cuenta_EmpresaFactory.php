@@ -10,8 +10,4 @@ class Cuenta_EmpresaFactory extends EntityFactory
     {
         return new Cuenta_Empresa();
     }
-
-    public function  getId(){
-        return $this->id;
-    }
 }
