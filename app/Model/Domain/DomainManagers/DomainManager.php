@@ -24,10 +24,10 @@ abstract class DomainManager
     /*------------------------------------------------------
      * Metodos del patron "Template Method"
      * */
-    abstract function deleteMessage();
-    abstract function saveElement($data, $id);
-    abstract function saveMessage($saved);
-    abstract function deleteRelations($id);
+    abstract public function deleteMessage();
+    abstract public function saveElement($data, $id);
+    abstract public function saveMessage($saved);
+    abstract public function deleteRelations($id);
 
     /*
      * Getters and Setters

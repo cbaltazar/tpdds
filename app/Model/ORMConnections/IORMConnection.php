@@ -10,5 +10,19 @@ interface IORMConnection
 
     public function findByColumnName($model, $columnName, $value);
 
+    public function findAllByColumnName($model, $columnName, $value);
+
     public function findById($model, $id);
+
+    public function findWhere($model, $where);
+
+    public function getDistinct($model, $column);
+
+    public function countWhere($model, $columnName, $value);
+
+    public function saveEntity($entity);
+
+    public function deleteEntity($model, $id);
+
+    public function findFormulaElementEntity($id);
 }
