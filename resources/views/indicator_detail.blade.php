@@ -42,13 +42,17 @@
                                         Activo </label></div>
                             </div>
                             <div class="hr-line-dashed"></div>
-                            <div class="form-group" id="formula-group"><label class="col-sm-2 control-label">Fórmula
-                                    *</label>
-                                <div class="col-sm-10">
+                            <div class="form-group" id="formula-group">
+                              <label class="col-sm-2 control-label">Fórmula*</label>
+                                <div class="col-sm-6">
                                     <input @if( $indicatorObject != null and $indicatorObject->predefinido == 1) disabled @endif name="formula" id="formula" type="text" class="form-control"
                                            placeholder="Fórmula del indicador"
                                            value="{{$indicatorObject->formula or " "}}" >
                                     <span class="help-block m-b-none" id="message"></span>
+                                </div>
+                                <div class="col-sm-3">
+                                  <select class="form-control" id="symbols" multiple>
+                                  </select>
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -86,23 +90,33 @@
 
         for (var i = 0; i < indicators.length; i++) {
             indicators[i].nombre = indicators[i].nombre.replace(/\s+/g,'');
-            scope[indicators[i].nombre] = 1
+            scope[indicators[i].nombre] = 1;
+            $("#symbols").append("<option>"+indicators[i].nombre+"</option>");
         }
 
-        $('#formula').on('input', function () {
-            try {
-                content = $('#formula').val().replace(/\s/g,'');
-                $('#formula-group').removeClass('has-error');
-                $('#message').empty();
-                $('#saveIndicator').removeClass("disabled");
-                math.eval(content, scope)
-            }
-            catch (e) {
-                $('#formula-group').addClass('has-error');
-                $('#saveIndicator').addClass("disabled");
-                $('#message').text(e.message)
-            }
+        $("#symbols option").dblclick(function() {
+          $('#formula').val($('#formula').val()+this.value);
+          validateEc();
         });
+
+        $('#formula').on('input', function () {
+          validateEc();
+        });
+
+        function validateEc(){
+          try {
+              content = $('#formula').val().replace(/\s/g,'');
+              $('#formula-group').removeClass('has-error');
+              $('#message').empty();
+              $('#saveIndicator').removeClass("disabled");
+              math.eval(content, scope)
+          }
+          catch (e) {
+              $('#formula-group').addClass('has-error');
+              $('#saveIndicator').addClass("disabled");
+              $('#message').text(e.message)
+          }
+        }
 
         $('#saveIndicator').click( function(){
             $('#formula').val($('#formula').val().trim());
