@@ -50,7 +50,7 @@ class IndicatorsManager extends DomainManager
     public function saveMessage($saved)
     {
         $msg = "Indicador guardado con exito!";
-        if($saved == 0) {
+        if($saved == null) {
             $msg = "Error al guardar el indicador.";
         }
         return $msg;
