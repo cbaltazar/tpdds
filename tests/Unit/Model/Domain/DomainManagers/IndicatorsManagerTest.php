@@ -30,10 +30,10 @@ class IndicatorsManagerTest extends TestCase
         $this->assertEquals("App\Model\Domain\DomainManagers\IndicatorsManager",get_class($instance));
     }
 
-    public function testSaveElement(){
+    /*public function testSaveElement(){
         var_dump($this->indicatorManager->saveElement($this->request, 1));
     }
-    /*
+
 
     public function saveElement($data, $id){
         $indicator = null;
