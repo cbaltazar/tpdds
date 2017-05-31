@@ -31,6 +31,8 @@ class IndicatorsManager extends DomainManager
     /*saveElement: guarda el indicador en caso de ser nuevo o lo actualiza.
      * */
     public function saveElement($data, $id){
+        $params = $this->getParams($data);
+
         $indicator = null;
         if( $id != null){
             $indicator = $this->getOne($id);
@@ -39,28 +41,20 @@ class IndicatorsManager extends DomainManager
             $indicator = $indicatorFactory->createObject();
         }
 
-        $indicator->nombre = $data->input('name');
-        $indicator->descripcion = $data->input('description');
-        is_array($data->status) ? $indicator->activo = 1:$indicator->activo = 0;
-        $indicator->formula = $data->input('formula');
-        $indicator->elementosDeFormula = $data->formulaElements;
-
-        return $this->ormConnection->saveEntity($indicator);
+        $this->ormConnection->saveEntity($this->setValues($indicator, $params));
+        return $indicator;
     }
 
     /* Devuelve el mensaje de guardado de indicadores.
      * */
     public function saveMessage($saved)
     {
-        return "Indicador guardado con exito!";
+        $msg = "Indicador guardado con exito!";
+        if($saved == 0) {
+            $msg = "Error al guardar el indicador.";
+        }
+        return $msg;
     }
-
-    /*se agregan porque es abstracto en la clase padre, pero no se implementa ya que no se necesita
-      en esa clase
-    */
-    function deleteRelations($id){}
-
-    public function deleteMessage(){}
 
     /*indicatorEvaluate: evalua todos los indicadores, para una empresa y un periodo dados.
      * */
@@ -77,6 +71,17 @@ class IndicatorsManager extends DomainManager
         return json_encode($results);
     }
 
+    /*se agregan porque son abstractos en la clase padre, pero no se implementa ya que no se necesita
+    en esta clase
+    */
+    function deleteRelations($id){}
+    public function deleteMessage(){}
+
+
+
+
+
+    /*--------------------- Funciones Auxiliares -------------------------------------------------------------*/
     public function prepareIndicator($indicator, $request){
         $result = new \stdClass();
         $formulaElementFactory = $this->getFactory(IndicatorElement::class);
@@ -93,4 +98,26 @@ class IndicatorsManager extends DomainManager
 
         return $result;
     }
+
+    public function getParams($data){
+        $params = new \stdClass();
+        $params->name = $data->input('name');
+        $params->description = $data->input('description');
+        $params->formula = $data->input('formula');
+        $params->elementosDeFormula = $data->formulaElements;
+        is_array($data->status) ? $params->activo = 1:$params->activo = 0;
+
+        return $params;
+    }
+
+    public function setValues($indicator, $params){
+        $indicator->nombre = $params->name;
+        $indicator->descripcion = $params->description;
+        $indicator->activo = $params->activo;
+        $indicator->formula = $params->formula;
+        $indicator->elementosDeFormula = $params->elementosDeFormula;
+
+        return $indicator;
+    }
+
 }

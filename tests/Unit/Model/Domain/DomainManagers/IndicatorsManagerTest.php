@@ -7,22 +7,37 @@ use \Illuminate\Http\Request;
 class IndicatorsManagerTest extends TestCase
 {
     protected $indicatorManager = null;
-    protected $request = null;
+    protected $params1, $params2;
 
     protected function setUp(){
-        $this->request = Mockery::mock('\Illuminate\Http\Request')->makePartial();
-        $this->request->shouldReceive('input')->times(3)->andReturn('Indic1', 'Descripcion', 'Cuenta1+555');
+
+        $this->params1 = new \stdClass();
+        $this->params1->name = 'Indicador1';
+        $this->params1->description = 'descripcion';
+        $this->params1->formula = 'formula';
+        $this->params1->elementosDeFormula = "elementos";
+        $this->params1->activo = 1;
+
+        $this->params2 = new \stdClass();
+        $this->params2->name = 'Indicador2';
+        $this->params2->description = 'descripcion2';
+        $this->params2->formula = 'formula2';
+        $this->params2->elementosDeFormula = "elementos2";
+        $this->params2->activo = 0;
 
         $indicatorEntity = Mockery::mock('App\Model\Entities\Indicador')->makePartial();
 
         $factory = Mockery::mock('App\Model\Factories\Entities\IndicadorFactoy')->makePartial();
-        $factory->shouldReceive('createObject')->once()->andReturn($indicatorEntity);
+        $factory->shouldReceive('createObject')->times(2)->andReturn($indicatorEntity);
 
         $this->orm = Mockery::mock('App\Model\ORMConnections\EloquentConnection')->makePartial();
-        $this->orm->shouldReceive('findById')->once()->andReturn($indicatorEntity);
+        $this->orm->shouldReceive('findById')->times(2)->andReturn($indicatorEntity);
+        $this->orm->shouldReceive('saveEntity')->times(2)->andReturn(1,1);
 
         $this->indicatorManager = Mockery::mock('App\Model\Domain\DomainManagers\IndicatorsManager')->makePartial();
         $this->indicatorManager->setOrmConnection($this->orm);
+        $this->indicatorManager->shouldReceive('getOne')->once()->andReturn($indicatorEntity);
+        $this->indicatorManager->shouldReceive('getFactory')->once()->andReturn($factory);
     }
 
     public function testGetInstance(){
@@ -30,66 +45,38 @@ class IndicatorsManagerTest extends TestCase
         $this->assertEquals("App\Model\Domain\DomainManagers\IndicatorsManager",get_class($instance));
     }
 
-    /*public function testSaveElement(){
-        var_dump($this->indicatorManager->saveElement($this->request, 1));
+    public function testSaveNEWElement(){
+        $this->indicatorManager->shouldReceive('getParams')->once()->andReturn($this->params1);
+        $indicatorSaved = $this->indicatorManager->saveElement(null, 1);
+        $this->assertEquals("Indicador1", $indicatorSaved->getNombre());
+        $this->assertEquals("descripcion", $indicatorSaved->getDescripcion());
+        $this->assertEquals("formula", $indicatorSaved->getFormula());
+        $this->assertEquals("elementos", $indicatorSaved->getElementosDeFormula());
+        $this->assertEquals(1, $indicatorSaved->isActive());
     }
 
-
-    public function saveElement($data, $id){
-        $indicator = null;
-        if( $id != null){
-            $indicator = $this->getOne($id);
-        }else{
-            $indicatorFactory = $this->getFactory(Indicador::class);
-            $indicator = $indicatorFactory->createObject();
-        }
-
-        $indicator->nombre = $data->input('name');
-        $indicator->descripcion = $data->input('description');
-        is_array($data->status) ? $indicator->activo = 1:$indicator->activo = 0;
-        $indicator->formula = $data->input('formula');
-        $indicator->elementosDeFormula = $data->formulaElements;
-
-        $this->ormConnection->saveEntity($indicator);
+    public function testSaveUPDATEElement(){
+        $this->indicatorManager->shouldReceive('getParams')->once()->andReturn($this->params2);
+        $indicatorSaved = $this->indicatorManager->saveElement(null, null);
+        $this->assertEquals("Indicador2", $indicatorSaved->getNombre());
+        $this->assertEquals("descripcion2", $indicatorSaved->getDescripcion());
+        $this->assertEquals("formula2", $indicatorSaved->getFormula());
+        $this->assertEquals("elementos2", $indicatorSaved->getElementosDeFormula());
+        $this->assertEquals(0, $indicatorSaved->isActive());
     }
 
-    public function saveMessage($saved)
-    {
-        return "Indicador guardado con exito!";
+    public function testSaveOKMessage(){
+        $indicatorManager = IndicatorsManager::getInstance();
+        $this->assertEquals("Indicador guardado con exito!", $indicatorManager->saveMessage(1));
     }
 
-    function deleteRelations($id){}
-
-    public function deleteMessage(){}
-
-    public function indicatorEvaluate($request){
-        $indicators = $this->getAll();
-        $results = array();
-
-        foreach ($indicators as $indicator){
-            if($indicator->isActive()){
-                array_push($results, $this->prepareIndicator($indicator, $request));
-            }
-        }
-
-        return json_encode($results);
+    public function testSaveFAILMessage(){
+        $indicatorManager = IndicatorsManager::getInstance();
+        $this->assertEquals("Error al guardar el indicador.", $indicatorManager->saveMessage(0));
     }
 
-    public function prepareIndicator($indicator, $request){
-        $result = new \stdClass();
-        $formulaElementFactory = $this->getFactory(IndicatorElement::class);
-        $indicatorElement = $formulaElementFactory->createObject($indicator, IndicatorsManager::getInstance());
-        $empresa = $this->ormConnection->findById(Empresa::class, $request->input('company'));
-        $result->company = $empresa->getNombre();
-        $result->indicator = $indicator->getNombre();
-        $result->period = $request->input('period');
-        if($indicator->isActive() == 1){
-            $result->value = $indicatorElement->evaluateFormula($request->input());
-        }else{
-            $result->value = "Inactivo";
-        }
+    /*public function testIndicatorEvaluate(){
+        se agrega luego del refactor.
+    }*/
 
-        return $result;
-    }
-    */
 }

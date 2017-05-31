@@ -22,11 +22,35 @@ class Indicador extends Model
         return $this->nombre;
     }
 
+    public function getDescripcion(){
+        return $this->descripcion;
+    }
+
     public function getElementosDeFormula(){
         return $this->elementosDeFormula;
     }
 
     public function getFormula(){
         return $this->formula;
+    }
+
+    public function setActive($active){
+        $this->activo = $active;
+    }
+
+    public function setNombre($nombre){
+        $this->nombre = $nombre;
+    }
+
+    public function setDescipcion($desc){
+        $this->descripcion = $desc;
+    }
+
+    public function setElementosDeFormula($formulaElem){
+        $this->elementosDeFormula = $formulaElem;
+    }
+
+    public function setFormula($formula){
+        $this->formula = $formula;
     }
 }
