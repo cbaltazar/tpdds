@@ -76,6 +76,7 @@
         var scope = {};
         var formula = "";
         var indicators = JSON.parse('{!! json_encode($variable) !!}');
+        var elements = JSON.parse('{!! json_encode($variable) !!}');
 
         $(document).ready(function () {
             $('.i-checks').iCheck({
@@ -86,10 +87,20 @@
 
         for (var i = 0; i < indicators.length; i++) {
             indicators[i].nombre = indicators[i].nombre.replace(/\s+/g,'');
-            scope[indicators[i].nombre] = 1
+            scope[indicators[i].nombre] = 1;
+            $("#symbols").append("<option>"+elements[i].nombre+"</option>");
         }
 
+        $("#symbols option").dblclick(function() {
+            $('#formula').val($('#formula').val()+this.value);
+            validateEc();
+        });
+
         $('#formula').on('input', function () {
+            validateEc();
+        });
+
+        function validateEc(){
             try {
                 content = $('#formula').val().replace(/\s/g,'');
                 $('#formula-group').removeClass('has-error');
@@ -102,7 +113,7 @@
                 $('#saveIndicator').addClass("disabled");
                 $('#message').text(e.message)
             }
-        });
+        }
 
         $('#saveIndicator').click( function(){
             $('#formula').val($('#formula').val().trim());
