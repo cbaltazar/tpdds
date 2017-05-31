@@ -6,13 +6,9 @@
 @section ('content')
     <div class="col-lg-12">
         <div class="wrapper wrapper-content animated fadeInUp">
-            @if ( Request::get('err') != null)
-                <div class="alert
-                @if(Request::get('err') == 0)
-                    alert-success"> Archivo cargado correctamente.
-                @else
-                    alert-danger"> Se ha producido un error al cargar el archivo. Vuelva a intentarlo.
-                @endif
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
                 </div>
             @endif
 <!---->
@@ -56,13 +52,13 @@
                                             <span class="label label-primary">activo</span>
                                         </td>
                                         <td class="project-title">
-                                            <a href="{{ url('accountDetail/'.$empresa) }}">{{ $empresa }}</a>
+                                            <a href="{{ url('accountDetail/'.$empresa->nombre) }}">{{ $empresa->nombre }}</a>
                                             <br/>
-                                            <small>Creado el {{ $created }}</small>
+                                            <small>Creado el {{ $empresa->created_at }}</small>
                                         </td>
                                         <td class="project-actions">
-                                            <a href="{{ url('accountDetail/'.$empresa) }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
-                                            <a href="{{ url('accountDetail/'.$empresa) }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
+                                            <a href="{{ url('accountDetail/'.$empresa->id) }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
+                                            <a href="{{ url('accountDetail/'.$empresa->id) }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
                                             <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
                                         </td>
                                     </tr>
