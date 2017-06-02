@@ -38,4 +38,18 @@ abstract class FormulaElement
     public function getFormulaElementsIds(){
         return $this->model->getElementosDeFormula();
     }
+
+    /*getObjectFormulaElement: devuelve un objeto elemento de formula, para obtener su valor y reemplazarlo
+    en la expresion.
+     * */
+    public function getObjectFormulaElement( $entity )
+    {
+        switch ( get_class($entity) ){
+            case 'App\Model\Entities\Cuenta':
+                return new AccountElement($entity);
+                break;
+            default:
+                return new IndicatorElement($entity);
+        }
+    }
 }

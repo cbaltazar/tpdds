@@ -7,13 +7,15 @@
 
 namespace App\Model\Domain\FormulaElements;
 
+use App\Model\ORMConnections\EloquentConnection;
+
 class IndicatorElement extends FormulaElement
 {
-    function __construct($indicator, $dm)
+    function __construct($indicator)
     {
         $this->model = $indicator;
-        $this->domainManager = $dm;
         $this->formula = $this->model->getFormula();
+        $this->orm = new EloquentConnection();
     }
 
     public function evaluateFormula( $data ){
@@ -28,11 +30,12 @@ class IndicatorElement extends FormulaElement
     }
 
     private function replaceFormulaElementValue($data){
-        $elementos = explode(",",$this->getFormulaElementsIds());
+        $elementos = json_decode($this->getFormulaElementsIds());
 
         foreach ($elementos as $elemento){
-            $entityFormulaElement = $this->domainManager->getFromulaElement($elemento);
-            $elem = $this->domainManager->getObjectFormulaElement($entityFormulaElement);
+            $elemento = json_decode($elemento);
+            $entityFormulaElement = $this->orm->findById('App\Model\Entities\\'.$elemento->class, $elemento->id);
+            $elem = $this->getObjectFormulaElement($entityFormulaElement);
             if($elem->getValue($data) >= 0){
                 $this->setFormula(str_replace($elem->getName(), $elem->getValue($data), $this->getFormula()));
             }else{

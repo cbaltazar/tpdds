@@ -6,17 +6,20 @@
 
 namespace App\Model\Domain\FormulaElements;
 
+use App\Model\Entities\Cuenta_Empresa;
+use App\Model\ORMConnections\EloquentConnection;
+
 class AccountElement extends FormulaElement
 {
-    function __construct( $accountEntity, $dm )
+    function __construct( $accountEntity )
     {
         $this->model = $accountEntity;
-        $this->domainManager = $dm;
+        $this->orm = new EloquentConnection();
     }
 
     public function getValue( $data ){
         $result = -1;
-        $accountCopanyRelation = $this->domainManager->getWhere( $this->getConditions($data) );
+        $accountCopanyRelation = $this->orm->findWhere(Cuenta_Empresa::class, $this->getConditions($data) );
 
         if($accountCopanyRelation != null){
             $result = $accountCopanyRelation->getMonto();
