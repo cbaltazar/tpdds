@@ -126,6 +126,8 @@ abstract class DomainManager
             $obj = new \stdClass();
             $obj->id = $element->getId();
             $obj->nombre = $element->getNombre();
+            $clase =  explode("\\", get_class($element));
+            $obj->clase = $clase[count($clase)-1];
             array_push($availablesElements,$obj);
         }
         return $availablesElements;

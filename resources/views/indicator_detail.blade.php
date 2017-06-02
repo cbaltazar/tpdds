@@ -126,7 +126,10 @@
             indicators.forEach(function(value){
                 filtered.forEach(function(elem){
                     if( elem.toString().replace("_", "") === value.nombre ){
-                        idsFiltered.push(value.id);
+                        var formulaElement = {};
+                        formulaElement.id = value.id;
+                        formulaElement.class = value.clase;
+                        idsFiltered.push(formulaElement);
                     }
                 });
             });
