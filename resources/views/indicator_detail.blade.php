@@ -92,7 +92,7 @@
         for (var i = 0; i < indicators.length; i++) {
             indicators[i].nombre = indicators[i].nombre.replace(/\s+/g,'');
             scope[indicators[i].nombre] = 1;
-<<<<<<< HEAD
+
             $("#symbols").append("<option>"+elements[i].nombre+"</option>");
         }
 
@@ -119,19 +119,6 @@
                 $('#message').text(e.message)
             }
         }
-=======
-            $("#symbols").append("<option>"+indicators[i].nombre+"</option>");
-        }
-
-        $("#symbols option").dblclick(function() {
-          $('#formula').val($('#formula').val()+this.value);
-          validateEc();
-        });
-
-        $('#formula').on('input', function () {
-          validateEc();
-        });
->>>>>>> displayElements
 
         function validateEc(){
           try {
