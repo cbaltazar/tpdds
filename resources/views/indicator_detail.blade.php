@@ -50,6 +50,10 @@
                                            value="{{$indicatorObject->formula or " "}}" >
                                     <span class="help-block m-b-none" id="message"></span>
                                 </div>
+                                <div class="col-sm-3">
+                                    <select class="form-control" id="symbols" multiple>
+                                    </select>
+                                </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <span class="col-sm-2 col-sm-offset-10 help-block"><i>* Campo obligatorio.</i></span>
