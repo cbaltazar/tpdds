@@ -51,7 +51,7 @@
                                     <span class="help-block m-b-none" id="message"></span>
                                 </div>
                                 <div class="col-sm-3">
-                                    <select class="form-control" id="symbols" multiple>
+                                    <select @if( $indicatorObject != null and $indicatorObject->predefinido == 1) disabled @endif class="form-control" id="symbols" multiple>
                                     </select>
                                 </div>
                             </div>
