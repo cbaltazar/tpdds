@@ -27,7 +27,7 @@ class IndicatorElement extends FormulaElement
     /*----------------------------------------------------------------------------------------------------------------*/
     public function evaluateFormula( $data ){
         //si el elemento tiene otros elementos dentro de su formula, tambien los evalua.
-        if($this->getFormulaElements()){
+        if( !empty(json_decode($this->getFormulaElements())) ){
             $this->replaceFormulaElementValue($data);
         }
         //devuelve la evaluacion del string de formula.
@@ -37,7 +37,6 @@ class IndicatorElement extends FormulaElement
     private function replaceFormulaElementValue($data){
         $formulaElements = json_decode($this->getFormulaElements());
         foreach ($formulaElements as $element){
-            $element = json_decode($element);
             //creo la entidad a partir de los datos guardados en $elemento.
             $entity = $this->orm->findById('App\Model\Entities\\'.$element->class, $element->id);
             //camuflo la entidad con el elemento de formula

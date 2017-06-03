@@ -153,7 +153,7 @@
                     }
                 });
             });
-            $('#formulaElements').val(idsFiltered.toString());
+            $('#formulaElements').val(JSON.stringify(idsFiltered));
         });
     </script>
 @endsection
