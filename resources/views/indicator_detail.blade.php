@@ -12,18 +12,18 @@
                         <h5>Editor de indicador</h5>
                     </div>
                     <div class="ibox-content">
-                        <form method="post" class="form-horizontal" name="indicator-form"
+                        <form method="post" class="form-horizontal" name="indicator-form" style="margin-top:15px"
                               action="{{ url('indicatorSave') }}/{{ $indicatorObject->id or "" }}">
                             <input type="hidden" name="formulaElements" id="formulaElements" value="">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="form-group"><label class="col-sm-2 control-label">Nombre *</label>
-                                <div class="col-sm-10"><input
+                                <div class="col-sm-9"><input
                                             @if( $indicatorObject != null and $indicatorObject->predefinido == 1) disabled @endif type="text" name="name" id="name" class="form-control"
                                                               placeholder="Nombre del indicador" value="{{$indicatorObject->nombre or " "}}"></div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group"><label class="col-sm-2 control-label">Descripción</label>
-                                <div class="col-sm-10"><input @if( $indicatorObject != null and $indicatorObject->predefinido == 1) disabled @endif type="text" name="description" id="description"
+                                <div class="col-sm-9"><input @if( $indicatorObject != null and $indicatorObject->predefinido == 1) disabled @endif type="text" name="description" id="description"
                                                               class="form-control"
                                                               placeholder="Descripción del indicador"
                                                               value="{{$indicatorObject->descripcion or " "}}" > <span

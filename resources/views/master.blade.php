@@ -35,13 +35,13 @@
                     <div class="logo-element">DI?</div>
                 </li>
                 <li> <!--class="active"-->
-                    <a href="{{ url('companyList') }}"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Empresas</span></a>
+                    <a href="{{ url('companyList') }}"><i class="fa fa-briefcase"></i> <span class="nav-label">Empresas</span></a>
                 </li>
                 <li>
-                    <a href="{{ url('indicatorList') }}"><i class="fa fa-calculator"></i> <span class="nav-label">Indicadores</span></a>
+                    <a href="{{ url('indicatorList') }}"><i class="fa fa-line-chart"></i> <span class="nav-label">Indicadores</span></a>
                 </li>
                 <li>
-                    <a href="{{ url('methodList') }}"><i class="fa fa-edit"></i> <span class="nav-label">Metodologías</span></a>
+                    <a href="{{ url('methodList') }}"><i class="fa fa-sliders"></i> <span class="nav-label">Metodologías</span></a>
                 </li>
             </ul>
         </div>

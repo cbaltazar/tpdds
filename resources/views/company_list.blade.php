@@ -59,12 +59,12 @@
                 <div class="ibox-title">
                     <h5>Listado de Empresas</h5>
                     <div class="ibox-tools">
-                        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#uploadModal"><i class="fa fa-plus"></i> Cargar cuentas</button>
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadModal"><i class="fa fa-upload"></i> Cargar cuentas</button>
                     </div>
                 </div>
                 <div class="ibox-content">
                     <div class="project-list">
-                        <table class="table table-hover">
+                        <table class="table table-hover" id=table>
                             <tbody>
                             @if( count($empresas) > 0)
                                 @foreach($empresas as $empresa)
@@ -89,6 +89,7 @@
 
                             </tbody>
                         </table>
+                        <div id="paginator" style="text-align:center"></div>
                     </div>
                 </div>
             </div>
@@ -100,12 +101,5 @@
 <script src="{{asset('js/plugins/fileStyle/bootstrap-filestyle.min.js')}}"></script>
 <script src="{{asset('js/plugins/toastr/toastr.min.js')}}"></script>
 <script src="{{asset('js/messenger.js')}}"></script>
-
-
-<script>
-$(".btn-delete").click(function(e){
-  $(".confirm").attr('href',"{{ url('deleteCompany/')}}"+"/"+$(this).attr('id'));
-})
-</script>
-
+<script src="{{asset('js/plugins/paginator/paginator.js')}}"></script>
 @endsection

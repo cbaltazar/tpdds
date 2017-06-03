@@ -32,21 +32,21 @@
                         <div class="ibox-title">
                             <h5>Listado de Indicadores</h5>
                             <div class="ibox-tools">
-                                <a href="{{ url('indicatorDetail') }}" class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> Crear Indicador</a>
+                                <a href="{{ url('indicatorDetail') }}" class="btn btn-primary btn-sm"><i class="fa fa-paint-brush"></i> Crear Indicador</a>
                             </div>
                         </div>
                         <div class="ibox-content">
                             <div class="project-list">
-                                <table class="table table-hover">
+                                <table class="table table-hover" id="table">
                                     <tbody>
                                     @if( count($indicators) > 0)
                                         @foreach($indicators as $indicator)
                                             <tr>
                                                 <td class="project-status">
                                                     <span class="label
-                                                        @if( $indicator->predefinido == 1) label-danger"> predefinido
+                                                        @if( $indicator->predefinido == 1) label-danger"> Predefinido
                                                         @else
-                                                        @if( $indicator->activo == 1) label-primary"> activo @else label-plain"> inactivo @endif
+                                                        @if( $indicator->activo == 1) label-primary"> Activo @else label-plain"> Inactivo @endif
                                                         @endif
                                                     </span>
                                                 </td>
@@ -66,6 +66,7 @@
                                     @endif
                                     </tbody>
                                 </table>
+                                <div id="paginator" style="text-align:center"></div>
                             </div>
                         </div>
                     </div>
@@ -84,4 +85,5 @@
           $(".confirm").attr('href',"{{ url('indicatorDelete/')}}"+"/"+$(this).attr('id'));
         })
     </script>
+    <script src="{{asset('js/plugins/paginator/paginator.js')}}"></script>
 @endsection
