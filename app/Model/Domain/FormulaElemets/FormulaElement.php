@@ -15,8 +15,22 @@ abstract class FormulaElement
 {
     protected $model;
     protected $formula;
+    protected $orm;
 
     public abstract function getValue( $data );
+
+    public function setFormula($formula){
+        $this->formula = $formula;
+    }
+
+    public function setOrmConnection($orm){
+        $this->orm=$orm;
+    }
+
+    public function setModel($model){
+        $this->model = $model;
+        $this->setFormula($model->getFormula());
+    }
 
     public function getName(){
         return $this->model->getNombre();
@@ -24,10 +38,6 @@ abstract class FormulaElement
 
     public function getFormula(){
         return $this->formula;
-    }
-
-    public function setFormula($formula){
-        $this->formula = $formula;
     }
 
     public function getFormulaElements(){
@@ -41,10 +51,10 @@ abstract class FormulaElement
     {
         switch ( get_class($entity) ){
             case 'App\Model\Entities\Cuenta':
-                return new AccountElement($entity);
+                return new AccountElement();
                 break;
             default:
-                return new IndicatorElement($entity);
+                return new IndicatorElement();
         }
     }
 }

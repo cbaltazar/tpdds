@@ -6,7 +6,7 @@ use App\Model\Domain\FormulaElements\IndicatorElement;
 
 class IndicatorElementFactory extends FormulaElementFactory
 {
-    public function createObject($model){
-        return new IndicatorElement($model);
+    public function createObject(){
+        return new IndicatorElement();
     }
 }

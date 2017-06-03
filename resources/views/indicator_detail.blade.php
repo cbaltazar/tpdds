@@ -153,6 +153,7 @@
                     }
                 });
             });
+            console.log(JSON.stringify(idsFiltered));
             $('#formulaElements').val(JSON.stringify(idsFiltered));
         });
     </script>

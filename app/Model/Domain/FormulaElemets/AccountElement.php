@@ -11,12 +11,6 @@ use App\Model\ORMConnections\EloquentConnection;
 
 class AccountElement extends FormulaElement
 {
-    function __construct( $accountEntity )
-    {
-        $this->model = $accountEntity;
-        $this->orm = new EloquentConnection();
-    }
-
     public function getValue( $data ){
         $result = -1;
         $accountCopanyRelation = $this->orm->findWhere(Cuenta_Empresa::class, $this->getConditions($data) );
@@ -32,7 +26,7 @@ class AccountElement extends FormulaElement
         $where = array();
 
         $account_id = ['cuenta_id', '=', $this->model->getId()];
-        $company_id = ['empresa_id', '=', $data->companyId];
+        $company_id = ['empresa_id', '=', $data->company];
         $period = ['periodo', '=', $data->period];
 
         array_push($where, $account_id);

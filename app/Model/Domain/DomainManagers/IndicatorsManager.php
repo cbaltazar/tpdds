@@ -86,7 +86,7 @@ class IndicatorsManager extends DomainManager
     public function prepareResult($params, $indicator, $indicatorElement){
         $result = new \stdClass();
         //tomo los datos de la empresa de la base de datos.
-        $empresa = $this->ormConnection->findById(Empresa::class, $params->companyId);
+        $empresa = $this->ormConnection->findById(Empresa::class, $params->company);
         $result->company = $empresa->getNombre();
         $result->indicator = $indicator->getNombre();
         $result->period = $params->period;
@@ -96,10 +96,13 @@ class IndicatorsManager extends DomainManager
     }
 
     public function calculateIndicator($indicator, $params){
-        //camuflar la entidad dentro de un elemento de formula. creo el elemento con una fabrica.
+        //camuflo la entidad dentro de un elemento de formula. creo el elemento con una fabrica.
         $formulaElementFactory = $this->getFactory(IndicatorElement::class);
         //creo el elemento indicador pasandole la entidad para que la use.
-        $indicatorElement = $formulaElementFactory->createObject($indicator);
+        $indicatorElement = $formulaElementFactory->createObject();
+        //le seteo los valores del orm y la entidad.
+        $indicatorElement->setOrmConnection($this->ormConnection);
+        $indicatorElement->setModel($indicator);
         //preparo el objeto resultado
         $result = $this->prepareResult($params, $indicator, $indicatorElement);
         return $result;
@@ -117,7 +120,7 @@ class IndicatorsManager extends DomainManager
                 break;
             case 'calculate':
                 $params->period = $data->input('period');
-                $params->companyId = $data->input('company');
+                $params->company = $data->input('company');
                 break;
         }
         return $params;

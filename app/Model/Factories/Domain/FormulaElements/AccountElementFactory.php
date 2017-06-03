@@ -6,7 +6,7 @@ use App\Model\Domain\FormulaElements\AccountElement;
 
 class AccountElementFactory extends FormulaElementFactory
 {
-    public function createObject($model){
-        return new AccountElement($model);
+    public function createObject(){
+        return new AccountElement();
     }
 }

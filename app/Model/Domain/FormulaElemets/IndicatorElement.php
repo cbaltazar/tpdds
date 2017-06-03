@@ -11,13 +11,6 @@ use App\Model\ORMConnections\EloquentConnection;
 
 class IndicatorElement extends FormulaElement
 {
-    function __construct($indicator)
-    {
-        $this->model = $indicator;
-        $this->formula = $this->model->getFormula();
-        $this->orm = new EloquentConnection();
-    }
-
     /*Evaluar la formula y retornar el valor.*/
     public function getValue($data){
         //evalua la formula con el periodo y la empresa dada por parametro.
@@ -41,7 +34,11 @@ class IndicatorElement extends FormulaElement
             $entity = $this->orm->findById('App\Model\Entities\\'.$element->class, $element->id);
             //camuflo la entidad con el elemento de formula
             $formulaElement = $this->getObjectFormulaElement($entity);
+            //seteo el orm y el modelo
+            $formulaElement->setOrmConnection($this->orm);
+            $formulaElement->setModel($entity);
             //evaluo la formula del elemento actual
+
             if($formulaElement->getValue($data) >= 0){
                 //si el valor de la formula existe, lo reemplazo en la formula del objeto que me llamo anteriormente.
                 $this->setFormula(str_replace($formulaElement->getName(), $formulaElement->getValue($data), $this->getFormula()));
