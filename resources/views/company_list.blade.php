@@ -70,7 +70,7 @@
                                 @foreach($empresas as $empresa)
                                     <tr>
                                         <td class="project-status">
-                                            <span class="label label-primary">activo</span>
+                                            <span class="label label-primary">Activo</span>
                                         </td>
                                         <td class="project-title">
                                             <a href="{{ url('companyDetail/'.$empresa->id) }}">{{ $empresa->nombre }}</a>
