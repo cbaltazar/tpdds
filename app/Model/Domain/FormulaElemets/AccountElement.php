@@ -32,8 +32,8 @@ class AccountElement extends FormulaElement
         $where = array();
 
         $account_id = ['cuenta_id', '=', $this->model->getId()];
-        $company_id = ['empresa_id', '=', $data['company']];
-        $period = ['periodo', '=', $data['period']];
+        $company_id = ['empresa_id', '=', $data->companyId];
+        $period = ['periodo', '=', $data->period];
 
         array_push($where, $account_id);
         array_push($where, $company_id);
