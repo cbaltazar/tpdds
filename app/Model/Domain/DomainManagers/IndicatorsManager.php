@@ -31,7 +31,7 @@ class IndicatorsManager extends DomainManager
     /*saveElement: guarda el indicador en caso de ser nuevo o lo actualiza.
      * */
     public function saveElement($data, $id){
-        $params = $this->getParams($data);
+        $params = $this->getParams($data, 'save');
 
         $indicator = null;
         if( $id != null){
@@ -64,7 +64,8 @@ class IndicatorsManager extends DomainManager
 
         foreach ($indicators as $indicator){
             if($indicator->isActive()){
-                array_push($results, $this->prepareIndicator($indicator, $request));
+                $params = $this->getParams($request, 'calculate');
+                array_push($results, $this->calculateIndicator($indicator, $params));
             }
         }
 
@@ -82,31 +83,43 @@ class IndicatorsManager extends DomainManager
 
 
     /*--------------------- Funciones Auxiliares -------------------------------------------------------------*/
-    public function prepareIndicator($indicator, $request){
+    public function prepareResult($params, $indicator, $indicatorElement){
         $result = new \stdClass();
-        $formulaElementFactory = $this->getFactory(IndicatorElement::class);
-        $indicatorElement = $formulaElementFactory->createObject($indicator, IndicatorsManager::getInstance());
-        $empresa = $this->ormConnection->findById(Empresa::class, $request->input('company'));
+        //tomo los datos de la empresa de la base de datos.
+        $empresa = $this->ormConnection->findById(Empresa::class, $params->companyId);
         $result->company = $empresa->getNombre();
         $result->indicator = $indicator->getNombre();
-        $result->period = $request->input('period');
-        if($indicator->isActive() == 1){
-            $result->value = $indicatorElement->evaluateFormula($request->input());
-        }else{
-            $result->value = "Inactivo";
-        }
-
+        $result->period = $params->period;
+        //si el indicador esta activo, evaluo su formula, si no, pongo inactivo.
+        ($indicator->isActive() == 1) ? $result->value = $indicatorElement->getValue($params) : $result->value = "Inactivo";
         return $result;
     }
 
-    public function getParams($data){
-        $params = new \stdClass();
-        $params->name = $data->input('name');
-        $params->description = $data->input('description');
-        $params->formula = $data->input('formula');
-        $params->elementosDeFormula = $data->formulaElements;
-        is_array($data->status) ? $params->activo = 1:$params->activo = 0;
+    public function calculateIndicator($indicator, $params){
+        //camuflar la entidad dentro de un elemento de formula. creo el elemento con una fabrica.
+        $formulaElementFactory = $this->getFactory(IndicatorElement::class);
+        //creo el elemento indicador pasandole la entidad para que la use.
+        $indicatorElement = $formulaElementFactory->createObject($indicator);
+        //preparo el objeto resultado
+        $result = $this->prepareResult($params, $indicator, $indicatorElement);
+        return $result;
+    }
 
+    public function getParams($data, $type){
+        $params = new \stdClass();
+        switch($type){
+            case 'save':
+                $params->name = $data->input('name');
+                $params->description = $data->input('description');
+                $params->formula = $data->input('formula');
+                $params->elementosDeFormula = $data->formulaElements;
+                is_array($data->status) ? $params->activo = 1:$params->activo = 0;
+                break;
+            case 'calculate':
+                $params->period = $data->input('period');
+                $params->companyId = $data->input('company');
+                break;
+        }
         return $params;
     }
 

@@ -5,5 +5,5 @@ use App\Model\Factories\Factory;
 
 abstract class FormulaElementFactory
 {
-    public abstract function createObject($model, $dm);
+    public abstract function createObject($model);
 }

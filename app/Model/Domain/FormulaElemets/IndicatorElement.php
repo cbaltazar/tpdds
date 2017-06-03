@@ -18,27 +18,36 @@ class IndicatorElement extends FormulaElement
         $this->orm = new EloquentConnection();
     }
 
-    public function evaluateFormula( $data ){
-        if($this->getFormulaElementsIds()){
-            $this->replaceFormulaElementValue($data);
-        }
-        return round(eval('return '.$this->getFormula().';'), 2);
-    }
-
+    /*Evaluar la formula y retornar el valor.*/
     public function getValue($data){
+        //evalua la formula con el periodo y la empresa dada por parametro.
         return $this->evaluateFormula($data);
     }
 
-    private function replaceFormulaElementValue($data){
-        $elementos = json_decode($this->getFormulaElementsIds());
+    /*----------------------------------------------------------------------------------------------------------------*/
+    public function evaluateFormula( $data ){
+        //si el elemento tiene otros elementos dentro de su formula, tambien los evalua.
+        if($this->getFormulaElements()){
+            $this->replaceFormulaElementValue($data);
+        }
+        //devuelve la evaluacion del string de formula.
+        return round(eval('return '.$this->getFormula().';'), 2);
+    }
 
-        foreach ($elementos as $elemento){
-            $elemento = json_decode($elemento);
-            $entityFormulaElement = $this->orm->findById('App\Model\Entities\\'.$elemento->class, $elemento->id);
-            $elem = $this->getObjectFormulaElement($entityFormulaElement);
-            if($elem->getValue($data) >= 0){
-                $this->setFormula(str_replace($elem->getName(), $elem->getValue($data), $this->getFormula()));
+    private function replaceFormulaElementValue($data){
+        $formulaElements = json_decode($this->getFormulaElements());
+        foreach ($formulaElements as $element){
+            $element = json_decode($element);
+            //creo la entidad a partir de los datos guardados en $elemento.
+            $entity = $this->orm->findById('App\Model\Entities\\'.$element->class, $element->id);
+            //camuflo la entidad con el elemento de formula
+            $formulaElement = $this->getObjectFormulaElement($entity);
+            //evaluo la formula del elemento actual
+            if($formulaElement->getValue($data) >= 0){
+                //si el valor de la formula existe, lo reemplazo en la formula del objeto que me llamo anteriormente.
+                $this->setFormula(str_replace($formulaElement->getName(), $formulaElement->getValue($data), $this->getFormula()));
             }else{
+                //si no existe elemento de formula, pongo un cero ya que no se puede calcular y corto el bucle.
                 $this->setFormula(0);
                 break;
             }

@@ -14,14 +14,9 @@ use App\Model\Domain\DomainManagers\IndicatorsManager;
 abstract class FormulaElement
 {
     protected $model;
-    protected $domainManager;
     protected $formula;
 
     public abstract function getValue( $data );
-
-    public function setDomainManager($dm){
-        $this->domainManager = $dm;
-    }
 
     public function getName(){
         return $this->model->getNombre();
@@ -35,7 +30,7 @@ abstract class FormulaElement
         $this->formula = $formula;
     }
 
-    public function getFormulaElementsIds(){
+    public function getFormulaElements(){
         return $this->model->getElementosDeFormula();
     }
 
