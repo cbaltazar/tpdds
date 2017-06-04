@@ -6,10 +6,12 @@
 namespace App\Model\Domain\DomainManagers;
 
 use App\Model\Domain\FormulaElements\IndicatorElement;
+use App\Model\Entities\Cuenta;
 use App\Model\Entities\Indicador;
 use App\Model\Entities\Empresa;
 use App\Model\ORMConnections\EloquentConnection;
 use App\Model\Utilities\Validators\ValidateIndicatorInput;
+use Symfony\Component\ExpressionLanguage\Lexer;
 
 class IndicatorsManager extends DomainManager
 {
@@ -135,11 +137,42 @@ class IndicatorsManager extends DomainManager
             $indicator->descripcion = $params->description;
             $indicator->activo = $params->activo;
             $indicator->formula = $params->formula;
+            if(!$params->elementosDeFormula){
+                $params->elementosDeFormula = $this->addElementosDeFormula($params);
+            }
             $indicator->elementosDeFormula = $params->elementosDeFormula;
-
             return $indicator;
         }
+    }
 
+    private function addElementosDeFormula($params){
+        $tokens = $this->getTokens($params->formula);
+        $formulaElements = array();
+
+        foreach ($tokens as $token){
+            $formulaInfo = new \stdClass();
+            $elem = $this->ormConnection->findByColumnName(Indicador::class,'nombre', $token);
+            if(!$elem) $elem = $this->ormConnection->findByColumnName(Cuenta::class,'nombre', $token);
+
+            $formulaInfo->id = $elem->getId();
+            $formulaInfo->class = explode('\\', get_class($elem))[3];
+            $formulaElements[] = json_encode($formulaInfo);
+        }
+        $formulaElements = implode(",", $formulaElements);
+        return '['.$formulaElements.']';
+    }
+
+    private function getTokens($formula){
+        $lexer = new Lexer();
+        $tokens = $lexer->tokenize($formula);
+        $elements = array();
+        while(!$tokens->isEOF()){
+            $token = $tokens->current;
+            if($token->type == 'name')
+                $elements[]=$token->value;
+            $tokens->next();
+        }
+        return $elements;
     }
 
 }
