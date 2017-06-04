@@ -14,13 +14,22 @@ use App\Model\Domain\DomainManagers\IndicatorsManager;
 abstract class FormulaElement
 {
     protected $model;
-    protected $domainManager;
     protected $formula;
+    protected $orm;
 
     public abstract function getValue( $data );
 
-    public function setDomainManager($dm){
-        $this->domainManager = $dm;
+    public function setFormula($formula){
+        $this->formula = $formula;
+    }
+
+    public function setOrmConnection($orm){
+        $this->orm=$orm;
+    }
+
+    public function setModel($model){
+        $this->model = $model;
+        $this->setFormula($model->getFormula());
     }
 
     public function getName(){
@@ -31,11 +40,21 @@ abstract class FormulaElement
         return $this->formula;
     }
 
-    public function setFormula($formula){
-        $this->formula = $formula;
+    public function getFormulaElements(){
+        return $this->model->getElementosDeFormula();
     }
 
-    public function getFormulaElementsIds(){
-        return $this->model->getElementosDeFormula();
+    /*getObjectFormulaElement: devuelve un objeto elemento de formula, para obtener su valor y reemplazarlo
+    en la expresion.
+     * */
+    public function getObjectFormulaElement( $entity )
+    {
+        switch ( get_class($entity) ){
+            case 'App\Model\Entities\Cuenta':
+                return new AccountElement();
+                break;
+            default:
+                return new IndicatorElement();
+        }
     }
 }

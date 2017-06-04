@@ -29,16 +29,6 @@ class DomainManagerTest extends TestCase
         $this->assertEquals("EloquentConnection", $ormName);
     }
 
-    public function testGetFromulaElement(){
-        $entityElement = get_class($this->domainManager->getFromulaElement(null));
-        $this->assertEquals('App\Model\Entities\Cuenta',$entityElement);
-    }
-
-    public function testGetObjectFormulaElement(){
-        $accountElement = get_class($this->domainManager->getObjectFormulaElement( $this->entity ));
-        $this->assertEquals('App\Model\Domain\FormulaElements\AccountElement', $accountElement);
-    }
-
     public function testGetFactory(){
         $this->assertEquals('App\Model\Factories\Entities\EmpresaFactory', get_class($this->domainManager->getFactory( 'App\Model\Entities\Empresa' )));
     }

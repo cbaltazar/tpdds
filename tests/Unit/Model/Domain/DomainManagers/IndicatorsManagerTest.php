@@ -8,8 +8,11 @@ class IndicatorsManagerTest extends TestCase
 {
     protected $indicatorManager = null;
     protected $params1, $params2;
+    protected $validator;
 
     protected function setUp(){
+        $this->validator = Mockery::mock('App\Model\Utilities\Validators\ValidateIndicatorInput')->makePartial();
+        $this->validator->shouldReceive('validateParams')->once()->andReturn(1);
 
         $this->params1 = new \stdClass();
         $this->params1->name = 'Indicador1';
@@ -38,6 +41,8 @@ class IndicatorsManagerTest extends TestCase
         $this->indicatorManager->setOrmConnection($this->orm);
         $this->indicatorManager->shouldReceive('getOne')->once()->andReturn($indicatorEntity);
         $this->indicatorManager->shouldReceive('getFactory')->once()->andReturn($factory);
+        $this->indicatorManager->shouldReceive('validateParams')->once()->andReturn(1);
+        $this->indicatorManager->setValidator($this->validator);
     }
 
     public function testGetInstance(){

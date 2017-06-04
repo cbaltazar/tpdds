@@ -8,9 +8,6 @@
 
 namespace App\Model\Domain\DomainManagers;
 
-use App\Model\Domain\FormulaElements\AccountElement;
-use App\Model\Domain\FormulaElements\IndicatorElement;
-
 abstract class DomainManager
 {
     /*
@@ -20,6 +17,7 @@ abstract class DomainManager
      * */
     protected $ormConnection = null;
     protected $model = null;
+    protected $validator = null;
 
     /*------------------------------------------------------
      * Metodos del patron "Template Method"
@@ -50,6 +48,18 @@ abstract class DomainManager
     }
     public function setModel($model){
         $this->model = $model;
+    }
+
+    /*obtengo el elemento validador
+     * */
+    public function getValidator(){
+        return $this->validator;
+    }
+
+    /*seteo el objeto validador
+     * */
+    public function setValidator($val){
+        $this->validator = $val;
     }
 
     /*
@@ -97,7 +107,13 @@ abstract class DomainManager
      Utiliza el metodo saveElement, que es implementado en cada clase hija.
     */
     public function save($data, $id){
-        return $this->saveMessage( $this->saveElement($data, $id) );
+        $msg = '';
+        try{
+            $msg = $this->saveMessage( $this->saveElement($data, $id) );
+        }catch(\Exception $e){
+            $msg = $e->getMessage();
+        }
+        return $msg;
     }
 
     /* delete: borra el elemento cuyo id es pasado como parametro.
@@ -126,6 +142,8 @@ abstract class DomainManager
             $obj = new \stdClass();
             $obj->id = $element->getId();
             $obj->nombre = $element->getNombre();
+            $clase =  explode("\\", get_class($element));
+            $obj->clase = $clase[count($clase)-1];
             array_push($availablesElements,$obj);
         }
         return $availablesElements;
@@ -145,26 +163,6 @@ abstract class DomainManager
         return $object;
     }
 
-    /* getFormulaElement: Devuelve el elemento de dominio  (entidad), que es parte de la formula de un indicador.
-     * */
-    public function getFromulaElement($id){
-        return $this->ormConnection->findFormulaElementEntity($id);
-    }
-
-    /*getObjectFormulaElement: devuelve un objeto elemento de formula, para obtener su valor y reemplazarlo
-    en la expresion.
-     * */
-    public function getObjectFormulaElement( $entity )
-    {
-        switch ( get_class($entity) ){
-            case 'App\Model\Entities\Cuenta':
-                return new AccountElement($entity, AccountCompanyRelationManager::getInstance());
-                break;
-            default:
-                return new IndicatorElement($entity, IndicatorsManager::getInstance());
-        }
-    }
-
     /* getFactory: devuelve la fabrica que crea el objeto del modelo necesario.
      * */
     public function getFactory($type){
@@ -173,5 +171,9 @@ abstract class DomainManager
         $factory = implode('\\', $namespace);
 
         return new $factory();
+    }
+
+    public function validateInput($data){
+       return $this->validator->validateParams($data);
     }
 }

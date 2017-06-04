@@ -19,4 +19,12 @@ class Cuenta extends Model
     public function getNombre(){
         return $this->nombre;
     }
+
+    public function getFormula(){
+        return "";
+    }
+
+    public function getElementosDeFormula(){
+        return "";
+    }
 }
