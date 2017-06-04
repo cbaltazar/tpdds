@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Doctrine\DBAL\Query\QueryException;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -44,6 +45,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+       /* if($exception instanceof QueryException){
+            return response()->view('errors.500', ['message'=>"Error en la conexion a la base de datos"], 500);
+        }
+        else{
+            return response()->view('errors.500', ['message'=>$exception->getMessage()], 500);
+        }*/
         return parent::render($request, $exception);
     }
 

@@ -13,11 +13,11 @@
 
 <body class="gray-bg">
     <div class="middle-box text-center animated fadeInDown">
-        <h1>404</h1>
-        <h3 class="font-bold">Ups! Ha ocuurrido un inconveniente</h3>
+        <h1>500</h1>
+        <h3 class="font-bold">Ups! Ha ocuurrido un inconveniente: {{ $message }}</h3>
 
         <div class="error-desc">
-            Ha ocurrido un inconveniente al intentar procesar lo solicitado.<br/>
+            <br/>
             Puedes volver a la página principal. <br/><a href="{{ url('/') }}" class="btn btn-primary m-t">Home</a>
         </div>
     </div>

@@ -7,6 +7,11 @@ Route::get('/phpinfo', function(){ return phpinfo(); });
 Route::get('/lockscreen', 'FrontController@lockscreen');
 Route::get('/', function(){ return redirect('/companyList'); });
 
+
+Route::get('/calcular', 'FrontController@calcular');
+
+
+
 //COMPANIES
 Route::get('/companyList', 'FrontController@companyList');
 Route::get('/companyDetail/{company?}', 'FrontController@companyDetail');

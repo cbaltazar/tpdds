@@ -20,6 +20,7 @@ abstract class DomainManager
      * */
     protected $ormConnection = null;
     protected $model = null;
+    protected $validator = null;
 
     /*------------------------------------------------------
      * Metodos del patron "Template Method"
@@ -50,6 +51,18 @@ abstract class DomainManager
     }
     public function setModel($model){
         $this->model = $model;
+    }
+
+    /*obtengo el elemento validador
+     * */
+    public function getValidator(){
+        return $this->validator;
+    }
+
+    /*seteo el objeto validador
+     * */
+    public function setValidator($val){
+        $this->validator = $val;
     }
 
     /*
@@ -155,5 +168,9 @@ abstract class DomainManager
         $factory = implode('\\', $namespace);
 
         return new $factory();
+    }
+
+    public function validateInput($data){
+       return $this->validator->validateParams($data);
     }
 }

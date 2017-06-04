@@ -9,6 +9,7 @@ use App\Model\Domain\FormulaElements\IndicatorElement;
 use App\Model\Entities\Indicador;
 use App\Model\Entities\Empresa;
 use App\Model\ORMConnections\EloquentConnection;
+use App\Model\Utilities\Validators\ValidateIndicatorInput;
 
 class IndicatorsManager extends DomainManager
 {
@@ -17,6 +18,8 @@ class IndicatorsManager extends DomainManager
     function __construct($orm){
         $this->ormConnection=$orm;
         $this->model = Indicador::class;
+        $this->validator = new ValidateIndicatorInput();
+        $this->validator->setOrm($this->ormConnection);
     }
 
     /*getInstance: devuelve la instancia de la clase.
@@ -127,13 +130,16 @@ class IndicatorsManager extends DomainManager
     }
 
     public function setValues($indicator, $params){
-        $indicator->nombre = $params->name;
-        $indicator->descripcion = $params->description;
-        $indicator->activo = $params->activo;
-        $indicator->formula = $params->formula;
-        $indicator->elementosDeFormula = $params->elementosDeFormula;
+        if($this->validateInput($params)){
+            $indicator->nombre = $params->name;
+            $indicator->descripcion = $params->description;
+            $indicator->activo = $params->activo;
+            $indicator->formula = $params->formula;
+            $indicator->elementosDeFormula = $params->elementosDeFormula;
 
-        return $indicator;
+            return $indicator;
+        }
+
     }
 
 }
