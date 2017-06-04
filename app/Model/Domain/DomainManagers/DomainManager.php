@@ -107,7 +107,13 @@ abstract class DomainManager
      Utiliza el metodo saveElement, que es implementado en cada clase hija.
     */
     public function save($data, $id){
-        return $this->saveMessage( $this->saveElement($data, $id) );
+        $msg = '';
+        try{
+            $msg = $this->saveMessage( $this->saveElement($data, $id) );
+        }catch(\Exception $e){
+            $msg = $e->getMessage();
+        }
+        return $msg;
     }
 
     /* delete: borra el elemento cuyo id es pasado como parametro.
