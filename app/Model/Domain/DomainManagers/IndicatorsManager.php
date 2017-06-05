@@ -46,7 +46,7 @@ class IndicatorsManager extends DomainManager
             $indicator = $indicatorFactory->createObject();
         }
 
-        $this->ormConnection->saveEntity($this->setValues($indicator, $params));
+        $this->ormConnection->saveEntity($this->setValues($indicator, $params, $id));
         return $indicator;
     }
 
@@ -119,7 +119,7 @@ class IndicatorsManager extends DomainManager
             case 'save':
                 $params->name = $data->input('name');
                 $params->description = $data->input('description');
-                $params->formula = $data->input('formula');
+                $params->formula = str_replace(" ", "_", $data->input('formula'));
                 $params->elementosDeFormula = $data->formulaElements;
                 is_array($data->status) ? $params->activo = 1:$params->activo = 0;
                 break;
@@ -131,12 +131,12 @@ class IndicatorsManager extends DomainManager
         return $params;
     }
 
-    public function setValues($indicator, $params){
-        if($this->validateInput($params)){
+    public function setValues($indicator, $params, $id){
+        if($this->validateInput($params, $id)){
             $indicator->nombre = $params->name;
             $indicator->descripcion = $params->description;
             $indicator->activo = $params->activo;
-            $indicator->formula = $params->formula;
+            $indicator->formula = str_replace("_", " ", $params->formula);
             if(!$params->elementosDeFormula){
                 $params->elementosDeFormula = $this->addElementosDeFormula($params);
             }
