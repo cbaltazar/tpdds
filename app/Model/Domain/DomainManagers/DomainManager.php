@@ -173,7 +173,7 @@ abstract class DomainManager
         return new $factory();
     }
 
-    public function validateInput($data){
-       return $this->validator->validateParams($data);
+    public function validateInput($data, $id){
+       return $this->validator->validateParams($data, $id);
     }
 }

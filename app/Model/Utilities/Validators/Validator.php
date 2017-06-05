@@ -6,7 +6,7 @@ abstract class Validator
 {
     protected $orm;
 
-    public abstract function validateParams($params);
+    public abstract function validateParams($params, $id);
 
     public function setOrm($orm){
         $this->orm = $orm;
