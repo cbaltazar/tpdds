@@ -11013,7 +11013,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sNext": "Siguiente",
+				"sNext": "<i class='fa fa-chevron-right'></i>",
 
 
 				/**
@@ -11036,7 +11036,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sPrevious": "Anterior"
+				"sPrevious": "<i class='fa fa-chevron-left'></i>"
 			},
 
 			/**
