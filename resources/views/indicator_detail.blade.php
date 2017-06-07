@@ -86,7 +86,7 @@
             indicators[i].nombre = indicators[i].nombre.replace(/\s+/g,'');
             scope[indicators[i].nombre] = 1;
         }
-        @if( $indicatorObject != null and !$indicatorObject->predefinido)
+        @if( $indicatorObject == null or !$indicatorObject->predefinido)
         $("#symbols option").dblclick(function() {
             $('#formula').val($('#formula').val()+this.value);
             validateEc();

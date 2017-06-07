@@ -102,4 +102,9 @@
 <script src="{{asset('js/plugins/toastr/toastr.min.js')}}"></script>
 <script src="{{asset('js/messenger.js')}}"></script>
 <script src="{{asset('js/plugins/paginator/paginator.js')}}"></script>
+<script>
+$(".btn-delete").click(function(e){
+  $(".confirm").attr('href',"{{ url('deleteCompany/')}}"+"/"+$(this).attr('id'));
+})
+</script>
 @endsection
