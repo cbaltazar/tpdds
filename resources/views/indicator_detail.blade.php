@@ -65,34 +65,33 @@
     <script src="{{asset('js/plugins/validate/jquery.validate.min.js')}}"></script>
     <script src="{{asset('js/indicator-validation.js')}}"></script>
     <script src="{{asset('js/plugins/iCheck/icheck.min.js')}}"></script>
+
     <script>
         var scope = {};
         var formula = "";
         var indicators = JSON.parse('{!! json_encode($variable) !!}');
 
         $(document).ready(function () {
-            prepareSymbols();
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green',
             });
-            @if( $indicatorObject != null and $indicatorObject->predefinido)
-                $(".dis").attr("disabled", true);
-            @endif
+          @if( $indicatorObject != null and $indicatorObject->predefinido)
+            $(".dis").attr("disabled", true);
+          @endif
         });
 
-        function prepareSymbols(){
-          for (var i = 0; i < indicators.length; i++) {
-              $("#symbols").append("<option>"+indicators[i].nombre+"</option>");
-              indicators[i].nombre = indicators[i].nombre.replace(/\s+/g,'');
-              scope[indicators[i].nombre] = 1;
-          }
+        for (var i = 0; i < indicators.length; i++) {
+            $("#symbols").append("<option>"+indicators[i].nombre+"</option>");
+            indicators[i].nombre = indicators[i].nombre.replace(/\s+/g,'');
+            scope[indicators[i].nombre] = 1;
         }
-
+        @if( $indicatorObject != null and !$indicatorObject->predefinido)
         $("#symbols option").dblclick(function() {
             $('#formula').val($('#formula').val()+this.value);
             validateEc();
         });
+        @endif
 
         $('#formula').on('input', function () {
             validateEc();
