@@ -35,7 +35,9 @@
                     <div class="logo-element">DI?</div>
                 </li>
                 <li> <!--class="active"-->
-                    <a href="{{ url('companyList') }}"><i class="fa fa-briefcase"></i> <span class="nav-label">Empresas</span></a>
+                    <a href="{{ url('companyList') }}"><i class="fa fa-briefcase"></i>
+                      <span class="nav-label">Empresas</span>
+                    </a>
                 </li>
                 <li>
                     <a href="{{ url('indicatorList') }}"><i class="fa fa-line-chart"></i> <span class="nav-label">Indicadores</span></a>

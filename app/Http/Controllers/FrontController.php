@@ -82,4 +82,8 @@ class FrontController extends Controller{
     public function methodDetail(){
         return view('method_detail');
     }
+
+    public function methodEval(){
+        return view('method_eval');
+    }
 }

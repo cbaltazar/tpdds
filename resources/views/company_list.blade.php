@@ -59,7 +59,8 @@
                 <div class="ibox-title">
                     <h5>Listado de Empresas</h5>
                     <div class="ibox-tools">
-                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadModal"><i class="fa fa-upload"></i> Cargar cuentas</button>
+                      <a href="{{ url('methodEval') }}" class="btn btn-primary btn-sm"><i class="fa fa-tachometer"></i> Evaluar </a>
+                      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadModal"><i class="fa fa-upload"></i> Cargar</button>
                     </div>
                 </div>
                 <div class="ibox-content">
