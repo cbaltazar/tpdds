@@ -34,27 +34,30 @@
       </div>
     </div>
   <div class="col-lg-8">
-    <div class="ibox">
-      <div class="ibox-title">
-        <div class="col-md-2">
-          <h5>Metodología:</h5>
-        </div>
-        <div class="col-md-7">
-            <select class="form-control m-b">
-              @for($i=1;$i<4;$i++)
-                <option> metodología {{$i}}</option>
-              @endfor
-            </select>
-        </div>
-        <div class="ibox-tools">
-            <a href="{{ url('methodDetail') }}" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Aplicar metodología</a>
-        </div>
+    <div style="background:#e7eaec; padding:0px 20px; margin-bottom:20px;">
+      <div class="project-list">
+      <table class="table">
+        <tbody>
+          <tr>
+            <td class="project-status">
+              <h5 style="font-size:14px">Evaluar mediante:</h5>
+            </td>
+            <td class="project-title" style="padding:13px 10px">
+              <select class="form-control">
+                @for($i=1;$i<4;$i++)
+                  <option> metodología {{$i}}</option>
+                @endfor
+              </select>
+            </td>
+            <td class="project-actions">
+              <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Aplicar</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       </div>
     </div>
     <div class="ibox float-e-margins">
-        <div class="ibox-title">
-            <h5>Ranking</h5>
-        </div>
         <div class="ibox-content">
             <table class="table table-hover">
                 <thead>
