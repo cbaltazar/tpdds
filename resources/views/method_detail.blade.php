@@ -27,7 +27,7 @@
                               <div class="checkbox i-checks"><label> <input type="checkbox" value="" checked=""> <i></i> Activo </label></div>
                       </div>
                       <div class="hr-line-dashed"></div>
-                      <div class="form-group"><label class="col-sm-2 control-label">Reglas</label>
+                      <div class="form-group"><label class="col-sm-2 control-label">Rules</label>
                           <div class="col-md-10">
                               <div class="summernote" style="border:1px solid black">
                                   <h4>

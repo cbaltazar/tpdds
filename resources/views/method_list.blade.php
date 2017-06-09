@@ -8,7 +8,7 @@
                         <div class="ibox-title">
                             <h5>Listado de Metodologías</h5>
                             <div class="ibox-tools">
-                                <a href="{{ url('methodDetail') }}" class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> Crear metodología</a>
+                                <a href="{{ url('methodDetail') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Crear metodología</a>
                             </div>
                         </div>
                         <div class="ibox-content">
@@ -24,156 +24,22 @@
                             <div class="project-list">
                                 <table class="table table-hover">
                                     <tbody>
+                                    @for($i=1;$i<8;$i++)
                                     <tr>
                                         <td class="project-status">
-                                            <span class="label label-primary">activo</span>
+                                            <span class="label label-primary">Activo</span>
                                         </td>
                                         <td class="project-title">
-                                            <a href="{{ url('methodDetail') }}">Contract with Zender Company</a>
+                                            <a href="{{ url('methodDetail') }}">Methodology {{$i}}</a>
                                             <br/>
                                             <small>Created 14.08.2014</small>
                                         </td>
                                         <td class="project-actions">
-
                                             <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
                                             <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td class="project-status">
-                                            <span class="label label-primary">activo</span>
-                                        </td>
-                                        <td class="project-title">
-                                            <a href="{{ url('methodDetail') }}">There are many variations of passages</a>
-                                            <br/>
-                                            <small>Created 11.08.2014</small>
-                                        </td>
-                                        <td class="project-actions">
-
-                                            <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
-                                            <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="project-status">
-                                            <span class="label label-warning">inactivo</span>
-                                        </td>
-                                        <td class="project-title">
-                                            <a href="{{ url('methodDetail') }}">Many desktop publishing packages and web</a>
-                                            <br/>
-                                            <small>Created 10.08.2014</small>
-                                        </td>
-                                        <td class="project-actions">
-
-                                            <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
-                                            <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="project-status">
-                                            <span class="label label-primary">activo</span>
-                                        </td>
-                                        <td class="project-title">
-                                            <a href="{{ url('methodDetail') }}">Letraset sheets containing</a>
-                                            <br/>
-                                            <small>Created 22.07.2014</small>
-                                        </td>
-                                        <td class="project-actions">
-
-                                          <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
-                                          <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="project-status">
-                                            <span class="label label-primary">activo</span>
-                                        </td>
-                                        <td class="project-title">
-                                            <a href="{{ url('methodDetail') }}">Contrary to popular belief</a>
-                                            <br/>
-                                            <small>Created 14.07.2014</small>
-                                        </td>
-                                        <td class="project-actions">
-
-                                          <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
-                                          <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="project-status">
-                                            <span class="label label-primary">activo</span>
-                                        </td>
-                                        <td class="project-title">
-                                            <a href="{{ url('methodDetail') }}">Contract with Zender Company</a>
-                                            <br/>
-                                            <small>Created 14.08.2014</small>
-                                        </td>
-                                        <td class="project-actions">
-
-                                            <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
-                                            <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="project-status">
-                                            <span class="label label-primary">activo</span>
-                                        </td>
-                                        <td class="project-title">
-                                            <a href="{{ url('methodDetail') }}">There are many variations of passages</a>
-                                            <br/>
-                                            <small>Created 11.08.2014</small>
-                                        </td>
-                                        <td class="project-actions">
-
-                                            <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
-                                            <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="project-status">
-                                            <span class="label label-warning">inactivo</span>
-                                        </td>
-                                        <td class="project-title">
-                                            <a href="{{ url('methodDetail') }}">Many desktop publishing packages and web</a>
-                                            <br/>
-                                            <small>Created 10.08.2014</small>
-                                        </td>
-                                        <td class="project-actions">
-
-                                          <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
-                                          <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="project-status">
-                                            <span class="label label-primary">activo</span>
-                                        </td>
-                                        <td class="project-title">
-                                            <a href="{{ url('methodDetail') }}">Letraset sheets containing</a>
-                                            <br/>
-                                            <small>Created 22.07.2014</small>
-                                        </td>
-                                        <td class="project-actions">
-
-                                          <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
-                                          <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="project-status">
-                                            <span class="label label-primary">activo</span>
-                                        </td>
-                                        <td class="project-title">
-                                            <a href="{{ url('methodDetail') }}">Contrary to popular belief</a>
-                                            <br/>
-                                            <small>Created 14.07.2014</small>
-                                        </td>
-                                        <td class="project-actions">
-
-                                          <a href="{{ url('methodDetail') }}" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> Ver </a>
-                                          <a href="#" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Borrar </a>
-                                        </td>
-                                    </tr>
+                                    @endfor
                                     </tbody>
                                 </table>
                             </div>

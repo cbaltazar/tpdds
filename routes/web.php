@@ -33,6 +33,7 @@ Route::get('/indicatorDelete/{id}', 'IndicatorController@indicatorDelete');
 //METODOLOGIES
 Route::get('/methodDetail', 'FrontController@methodDetail');
 Route::get('/methodList', 'FrontController@methodList');
+Route::get('/methodEval','FrontController@methodEval');
 
 //TEST FORMULA
 Route::get('/pruebaBase', 'FrontController@pruebaBase');
