@@ -37,6 +37,7 @@ class IndicatorsManager extends DomainManager
      * */
     public function saveElement($data, $id){
         $params = $this->getParams($data, 'save');
+        $params->id = $id;
 
         $indicator = null;
         if( $id != null){

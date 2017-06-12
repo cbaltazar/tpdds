@@ -11,11 +11,12 @@ class ValidateIndicatorInput extends Validator
 {
     public function validateParams($params)
     {
+        var_dump($params);
         if(!$this->validateFormatName($params->name)){
             throw new Exception("Error en el nombre del indicador.");
         }
 
-        if($this->existName(Indicador::class, $params->name)){
+        if($this->existName(Indicador::class, $params->name) && !$params->id){
             throw new Exception("Ya existe un indicador con ese nombre.");
         }
 
@@ -39,7 +40,7 @@ class ValidateIndicatorInput extends Validator
         $sexpr  = "$atom($op$atom)*";
         $formula = preg_replace('~\s+~', '', $formula);
         $par = "~\($sexpr\)~";
-        $matches = array();
+
         while(preg_match($par, $formula)){
             $formula = preg_replace($par, 'x', $formula);
         }
@@ -50,7 +51,7 @@ class ValidateIndicatorInput extends Validator
     public function validateFormulaElements($params){
         $response = true;
         $lexer = new Lexer();
-        $tokens = $lexer->tokenize($params->formula);
+        $tokens = $lexer->tokenize(str_replace(' ', "_", $params->formula));
         while(!$tokens->isEOF()){
             $token = $tokens->current;
             if($token->type == 'name'){
@@ -66,6 +67,7 @@ class ValidateIndicatorInput extends Validator
 
     private function validateElement($element){
         $response = true;
+        $element->value = str_replace('_', ' ', $element->value);
         if(!$this->existName(Indicador::class, $element->value) && !$this->existName(Cuenta::class, $element->value)){
             $response = false;
         }
