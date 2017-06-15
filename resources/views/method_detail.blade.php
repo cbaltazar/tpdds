@@ -27,11 +27,10 @@
                       </div>
                       <div class="hr-line-dashed"></div>
 
-
                       <h4>Reglas</h4>
                         <div class="content col-sm-12">
                           <div class="table responsive">
-                              <table class="table table-striped">
+                              <table class="table table-striped" id="rules">
                                   <thead>
                                   <tr>
                                       <th>#</th>
@@ -43,51 +42,9 @@
                                       <th></th>
                                   </tr>
                                   </thead>
-                                  <tbody>
-                                  @for($i=1;$i<6;$i++)
-                                  <tr class="rule-{{$i}}">
-                                      <td><b>{{$i}}</b></td>
-                                      <td><select class="form-control indicator" id="indicator">
-                                      @for($j=0;$j<=10;$j++)
-                                        <option value="ind1">Indicador {{$j}}</option>
-                                      @endfor
-                                      </td>
-                                      <td class="form-inline">
-                                        <select class="form-control" style="width:100%" id="condition">
-                                          <option value="min">menor</option>
-                                          <option value="max">mayor</option>
-                                          <option value="minq">menor que</option>
-                                          <option value="maxq">mayor que</option>
-                                          <option value="asc">creciente</option>
-                                          <option value="dec">decreciente</option>
-                                        </select>
-                                        <input type="text" class="form-control" style="width:0%" value="0" id="value">
-                                      </td>
-                                      <td><select class="form-control" name="from" id="from">
-                                      @for($j=0;$j<7;$j++)
-                                        <option value="201{{$j}}">201{{$j}}</option>
-                                      @endfor
-                                      </td>
-                                      <td><select class="form-control" name="to" id="to">
-                                      @for($j=0;$j<7;$j++)
-                                        <option value="201{{$j}}">201{{$j}}</option>
-                                      @endfor
-                                      </td>
-                                      <td><select class="form-control function" id="function">
-                                        <option value="uni">Unitaria</option>
-                                        <option value="sum">Sumatoria</option>
-                                        <option value="avg">Promedio</option>
-                                        <option value="med">Media</option>
-                                      </td>
-                                      <td>
-                                        <button type="button" name="button" class="btn btn-sm btn-warning"><i class="fa fa-trash"></i></button>
-                                      </td>
-
-                                  </tr>
-                                  @endfor
-                                  </tbody>
+                                  <tbody></tbody>
                               </table>
-                              <button type="button" name="button" class="btn btn-md btn-primary col-sm-offset-10"><i class="fa fa-plus"></i> Agregar Regla</button>
+                              <button type="button" name="button" class="btn btn-md btn-primary col-sm-offset-10" id="addRule"><i class="fa fa-plus"></i> Agregar Regla</button>
                           </div>
 
                         </div>
@@ -104,57 +61,120 @@
   </div>
 </div>
 @endsection
+
 @section ('scripts')
-    <script src="{{asset('js/plugins/iCheck/icheck.min.js')}}"></script>
-    <script src="{{asset('js/plugins/sweetalert/dist/sweetalert.min.js')}}"></script>
-    <script>
-        $(document).ready(function(){
-            $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });
+  <script src="{{asset('js/plugins/iCheck/icheck.min.js')}}"></script>
+  <script src="{{asset('js/plugins/sweetalert/dist/sweetalert.min.js')}}"></script>
+  <script>
 
-            $('#function').attr("disabled",true);
-            $('#value').hide()
-            bkpFrom=$('#from').val();
-            bkpTo=$('#to').val()
-       });
+    var ruleId=1;
+      $(document).ready(function(){
+          $('.i-checks').iCheck({
+              checkboxClass: 'icheckbox_square-green',
+              radioClass: 'iradio_square-green',
+          });
+          createRuleRow(ruleId);
+     });
 
-    </script>
+//--------campo value------------------
+  $('body').on('change','.condition', function(){
+    var rowId ='#'+ $(this).parent().parent().attr('id');
+    if(this.value == "minq" || this.value == "maxq"){
+      $(rowId+' .value').show().width("10%");
+      $(rowId+' .condition').width("36%");
+    }else {
+      $(rowId+' .value').hide()
+      $(rowId+' .condition').width("75%");
+    }
+  })
+//-----------DATE-VALIDATOR--------------------------
+    $('body').on('change','.from,.to',function(){
+      var rowId = $(this).parent().parent().attr('id');
+      var lastPeriod = $(this).data('lastPeriod');
+      var newPeriod = $(this).val();
 
-    <script>
-      $('#from, #to').each(function() {
-        $(this).data('lastValue', $(this).val());
+      if($('#'+rowId+' .from').val() > $('#'+rowId+' .to').val()){
+        sweetAlert("Ups...", "La fecha final no puede ser menor que la inicial");
+        $(this).val(lastPeriod)
+      }else {
+        $(this).data('lastPeriod', newPeriod)
+      }
+    })
+//-----------MODALIDAD VALIDATOR--------------------------
+     $('body').on('change','.from,.to,.condition', function(){
+       var rowId ='#'+ $(this).parent().parent().attr('id');
+       if($(rowId+' .from').val() != $(rowId+' .to').val() && $(rowId+' .condition').val()!='asc' && $(rowId+' .condition').val()!='dec'){
+         $(rowId+' .function').attr("disabled",false);
+       }else{
+         $(rowId+ ' .function').attr("disabled",true).val("uni");
+       }
+     });
+//----------DELETE RULE------------------
+     $('body').on('click','.deleteRule',function(){
+       var i;
+
+       if ($('#rules .rule').length>1) {
+         rowId= $(this).parent().parent().attr('id');
+         $('#'+rowId).remove()
+         for (i = 0; i < $('#rules .rule').length; i++) {
+           $($('#rules .rule')[i]).find('.ruleId').html(i+1)
+           $($('#rules .rule')[i]).attr('id',i);
+         };
+         ruleId = i+1 //que proxima que se genere parta del id de la ultima
+       }else{
+         sweetAlert("Ups...", "Necesitas al menos una regla");
+       };
+     });
+//----------CREATE RULE-----
+      $("#addRule").click(function(){
+        createRuleRow(ruleId)
       });
 
-      $('#from,#to,#condition').change(function(){
-        if($('#from').val() != $('#to').val() && $('#condition').val()!='asc' && $('#condition').val()!='dec'){
-          $('#function').attr("disabled",false);
-        }else{
-          $('#function').attr("disabled",true).val("uni");
-        }
-      })
-      $('#from,#to').change(function(){
-        var lastPeriod = $(this).data('lastValue');
-        var newPeriod = $(this).val();
-        if($('#from').val() > $('#to').val()){
-          sweetAlert("Oops...", "La fecha final no puede ser menor que la inicial");
-          $(this).val(lastPeriod)
-        }else {
-          $(this).data('lastValue', newPeriod)
-        }
-      })
-
-      $('#condition').change(function(){
-        if(this.value == "minq" || this.value == "maxq"){
-          $('#value').show();
-          $('#value').width("10%");
-          $('#condition').width("36%");
-        }else {
-          $('#value').hide()
-          $('#condition').width("75%");
-        }
-      })
-
-    </script>
+      function createRuleRow(){
+        $("#rules").append(
+          '<tr class="rule" id="'+ruleId+'">\
+          <td><b class="ruleId">'+ruleId+'</b></td>\
+          <td><select class="form-control indicator>\
+          @for($j=0;$j<=10;$j++)"\
+            <option value="ind{{$j}}">Indicador {{$j}}</option>\
+          @endfor\
+          </td>\
+          <td class="form-inline">\
+            <select class="form-control condition" style="width:100%">\
+              <option value="min">menor</option>\
+              <option value="max">mayor</option>\
+              <option value="minq">menor que</option>\
+              <option value="maxq">mayor que</option>\
+              <option value="asc">creciente</option>\
+              <option value="dec">decreciente</option>\
+            </select>\
+            <input type="text" class="form-control value" style="width:0%">\
+          </td>\
+          <td><select class="form-control from" name="from">\
+            @for($j=0;$j<7;$j++)\
+              <option value="201{{$j}}">201{{$j}}</option>\
+            @endfor\
+          </td>\
+          <td><select class="form-control to" name="to">\
+            @for($j=0;$j<7;$j++)\
+              <option value="201{{$j}}">201{{$j}}</option>\
+            @endfor\
+          </td>\
+          <td><select class="form-control function">\
+            <option value="uni">Unitaria</option>\
+            <option value="sum">Sumatoria</option>\
+            <option value="avg">Promedio</option>\
+            <option value="med">Media</option>\
+          </td>\
+          <td>\
+              <button type="button" name="button" class="btn btn-sm btn-warning deleteRule"><i class="fa fa-trash"></i></button>\
+          </td>\
+        </tr>')
+        $('#'+ruleId+'>td>.function').attr("disabled",true);
+        $('#'+ruleId+'>td>.value').hide();
+        $('#'+ruleId+' .from').data('lastPeriod', $('#'+ruleId+' .from').val());
+        $('#'+ruleId+' .to').data('lastPeriod', $('#'+ruleId+' .to').val());
+        ruleId++;
+    }
+  </script>
 @endsection
