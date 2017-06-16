@@ -10,7 +10,7 @@ use App\Model\Entities\Cuenta;
 use App\Model\Entities\Cuenta_Empresa;
 use App\Model\Entities\Empresa;
 use App\Model\ORMConnections\EloquentConnection;
-use App\Model\Entities\Factories\Cuenta_EmpresaFactory;
+use App\Model\Factories\Cuenta_EmpresaFactory;
 
 class AccountsManager extends DomainManager
 {
