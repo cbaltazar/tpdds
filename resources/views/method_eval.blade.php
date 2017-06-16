@@ -50,6 +50,7 @@
               </select>
             </td>
             <td class="project-actions">
+              <a href="{{ url('methodDetail') }}" class="btn btn-warning btn-sm"><i class="fa fa-eye"></i> Ver </a>
               <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Aplicar</a>
             </td>
           </tr>
