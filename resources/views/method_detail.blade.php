@@ -13,17 +13,17 @@
                   <h5>Editor de Metodología</h5>
               </div>
               <div class="ibox-content">
-                  <form method="get" class="form-horizontal" style="margin-top:15px">
+                  <form method="get" class="form-horizontal" style="margin-top:15px" id="methodology-form">
                       <div class="form-group"><label class="col-sm-2 control-label">Nombre</label>
-                          <div class="col-sm-9"><input type="text" class="form-control" placeholder="Nombre de la metodología" ></div>
+                          <div class="col-sm-9"><input type="text" class="form-control" placeholder="Nombre de la metodología" id="nombre"></div>
                       </div>
                       <div class="hr-line-dashed"></div>
                       <div class="form-group"><label class="col-sm-2 control-label">Descripción</label>
-                          <div class="col-sm-9"><input type="text" class="form-control" placeholder="Descripción de la metodología" > <span class="help-block m-b-none">Este campo le permitirá dar una breve descripción de la metodología generada.</span></div>
+                          <div class="col-sm-9"><input type="text" class="form-control" placeholder="Descripción de la metodología" id="descripcion" > <span class="help-block m-b-none">Este campo le permitirá dar una breve descripción de la metodología generada.</span></div>
                       </div>
                       <div class="hr-line-dashed"></div>
                       <div class="form-group"><label class="col-sm-2 control-label">Estado</label>
-                              <div class="checkbox i-checks"><label> <input type="checkbox" value="" checked=""> <i></i> Activo </label></div>
+                              <div class="checkbox i-checks"><label> <input type="checkbox" value="" checked="" id="estado"> <i></i> Activo </label></div>
                       </div>
                       <div class="hr-line-dashed"></div>
 
@@ -131,50 +131,112 @@
       });
 
       function createRuleRow(){
-        $("#rules").append(
-          '<tr class="rule" id="'+ruleId+'">\
-          <td><b class="ruleId">'+ruleId+'</b></td>\
-          <td><select class="form-control indicator>\
-          @for($j=0;$j<=10;$j++)"\
-            <option value="ind{{$j}}">Indicador {{$j}}</option>\
-          @endfor\
-          </td>\
-          <td class="form-inline">\
-            <select class="form-control condition" style="width:100%">\
-              <option value="min">menor</option>\
-              <option value="max">mayor</option>\
-              <option value="minq">menor que</option>\
-              <option value="maxq">mayor que</option>\
-              <option value="asc">creciente</option>\
-              <option value="dec">decreciente</option>\
-            </select>\
-            <input type="text" class="form-control value" style="width:0%">\
-          </td>\
-          <td><select class="form-control from" name="from">\
-            @for($j=0;$j<7;$j++)\
-              <option value="201{{$j}}">201{{$j}}</option>\
-            @endfor\
-          </td>\
-          <td><select class="form-control to" name="to">\
-            @for($j=0;$j<7;$j++)\
-              <option value="201{{$j}}">201{{$j}}</option>\
-            @endfor\
-          </td>\
-          <td><select class="form-control function">\
-            <option value="uni">Unitaria</option>\
-            <option value="sum">Sumatoria</option>\
-            <option value="avg">Promedio</option>\
-            <option value="med">Media</option>\
-          </td>\
-          <td>\
-              <button type="button" name="button" class="btn btn-sm btn-warning deleteRule"><i class="fa fa-trash"></i></button>\
-          </td>\
-        </tr>')
+          var elements = JSON.parse('{!! json_encode($elements) !!}');
+          console.log(elements);
+
+          var htmlText = "<tr class='rule' id='"+ruleId+"'>"+
+                         "<td><b class='ruleId'>"+ruleId+"</b></td>"+
+                         "<td><select class='form-control element'>";
+
+          elements.forEach(function ( item ) {
+             htmlText += "<option value='"+ item.nombre +"'>"+item.nombre+"</option>";
+          });
+
+          htmlText += "<\td>"+
+                      "<td class='form-inline'>"+
+                      "<select class='form-control condition' style='width:100%'>"+
+                        "<option value='min'>menor</option>"+
+                        "<option value='max'>mayor</option>" +
+                        "<option value='minq'>menor que</option>"+
+                        "<option value='maxq'>mayor que</option>"+
+                        "<option value='asc'>creciente</option>"+
+                        "<option value='dec'>decreciente</option>"+
+                      "</select>";
+
+          htmlText += "<input type='text' class='form-control value' style='width:0%'></td>"+
+                      "<td><select class='form-control from' name='from'>";
+          for(var j=0;j<7;j++){
+              htmlText += "<option value='201"+j+"'>201"+j+"</option>";
+          }
+
+          htmlText += "</td>"+
+                      "<td><select class='form-control to' name='to'>";
+
+          for(var j=0;j<7;j++){
+              htmlText += "<option value='201"+j+"'>201"+j+"</option>";
+          }
+
+          htmlText += "</td>"+
+                      "<td>" +
+                          "<select class='form-control function'>"+
+                              "<option value='uni'>Unitaria</option>"+
+                              "<option value='sum'>Sumatoria</option>"+
+                              "<option value='avg'>Promedio</option>"+
+                              "<option value='med'>Media</option>"+
+                          "</select>"+
+                      "</td>";
+
+          htmlText += "<td>"+
+                        "<button type='button' name='button' class='btn btn-sm btn-warning deleteRule'><i class='fa fa-trash'></i></button>"+
+                      "</td>"+
+                    "</tr>";
+
+        $("#rules").append( htmlText );
+
         $('#'+ruleId+'>td>.function').attr("disabled",true);
         $('#'+ruleId+'>td>.value').hide();
         $('#'+ruleId+' .from').data('lastPeriod', $('#'+ruleId+' .from').val());
         $('#'+ruleId+' .to').data('lastPeriod', $('#'+ruleId+' .to').val());
         ruleId++;
     }
+
+    $('#methodology-form').submit(function(){
+        var methodology = prepareRequest();
+
+        saveMethodology( methodology );
+
+        alert( "Handler for .submit() called." );
+
+        event.preventDefault();
+    });
+
+      function saveMethodology( data ){
+          $.ajax({
+              url: '/api/saveMethodology',
+              type: 'post',
+              dataType: 'json',
+              data: JSON.stringify(data),
+              success: function( obj ) {
+                console.log(obj);
+              },
+              error: function( obj ){
+                  console.log(obj);
+              }
+          });
+      }
+
+      function prepareRequest(){
+          var methodology = {};
+          methodology.nombre = $("#nombre").val();
+          methodology.descripcion = $("#descripcion").val();
+          methodology.estado = ($("#estado").is(':checked')) ? 1 : 0;
+          methodology.reglas = [];
+
+          var rows = $("#rules").children('tbody').children('tr');
+          rows.each(function( key, item ){
+              var rule = {};
+              rule.elemento = $(item).find('.element').val();
+              rule.condicion = $(item).find('.condition').val();
+              rule.periodo = {};
+              rule.periodo.desde = $(item).find('.from').val();
+              rule.periodo.hasta = $(item).find('.to').val();
+              rule.modalidad = $(item).find('.function').val();
+
+              methodology.reglas.push( rule );
+          });
+
+          return methodology;
+      }
+
   </script>
 @endsection

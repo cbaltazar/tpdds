@@ -8,6 +8,9 @@
 
 namespace App\Model\Domain\DomainManagers;
 
+use App\Model\Entities\Indicador;
+use App\Model\Entities\Cuenta;
+
 abstract class DomainManager
 {
     /*
@@ -134,8 +137,8 @@ abstract class DomainManager
       Se utliza a la hora de cargar la formula de un indicador, para validar que los elementos
       ingresados, existan.
      */
-    public function getAvailablesElements(){
-        $elements = $this->ormConnection->getAll( $this->model );
+    public function getAvailablesElements( $model ){
+        $elements = $this->ormConnection->getAll( $model );
         $availablesElements = array();
 
         foreach ($elements as $element) {
@@ -147,6 +150,13 @@ abstract class DomainManager
             array_push($availablesElements,$obj);
         }
         return $availablesElements;
+    }
+
+    public function getAvailablesFromulaElements(){
+        $accounts = $this->getAvailablesElements( Cuenta::class );
+        $indicators = $this->getAvailablesElements( Indicador::class );
+
+        return array_merge($accounts, $indicators);
     }
 
     /*getObject: busca el elemento con el nombre seleccionado. Si no se encuentra, lo crea.

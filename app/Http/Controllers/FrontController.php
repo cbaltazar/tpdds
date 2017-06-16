@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Domain\DomainManagers\AccountsManager;
 use App\Model\Domain\DomainManagers\AccountCompanyRelationManager;
 use App\Model\Domain\DomainManagers\IndicatorsManager;
 use App\Model\Domain\DomainManagers\CompaniesManager;
-use Symfony\Component\ExpressionLanguage\Parser;
-use Symfony\Component\ExpressionLanguage\Lexer;
-use Symfony\Component\ExpressionLanguage\Node;
+use App\Model\Domain\DomainManagers\MethodologiesManager;
 
 class FrontController extends Controller{
 
@@ -67,77 +64,27 @@ class FrontController extends Controller{
      *
      */
     public function indicatorDetail($id=null){
-        $accounts = AccountsManager::getInstance()->getAvailablesElements();
-        $indicators = IndicatorsManager::getInstance()->getAvailablesElements();
+        $domainManager = IndicatorsManager::getInstance();
 
-        $indicatorObject = IndicatorsManager::getInstance()->getOne($id);
+        $indicatorObject = $domainManager->getOne($id);
 
-        return view('indicator_detail')->with("variable", array_merge($accounts, $indicators))
+        return view('indicator_detail')->with("variable", $domainManager->getAvailablesFromulaElements())
                                        ->with("indicatorObject", $indicatorObject);
     }
 
 
 //MOTHODOLOGIES
     public function methodList(){
+
         return view('method_list');
     }
 
     public function methodDetail(){
-        return view('method_detail');
+        $domainManager = MethodologiesManager::getInstance();
+        return view('method_detail')->with("elements", $domainManager->getAvailablesFromulaElements());
     }
 
     public function methodEval(){
         return view('method_eval');
-    }
-
-
-
-
-
-
-    private function check_syntax($str) {
-
-        $lexer = new Lexer();
-        $parser = new Parser(array());
-        $tokenizado = $lexer->tokenize('((EBITDA*2.5)/(FDS*0.33))*888');
-
-        while(!$tokenizado->isEOF()){
-            $token = $tokenizado->current;
-            if($token->type == 'name'){
-                echo "<br>";var_dump($token); echo "<br>";
-            }
-            $tokenizado->next();
-        }
-        die;
-
-        // define the grammar
-        $number = "\d+(\.\d+)?";
-        $ident  = "[a-zA-Z]\w*";
-        $atom   = "[+-]?($number|$ident)";
-        $op     = "[+*/-]";
-        $sexpr  = "$atom($op$atom)*"; // simple expression
-
-        // step1. remove whitespace
-        $str = preg_replace('~\s+~', '', $str);
-
-        // step2. repeatedly replace parenthetic expressions with 'x'
-        $par = "~\($sexpr\)~";
-        while(preg_match($par, $str, $matches))
-            $str = preg_replace($par, 'x', $str);
-
-        // step3. no more parens, the string must be simple expression
-        $match = preg_match("~^$sexpr$~", $str);
-    }
-
-    public function calcular()
-    {
-        $tests = array(
-            "((Indicador)+centa",
-            "((EBITDA*2.5)/(FDS*0.33))*888"
-        );
-
-        foreach($tests as $t)
-            echo $t, "=", $this->check_syntax($t) ? "ok" : "nope", "\n";
-
     }
 }
