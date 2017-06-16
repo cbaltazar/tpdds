@@ -31,6 +31,6 @@ class IndicatorController extends Controller
      * Api que calcula los indicadores, para la empresa y periodo pasados por POST
      * */
     public function indicatorEvaluate(Request $request){
-        return IndicatorsManager::getInstance()->indicatorEvaluate($request);
+        return IndicatorsManager::getInstance()->indicatorEvaluate(json_decode( $request->getContent() ));
     }
 }

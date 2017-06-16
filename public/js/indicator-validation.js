@@ -1,4 +1,7 @@
 $(function() {
+
+    $("form[name='indicator-form']").onsubmit()
+
   $("form[name='indicator-form']").validate({
     rules: {
       name: {

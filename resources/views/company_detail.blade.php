@@ -137,7 +137,7 @@ function calculateIndicator(){
         url: '/api/indicatorEvaluate',
         type: 'post',
         dataType: 'json',
-        data: data,
+        data: JSON.stringify(data),
         success: function ( obj ) {
             if( obj.length > 0){
                 var i = 0;

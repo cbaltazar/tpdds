@@ -63,13 +63,12 @@ class IndicatorsManager extends DomainManager
 
     /*indicatorEvaluate: evalua todos los indicadores, para una empresa y un periodo dados.
      * */
-    public function indicatorEvaluate($request){
+    public function indicatorEvaluate($params){
         $indicators = $this->getAll();
         $results = array();
 
         foreach ($indicators as $indicator){
             if($indicator->isActive()){
-                $params = $this->getParams($request, 'calculate');
                 array_push($results, $this->calculateIndicator($indicator, $params));
             }
         }
@@ -121,10 +120,6 @@ class IndicatorsManager extends DomainManager
                 $params->formula = str_replace(" ", "_", $data->input('formula'));
                 $params->elementosDeFormula = $data->formulaElements;
                 is_array($data->status) ? $params->activo = 1:$params->activo = 0;
-                break;
-            case 'calculate':
-                $params->period = $data->input('period');
-                $params->company = $data->input('company');
                 break;
         }
         return $params;
