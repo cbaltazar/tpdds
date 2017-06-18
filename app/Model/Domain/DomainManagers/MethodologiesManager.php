@@ -5,6 +5,7 @@ namespace App\Model\Domain\DomainManagers;
 
 use App\Model\Entities\Metodologia;
 use App\Model\ORMConnections\EloquentConnection;
+use App\Model\Utilities\Validators\ValidateMethodology;
 
 class MethodologiesManager extends DomainManager
 {
@@ -13,6 +14,8 @@ class MethodologiesManager extends DomainManager
     function __construct($orm){
         $this->ormConnection=$orm;
         $this->model = Metodologia::class;
+        $this->validator = new ValidateMethodology();
+        $this->validator->setOrm($this->ormConnection);
     }
 
     /*getInstance: devuelve la instancia de la clase.
@@ -31,13 +34,31 @@ class MethodologiesManager extends DomainManager
 
     public function saveElement($data, $id)
     {
-        var_dump( "data -> ", $data, " id -> ", $id );die;
-        // TODO: Implement saveElement() method.
+        $methodology = null;
+        if( $id != null){
+            $methodology = $this->getOne($id);
+        }else{
+            $methodologyFactory = $this->getFactory(Metodologia::class);
+            $methodology = $methodologyFactory->createObject();
+        }
+        $saved = $this->ormConnection->saveEntity($this->setValues($methodology, $data, $id));
+        $this->saveRules( $saved, $data);
+        return $saved;
+    }
+
+    public function saveRules($saved, $data){
+
     }
 
     public function saveMessage($saved)
     {
-        // TODO: Implement saveMessage() method.
+        $response = array();
+        $response['msg'] = "Metodologia guardada con exito!";
+        $response['id'] = $saved;
+        if($saved == null) {
+            $response['msg'] = "Error al guardar la metodologia.";
+        }
+        return $response;
     }
 
     public function deleteRelations($id)
@@ -45,4 +66,14 @@ class MethodologiesManager extends DomainManager
         // TODO: Implement deleteRelations() method.
     }
 
+    public function setValues($methodology, $data, $id){
+        if($this->validateInput($data, $id)){
+            $methodology->nombre = $data->name;
+            $methodology->descripcion = $data->description;
+            $methodology->activo = $data->status;
+            $methodology->reglas = json_encode($data->rules);
+
+            return $methodology;
+        }
+    }
 }

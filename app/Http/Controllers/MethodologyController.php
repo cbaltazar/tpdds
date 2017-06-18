@@ -9,7 +9,8 @@ class MethodologyController extends Controller
 {
     public function post(Request $request){
         $domainManager = MethodologiesManager::getInstance();
-        $domainManager->save( $request->getContent(), null );
-        var_dump( json_decode( $request->getContent() ) );die;
+        $status = $domainManager->save( json_decode( $request->getContent() ), null );
+
+        return $status;
     }
 }

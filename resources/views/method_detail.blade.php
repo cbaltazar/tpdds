@@ -8,12 +8,14 @@
 <div class="wrapper wrapper-content animated fadeInUp">
   <div class="row">
       <div class="col-lg-12">
+          <div class="alert alert-danger" style="display: none;"></div>
+          <div class="alert alert-success" id="success-msg" style="display: none;"></div>
           <div class="ibox float-e-margins">
               <div class="ibox-title">
                   <h5>Editor de Metodología</h5>
               </div>
               <div class="ibox-content">
-                  <form method="get" class="form-horizontal" style="margin-top:15px" id="methodology-form">
+                  <form method="post" class="form-horizontal" style="margin-top:15px" id="methodology-form">
                       <div class="form-group"><label class="col-sm-2 control-label">Nombre</label>
                           <div class="col-sm-9"><input type="text" class="form-control" placeholder="Nombre de la metodología" id="nombre"></div>
                       </div>
@@ -132,7 +134,6 @@
 
       function createRuleRow(){
           var elements = JSON.parse('{!! json_encode($elements) !!}');
-          console.log(elements);
 
           var htmlText = "<tr class='rule' id='"+ruleId+"'>"+
                          "<td><b class='ruleId'>"+ruleId+"</b></td>"+
@@ -192,11 +193,7 @@
 
     $('#methodology-form').submit(function(){
         var methodology = prepareRequest();
-
         saveMethodology( methodology );
-
-        alert( "Handler for .submit() called." );
-
         event.preventDefault();
     });
 
@@ -207,32 +204,40 @@
               dataType: 'json',
               data: JSON.stringify(data),
               success: function( obj ) {
-                console.log(obj);
+                  $('.alert-success').text( obj.msg );
+                  $('.alert-success').show();
+                  window.location.hash = '#success-msg';
+                  setTimeout(function () {
+                      $(".alert-success").slideUp(1500);
+                      location.href = '{{ url('methodList') }}';
+                  }, 2000);
               },
               error: function( obj ){
-                  console.log(obj);
+                  $('.alert-danger').text( obj.responseText );
+                  $('.alert-danger').show();
+                  $('.alert-danger').focus();
               }
           });
       }
 
       function prepareRequest(){
           var methodology = {};
-          methodology.nombre = $("#nombre").val();
-          methodology.descripcion = $("#descripcion").val();
-          methodology.estado = ($("#estado").is(':checked')) ? 1 : 0;
-          methodology.reglas = [];
+          methodology.name = $("#nombre").val();
+          methodology.description = $("#descripcion").val();
+          methodology.status = ($("#estado").is(':checked')) ? 1 : 0;
+          methodology.rules = [];
 
           var rows = $("#rules").children('tbody').children('tr');
           rows.each(function( key, item ){
               var rule = {};
-              rule.elemento = $(item).find('.element').val();
-              rule.condicion = $(item).find('.condition').val();
-              rule.periodo = {};
-              rule.periodo.desde = $(item).find('.from').val();
-              rule.periodo.hasta = $(item).find('.to').val();
-              rule.modalidad = $(item).find('.function').val();
+              rule.element = $(item).find('.element').val();
+              rule.condition = $(item).find('.condition').val();
+              rule.period = {};
+              rule.period.from = $(item).find('.from').val();
+              rule.period.to = $(item).find('.to').val();
+              rule.mode = $(item).find('.function').val();
 
-              methodology.reglas.push( rule );
+              methodology.rules.push( rule );
           });
 
           return methodology;
