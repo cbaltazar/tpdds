@@ -8,24 +8,29 @@
 <div class="wrapper wrapper-content animated fadeInUp">
   <div class="row">
       <div class="col-lg-12">
-          <div class="alert alert-danger" style="display: none;"></div>
-          <div class="alert alert-success" id="success-msg" style="display: none;"></div>
+          @if (session('status'))
+              <div class="alert  alert-danger">
+                    {{ session('status') }}
+                </div>
+          @endif
           <div class="ibox float-e-margins">
               <div class="ibox-title">
                   <h5>Editor de Metodología</h5>
               </div>
               <div class="ibox-content">
-                  <form method="post" class="form-horizontal" style="margin-top:15px" id="methodology-form">
+                  <form method="post" class="form-horizontal" style="margin-top:15px" id="methodology-form" action="{{ url('saveMethodology') }}/{{ $methodologyObject->id or "" }}">
+                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
                       <div class="form-group"><label class="col-sm-2 control-label">Nombre</label>
-                          <div class="col-sm-9"><input type="text" class="form-control" placeholder="Nombre de la metodología" id="nombre"></div>
+                          <div class="col-sm-9"><input type="text" class="form-control" placeholder="Nombre de la metodología" id="nombre" value="{{$methodologyObject->nombre or " "}}"></div>
                       </div>
                       <div class="hr-line-dashed"></div>
                       <div class="form-group"><label class="col-sm-2 control-label">Descripción</label>
-                          <div class="col-sm-9"><input type="text" class="form-control" placeholder="Descripción de la metodología" id="descripcion" > <span class="help-block m-b-none">Este campo le permitirá dar una breve descripción de la metodología generada.</span></div>
+                          <div class="col-sm-9"><input type="text" class="form-control" placeholder="Descripción de la metodología" id="descripcion" value="{{$methodologyObject->descripcion or " "}}"> <span class="help-block m-b-none">Este campo le permitirá dar una breve descripción de la metodología generada.</span></div>
                       </div>
                       <div class="hr-line-dashed"></div>
                       <div class="form-group"><label class="col-sm-2 control-label">Estado</label>
-                              <div class="checkbox i-checks"><label> <input type="checkbox" value="" checked="" id="estado"> <i></i> Activo </label></div>
+                              <div class="checkbox i-checks"><label> <input type="checkbox" value="" @if($methodologyObject != null and $methodologyObject->activo ==1) checked @endif id="estado">
+                                      <i></i> Activo </label></div>
                       </div>
                       <div class="hr-line-dashed"></div>
 
@@ -44,7 +49,14 @@
                                       <th></th>
                                   </tr>
                                   </thead>
-                                  <tbody></tbody>
+                                  <tbody>
+                                    @if( $methodologyObject != null && count($methodologyObject->reglas) > 0 )
+                                       <h1>TIENE {{  count($methodologyObject->reglas ) }} REGLAS</h1>
+                                        @else
+                                        <h1>NO TIENE REGLAS</h1>
+                                        @endif
+
+                                  </tbody>
                               </table>
                               <button type="button" name="button" class="btn btn-md btn-primary col-sm-offset-10" id="addRule"><i class="fa fa-plus"></i> Agregar Regla</button>
                           </div>
@@ -56,6 +68,7 @@
                               <button class="btn btn-primary" type="submit">Guardar</button>
                           </div>
                       </div>
+                      <input type="hidden" name="jsonData" id="jsonData">
                   </form>
               </div>
           </div>
@@ -76,6 +89,10 @@
               radioClass: 'iradio_square-green',
           });
           createRuleRow(ruleId);
+
+          setTimeout(function () {
+              $(".alert").slideUp(1500);
+          }, 2000);
      });
 
 //--------campo value------------------
@@ -193,32 +210,9 @@
 
     $('#methodology-form').submit(function(){
         var methodology = prepareRequest();
-        saveMethodology( methodology );
-        event.preventDefault();
+        $("#jsonData").val(JSON.stringify(methodology));
+        console.log( $("#jsonData").val() );
     });
-
-      function saveMethodology( data ){
-          $.ajax({
-              url: '/api/saveMethodology',
-              type: 'post',
-              dataType: 'json',
-              data: JSON.stringify(data),
-              success: function( obj ) {
-                  $('.alert-success').text( obj.msg );
-                  $('.alert-success').show();
-                  window.location.hash = '#success-msg';
-                  setTimeout(function () {
-                      $(".alert-success").slideUp(1500);
-                      location.href = '{{ url('methodList') }}';
-                  }, 2000);
-              },
-              error: function( obj ){
-                  $('.alert-danger').text( obj.responseText );
-                  $('.alert-danger').show();
-                  $('.alert-danger').focus();
-              }
-          });
-      }
 
       function prepareRequest(){
           var methodology = {};

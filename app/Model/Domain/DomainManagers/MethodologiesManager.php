@@ -2,8 +2,8 @@
 
 namespace App\Model\Domain\DomainManagers;
 
-
 use App\Model\Entities\Metodologia;
+use App\Model\Entities\Regla;
 use App\Model\ORMConnections\EloquentConnection;
 use App\Model\Utilities\Validators\ValidateMethodology;
 
@@ -47,7 +47,14 @@ class MethodologiesManager extends DomainManager
     }
 
     public function saveRules($saved, $data){
+        $ruleFactory = $this->getFactory(Regla::class);
 
+        foreach ( $data->rules as $regla) {
+            $rule = $ruleFactory->createObject();
+            $rule->metodologia_id = $saved;
+            $rule = $this->setRuleValues($rule, $regla);
+            $this->ormConnection->saveEntity( $rule );
+        }
     }
 
     public function saveMessage($saved)
@@ -66,13 +73,21 @@ class MethodologiesManager extends DomainManager
         // TODO: Implement deleteRelations() method.
     }
 
+    public function setRuleValues($rule, $data){
+        $rule->elemento = $data->element;
+        $rule->condicion = $data->condition;
+        $rule->desde = $data->period->from;
+        $rule->hasta = $data->period->to;
+        $rule->modalidad = $data->mode;
+
+        return $rule;
+    }
+
     public function setValues($methodology, $data, $id){
         if($this->validateInput($data, $id)){
             $methodology->nombre = $data->name;
             $methodology->descripcion = $data->description;
             $methodology->activo = $data->status;
-            $methodology->reglas = json_encode($data->rules);
-
             return $methodology;
         }
     }

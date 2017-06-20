@@ -75,14 +75,16 @@ class FrontController extends Controller{
 
 //MOTHODOLOGIES
     public function methodList(){
-
-        return view('method_list');
+        $domainManager = MethodologiesManager::getInstance();
+        return view('method_list')->with("methodologies", $domainManager->getAll());
     }
 
     public function methodDetail($id=null){
         $domainManager = MethodologiesManager::getInstance();
+        $methodologyObject = $domainManager->getOne($id);
+//var_dump(count($methodologyObject->reglas));die;
         return view('method_detail')->with("elements", $domainManager->getAvailablesFromulaElements())
-                                         ->with("id", $id);
+                                         ->with("methodologyObject", $methodologyObject);
     }
 
     public function methodEval(){

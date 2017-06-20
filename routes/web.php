@@ -30,10 +30,11 @@ Route::get('/indicatorDetail/{id?}', 'FrontController@indicatorDetail');
 Route::post('/indicatorSave/{id?}', 'IndicatorController@indicatorSave');
 Route::get('/indicatorDelete/{id}', 'IndicatorController@indicatorDelete');
 
-//METODOLOGIES
+//METHODOLOGIES
 Route::get('/methodDetail/{id?}', 'FrontController@methodDetail');
 Route::get('/methodList', 'FrontController@methodList');
 Route::get('/methodEval','FrontController@methodEval');
 
-//TEST FORMULA
-Route::get('/pruebaBase', 'FrontController@pruebaBase');
+//ABM METHODOLOGIES
+Route::post('/saveMethodology/{id?}', 'MethodologyController@saveMethodology');
+
