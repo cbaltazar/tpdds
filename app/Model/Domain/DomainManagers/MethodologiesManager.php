@@ -29,7 +29,9 @@ class MethodologiesManager extends DomainManager
 
     public function deleteMessage()
     {
-        // TODO: Implement deleteMessage() method.
+        $response = array();
+        $response['msg'] = "Metodología borrada con éxito!";
+        return $response;
     }
 
     public function saveElement($data, $id)
@@ -70,7 +72,9 @@ class MethodologiesManager extends DomainManager
 
     public function deleteRelations($id)
     {
-        // TODO: Implement deleteRelations() method.
+        $methodology = $this->getOne($id);
+        $this->refreshMethodologyRules($methodology);
+        return 1;
     }
 
     public function setRuleValues($rule, $data){

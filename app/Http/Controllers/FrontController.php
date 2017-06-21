@@ -88,6 +88,7 @@ class FrontController extends Controller{
     }
 
     public function methodEval(){
+        $domainManager = MethodologiesManager::getInstance();
         return view('method_eval');
     }
 }

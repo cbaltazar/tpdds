@@ -37,4 +37,5 @@ Route::get('/methodEval','FrontController@methodEval');
 
 //ABM METHODOLOGIES
 Route::post('/saveMethodology/{id?}', 'MethodologyController@saveMethodology');
+Route::get('/deleteMethodology/{id}', 'MethodologyController@methodologyDelete');
 

@@ -1,7 +1,8 @@
 @extends ('master')
 @section ('title','Evaluar Empresas')
 @section ('head')
-<link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
+    <link href="{{asset('js/plugins/sweetalert/dist/sweetalert.css')}}" rel="stylesheet">
 @endsection
 @section ('content')
 <div class="wrapper wrapper-content animated fadeInUp">
