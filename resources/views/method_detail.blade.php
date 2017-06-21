@@ -66,15 +66,25 @@
                                                        </select>
                                                    </td>
                                                    <td class='form-inline'>
-                                                       <select class='form-control condition' style='width:100%'>
+                                                       <select class='form-control condition'
+                                                               @if( explode(",",$regla->condicion)[0] == 'minq' || explode(",",$regla->condicion)[0] == 'maxq' )
+                                                               style='width:62%'
+                                                           @else
+                                                               style='width:100%'
+                                                           @endif
+                                                            />
                                                            <option value='min' @if($regla->condicion == 'min') selected @endif>menor</option>
                                                            <option value='max' @if($regla->condicion == 'max') selected @endif>mayor</option>
-                                                           <option value='minq' @if($regla->condicion == 'minq') selected @endif >menor que</option>
-                                                           <option value='maxq' @if($regla->condicion == 'maxq') selected @endif >mayor que</option>
+                                                           <option value='minq' @if(explode(",",$regla->condicion)[0] == 'minq') selected @endif >menor que</option>
+                                                           <option value='maxq' @if(explode(",",$regla->condicion)[0] == 'maxq') selected @endif >mayor que</option>
                                                            <option value='asc' @if($regla->condicion == 'asc') selected @endif>creciente</option>
                                                            <option value='dec' @if($regla->condicion == 'dec') selected @endif>decreciente</option>
                                                        </select>
-                                                       <input type='text' class='form-control value' name='valueToCompare' style='width:0%; display: none;'>
+                                                       @if( explode(",",$regla->condicion)[0] == 'minq' || explode(",",$regla->condicion)[0] == 'maxq' )
+                                                       <input type='text' class='form-control value' name='valueToCompare' style='width:36%; display: inline;' value="{{ explode(",",$regla->condicion)[1] }}">
+                                                           @else
+                                                           <input type='text' class='form-control value' name='valueToCompare' style='width:0%; display: none;'>
+                                                       @endif
                                                    </td>
 
                                                    <td>
