@@ -18,7 +18,7 @@ abstract class Validator
 
     public function validateFormatName($name){
         $response = true;
-        if(!preg_match('/^([0-9A-Za-z-_])+$/', $name)){
+        if(!preg_match('/^([ 0-9A-Za-z-_])+$/', $name)){
             $response = false;
         }
         return $response;
