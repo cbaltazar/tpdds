@@ -291,6 +291,10 @@
             rows.each(function( key, item ){
                 var rule = {};
                 rule.element = $(item).find('.element').val();
+
+                if($(item).find('.condition').val() == 'minq' || $(item).find('.condition').val() == 'maxq' ){
+                    
+                }
                 rule.condition = $(item).find('.condition').val();
                 rule.period = {};
                 rule.period.from = $(item).find('.from').val();
