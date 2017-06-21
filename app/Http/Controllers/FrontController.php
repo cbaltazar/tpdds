@@ -6,6 +6,7 @@ use App\Model\Domain\DomainManagers\AccountCompanyRelationManager;
 use App\Model\Domain\DomainManagers\IndicatorsManager;
 use App\Model\Domain\DomainManagers\CompaniesManager;
 use App\Model\Domain\DomainManagers\MethodologiesManager;
+use App\Model\Entities\Metodologia;
 
 class FrontController extends Controller{
 
@@ -88,7 +89,8 @@ class FrontController extends Controller{
     }
 
     public function methodEval(){
-        $domainManager = MethodologiesManager::getInstance();
-        return view('method_eval');
+        $companiesManager = CompaniesManager::getInstance();
+        $methodologiesManager = MethodologiesManager::getInstance();
+        return view('method_eval')->with("companies", $companiesManager->getAll())->with("methodologies", $methodologiesManager->getAll());
     }
 }
