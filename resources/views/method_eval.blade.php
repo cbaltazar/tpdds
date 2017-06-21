@@ -110,12 +110,16 @@
     <script>
 
         function prepareParams(){
-            params = [];
+            params = {};
+            params.companies = [];
+
             $('.companyToEvaluate').each(function(index, item){
                 if( $(item).find('.icheckbox_square-green.checked') ){
-                    console.log($(item).find('#companyName').innerHTML());
+                    params.companies.push($(item).find('.companyName').text());
                 }
             });
+
+            console.log(params);
         }
 
         $(document).ready(function(){
