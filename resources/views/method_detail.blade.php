@@ -117,7 +117,7 @@
                                                </tr>
                                            @endforeach
                                         @else
-                                        <h1>NO TIENE REGLAS</h1>
+
                                         @endif
                                   </tbody>
                               </table>
@@ -239,14 +239,14 @@
 
             htmlText += "<input type='text' class='form-control value' name='valueToCompare' style='width:0%; display: none;'></td>"+
                 "<td><select class='form-control from' name='from'>";
-            for(var j=0;j<7;j++){
+            for(var j=0;j<=7;j++){
                 htmlText += "<option value='201"+j+"'>201"+j+"</option>";
             }
 
             htmlText += "</select></td>"+
                 "<td><select class='form-control to' name='to'>";
 
-            for(var j=0;j<7;j++){
+            for(var j=0;j<=7;j++){
                 htmlText += "<option value='201"+j+"'>201"+j+"</option>";
             }
 

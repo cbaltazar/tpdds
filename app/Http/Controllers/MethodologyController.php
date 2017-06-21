@@ -12,7 +12,7 @@ class MethodologyController extends Controller
         $status = $domainManager->save( json_decode( $request->get('jsonData') ), $id );
 
         if( !is_array($status)){
-            return redirect('methodDetail')->with('status', $status);
+            return redirect('methodDetail/'.$id)->with('status', $status);
         }
         return redirect('methodList')->with('status', $status);
     }

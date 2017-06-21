@@ -82,7 +82,7 @@ class FrontController extends Controller{
     public function methodDetail($id=null){
         $domainManager = MethodologiesManager::getInstance();
         $methodologyObject = $domainManager->getOne($id);
-//var_dump(count($methodologyObject->reglas));die;
+
         return view('method_detail')->with("elements", $domainManager->getAvailablesFromulaElements())
                                          ->with("methodologyObject", $methodologyObject);
     }

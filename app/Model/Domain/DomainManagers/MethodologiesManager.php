@@ -37,7 +37,6 @@ class MethodologiesManager extends DomainManager
         $methodology = null;
         if( $id != null){
             $methodology = $this->getOne($id);
-            $this->refreshMethodologyRules($methodology);
         }else{
             $methodologyFactory = $this->getFactory(Metodologia::class);
             $methodology = $methodologyFactory->createObject();
@@ -86,6 +85,9 @@ class MethodologiesManager extends DomainManager
 
     public function setValues($methodology, $data, $id){
         if($this->validateInput($data, $id)){
+            if( $id != null){
+                $this->refreshMethodologyRules($methodology);
+            }
             $methodology->nombre = $data->name;
             $methodology->descripcion = $data->description;
             $methodology->activo = $data->status;
