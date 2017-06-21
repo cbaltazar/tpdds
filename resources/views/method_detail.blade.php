@@ -61,54 +61,54 @@
                                                    <td>
                                                        <select class='form-control element'>
                                                            @foreach($elements as $elem)
-                                                                <option value='{{ $elem->nombre }}'>{{ $elem->nombre }}</option>
+                                                                <option value='{{ $elem->nombre }}' @if($regla->elemento == $elem->nombre) selected @endif>{{ $elem->nombre }}</option>
                                                            @endforeach
                                                        </select>
                                                    </td>
                                                    <td class='form-inline'>
                                                        <select class='form-control condition' style='width:100%'>
-                                                           <option value='min'>menor</option>
-                                                           <option value='max'>mayor</option>
-                                                           <option value='minq'>menor que</option>
-                                                           <option value='maxq'>mayor que</option>
-                                                           <option value='asc'>creciente</option>
-                                                           <option value='dec'>decreciente</option>
+                                                           <option value='min' @if($regla->condicion == 'min') selected @endif>menor</option>
+                                                           <option value='max' @if($regla->condicion == 'max') selected @endif>mayor</option>
+                                                           <option value='minq' @if($regla->condicion == 'minq') selected @endif >menor que</option>
+                                                           <option value='maxq' @if($regla->condicion == 'maxq') selected @endif >mayor que</option>
+                                                           <option value='asc' @if($regla->condicion == 'asc') selected @endif>creciente</option>
+                                                           <option value='dec' @if($regla->condicion == 'dec') selected @endif>decreciente</option>
                                                        </select>
                                                        <input type='text' class='form-control value' name='valueToCompare' style='width:0%; display: none;'>
                                                    </td>
 
                                                    <td>
                                                        <select class='form-control from' name='from'>
-                                                           <option value='2010'>2010</option>
-                                                           <option value='2011'>2011</option>
-                                                           <option value='2012'>2012</option>
-                                                           <option value='2013'>2013</option>
-                                                           <option value='2014'>2014</option>
-                                                           <option value='2015'>2015</option>
-                                                           <option value='2016'>2016</option>
-                                                           <option value='2017'>2017</option>
+                                                           <option value='2010' @if($regla->desde == '2010') selected @endif>2010</option>
+                                                           <option value='2011' @if($regla->desde == '2011') selected @endif>2011</option>
+                                                           <option value='2012' @if($regla->desde == '2012') selected @endif>2012</option>
+                                                           <option value='2013' @if($regla->desde == '2013') selected @endif>2013</option>
+                                                           <option value='2014' @if($regla->desde == '2014') selected @endif>2014</option>
+                                                           <option value='2015' @if($regla->desde == '2015') selected @endif>2015</option>
+                                                           <option value='2016' @if($regla->desde == '2016') selected @endif>2016</option>
+                                                           <option value='2017' @if($regla->desde == '2017') selected @endif>2017</option>
                                                        </select>
                                                    </td>
 
                                                    <td>
                                                        <select class='form-control to' name='to'>
-                                                           <option value='2010'>2010</option>
-                                                           <option value='2011'>2011</option>
-                                                           <option value='2012'>2012</option>
-                                                           <option value='2013'>2013</option>
-                                                           <option value='2014'>2014</option>
-                                                           <option value='2015'>2015</option>
-                                                           <option value='2016'>2016</option>
-                                                           <option value='2017'>2017</option>
+                                                           <option value='2010' @if($regla->hasta == '2010') selected @endif>2010</option>
+                                                           <option value='2011' @if($regla->hasta == '2011') selected @endif>2011</option>
+                                                           <option value='2012' @if($regla->hasta == '2012') selected @endif>2012</option>
+                                                           <option value='2013' @if($regla->hasta == '2013') selected @endif>2013</option>
+                                                           <option value='2014' @if($regla->hasta == '2014') selected @endif>2014</option>
+                                                           <option value='2015' @if($regla->hasta == '2015') selected @endif>2015</option>
+                                                           <option value='2016' @if($regla->hasta == '2016') selected @endif>2016</option>
+                                                           <option value='2017' @if($regla->hasta == '2017') selected @endif>2017</option>
                                                        </select>
                                                    </td>
 
                                                    <td>
                                                        <select class='form-control function'>
-                                                           <option value='uni'>Unitaria</option>
-                                                           <option value='sum'>Sumatoria</option>
-                                                           <option value='avg'>Promedio</option>
-                                                           <option value='med'>Media</option>
+                                                           <option value='uni' @if($regla->modalidad == 'uni') selected @endif>Unitaria</option>
+                                                           <option value='sum' @if($regla->modalidad == 'sum') selected @endif>Sumatoria</option>
+                                                           <option value='avg' @if($regla->modalidad == 'avg') selected @endif>Promedio</option>
+                                                           <option value='med' @if($regla->modalidad == 'med') selected @endif>Media</option>
                                                        </select>
                                                    </td>
                                                    <td>
@@ -293,9 +293,10 @@
                 rule.element = $(item).find('.element').val();
 
                 if($(item).find('.condition').val() == 'minq' || $(item).find('.condition').val() == 'maxq' ){
-                    
+                    rule.condition = $(item).find('.condition').val()+","+$(item).find('.value').val();
+                }else{
+                    rule.condition = $(item).find('.condition').val();
                 }
-                rule.condition = $(item).find('.condition').val();
                 rule.period = {};
                 rule.period.from = $(item).find('.from').val();
                 rule.period.to = $(item).find('.to').val();
