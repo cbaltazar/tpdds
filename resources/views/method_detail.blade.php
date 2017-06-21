@@ -127,7 +127,7 @@
                         </div>
                       <div class="form-group">
                           <div class="col-sm-4 col-sm-offset-5">
-                              <button class="btn btn-white" type="submit">Cancelar</button>
+                              <input type="button" class="btn btn-white" onclick="location.href='{{URL::previous()}}';" value="Cancelar" name="cancel"></input>
                               <button class="btn btn-primary" type="submit">Guardar</button>
                           </div>
                       </div>

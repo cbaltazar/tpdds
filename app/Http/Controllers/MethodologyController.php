@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class MethodologyController extends Controller
 {
-    public function saveMethodology(Request $request){
+    public function saveMethodology(Request $request, $id = null){
         $domainManager = MethodologiesManager::getInstance();
-        $status = $domainManager->save( json_decode( $request->get('jsonData') ), null );
+        $status = $domainManager->save( json_decode( $request->get('jsonData') ), $id );
 
         if( !is_array($status)){
             return redirect('methodDetail')->with('status', $status);

@@ -37,6 +37,7 @@ class MethodologiesManager extends DomainManager
         $methodology = null;
         if( $id != null){
             $methodology = $this->getOne($id);
+            $this->refreshMethodologyRules($methodology);
         }else{
             $methodologyFactory = $this->getFactory(Metodologia::class);
             $methodology = $methodologyFactory->createObject();
@@ -89,6 +90,13 @@ class MethodologiesManager extends DomainManager
             $methodology->descripcion = $data->description;
             $methodology->activo = $data->status;
             return $methodology;
+        }
+    }
+
+    public function refreshMethodologyRules($methodology){
+        $rules = $this->ormConnection->getWhere(Regla::class, 'metodologia_id', $methodology->id);
+        foreach($rules as $rule){
+            $this->ormConnection->deleteEntity(Regla::class, $rule->id);
         }
     }
 }

@@ -32,7 +32,7 @@
                                     @foreach( $methodologies as $methodology)
                                     <tr>
                                         <td class="project-status">
-                                            <span class="label label-primary">Activo</span>
+                                            <span class="label @if( $methodology->activo == 1) label-primary"> Activo @else label-plain"> Inactivo @endif</span>
                                         </td>
                                         <td class="project-title">
                                             <a href="{{ url('methodDetail/'.$methodology->id) }}">{{ $methodology->nombre }}</a>
