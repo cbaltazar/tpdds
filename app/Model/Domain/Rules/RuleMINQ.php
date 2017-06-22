@@ -6,6 +6,12 @@ class RuleMINQ extends Rule
 {
     public function evaluate($results, $params, $rule)
     {
-            var_dump($this->getValuesOfPeriods($results, $params, $rule));die;
+        foreach ($params->companies as $companyId){
+            $valueOfPeriods = $this->getValuesOfPeriods($companyId, $rule);
+            if( $rule->modalidad != 'uni' ){
+               $valueOfPeriods =  $this->applyMode($rule, $valueOfPeriods);
+            }
+
+        }
     }
 }

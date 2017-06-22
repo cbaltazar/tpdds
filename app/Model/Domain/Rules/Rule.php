@@ -12,29 +12,43 @@ abstract class Rule
 {
     public abstract function evaluate($results, $params, $rule);
 
-    public function getValuesOfPeriods($results, $params, $rule){
-        $results = array();
-        foreach ($params->companies as $companyId){
-            $element = $this->getElement($rule);
-            $values = array();
-            $data = new \stdClass();
-            $data->company = $companyId;
-            for($i = $rule->desde; $i <= $rule->hasta; $i++ ){
-                $data->period = $i;
-                $values[$i] = $element->getValue($data);
-            }
-            $results[$companyId] = $values;
-        }
-
-        return $results;
+    public function applyMode($rule, $values){
+        $mode = $rule->modalidad;
+        return $this->$mode();
     }
 
-    public function getElement($rule){
-        $element = null;
-        if( explode(",", $rule->elemento)[1] == 'Cuenta' ){
-            $element = $this->getAccountElement($rule);
+    public function sum($values){
+
+    }
+
+    public function avg($values){
+
+    }
+
+    public function med($values){
+
+    }
+
+    public function getValuesOfPeriods($companyId, $rule)
+    {
+        $element = $this->getElement($rule);
+        $values = array();
+        $data = new \stdClass();
+        $data->company = $companyId;
+        for ($i = $rule->desde; $i <= $rule->hasta; $i++) {
+            $data->period = $i;
+            $values[$i] = $element->getValue($data);
         }
-        else{
+
+        return $values;
+    }
+
+    public function getElement($rule)
+    {
+        $element = null;
+        if (explode(",", $rule->elemento)[1] == 'Cuenta') {
+            $element = $this->getAccountElement($rule);
+        } else {
             $element = $this->getIndicatorElement($rule);
         }
 
@@ -42,21 +56,24 @@ abstract class Rule
         return $element;
     }
 
-    public function getAccountElement($rule){
-        $model = Cuenta::find( explode(",", $rule->elemento)[0] );
+    public function getAccountElement($rule)
+    {
+        $model = Cuenta::find(explode(",", $rule->elemento)[0]);
         $element = new AccountElement();
         $element->setModel($model);
         return $element;
     }
 
-    public function getIndicatorElement($rule){
-        $model = Indicador::find( explode(",", $rule->elemento)[0] );
+    public function getIndicatorElement($rule)
+    {
+        $model = Indicador::find(explode(",", $rule->elemento)[0]);
         $element = new IndicatorElement();
         $element->setModel($model);
         return $element;
     }
 
-    public function getOrmConnection(){
+    public function getOrmConnection()
+    {
         return new EloquentConnection();
     }
 }
