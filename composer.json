@@ -15,7 +15,9 @@
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "^6.1",
-        "doctrine/dbal": "v2.5.12"
+        "doctrine/dbal": "v2.5.12",
+        "zjango/laracurl": "dev-master",
+        "guzzlehttp/guzzle": "~6.0"
     },
     "autoload": {
         "classmap": [

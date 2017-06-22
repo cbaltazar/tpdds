@@ -24,7 +24,7 @@
                                         <input type="checkbox" checked="" class="i-checks" name="input[]" style="position: absolute; opacity: 0;">
                                     </div>
                                 </td>
-                                <td class="companyName">{{ $company->nombre }}</td>
+                                <td class="companyName" id="{{ $company->id }}">{{ $company->nombre }}</td>
                             </tr>
                             @endforeach
                         @else
@@ -49,7 +49,7 @@
                       <h5 style="font-size:14px">Evaluar mediante:</h5>
                   </td>
                   <td class="project-title" style="padding:13px 10px">
-                    <select class="form-control">
+                    <select class="form-control" id="selectedMethodology">
                       @foreach( $methodologies as $methodology)
                           <option value="{{ $methodology->id }}" > {{ $methodology->nombre }}</option>
                           @endforeach
@@ -57,6 +57,7 @@
                   </td>
                   <td class="project-actions">
                       <a href="{{ url('methodDetail/'.$methodology->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-eye"></i> Ver </a>
+                      <a href="{{ url('methodDetail') }}" class="btn btn-warning btn-sm"><i class="fa fa-eye"></i> Cargar </a>
                       <a href="#" class="btn btn-primary btn-sm" id="applyMethodology"><i class="fa fa-check"></i> Aplicar</a>
                   </td>
                       @else
@@ -115,11 +116,16 @@
 
             $('.companyToEvaluate').each(function(index, item){
                 if( $(item).find('.icheckbox_square-green.checked') ){
-                    params.companies.push($(item).find('.companyName').text());
+                    params.companies.push($(item).find('.companyName').attr('id'));
                 }
             });
-
+            params.methodology = $("#selectedMethodology").val();
             console.log(params);
+            return params;
+        }
+
+        function evaluateMethodology( params ){
+
         }
 
         $(document).ready(function(){

@@ -6,6 +6,12 @@ use App\Model\Entities\Metodologia;
 use App\Model\Entities\Regla;
 use App\Model\ORMConnections\EloquentConnection;
 use App\Model\Utilities\Validators\ValidateMethodology;
+use App\Model\Domain\Rules\RuleASC;
+use App\Model\Domain\Rules\RuleDEC;
+use App\Model\Domain\Rules\RuleMAX;
+use App\Model\Domain\Rules\RuleMIN;
+use App\Model\Domain\Rules\RuleMINQ;
+use App\Model\Domain\Rules\RuleMAXQ;
 
 class MethodologiesManager extends DomainManager
 {
@@ -103,6 +109,17 @@ class MethodologiesManager extends DomainManager
         $rules = $this->ormConnection->getWhere(Regla::class, 'metodologia_id', $methodology->id);
         foreach($rules as $rule){
             $this->ormConnection->deleteEntity(Regla::class, $rule->id);
+        }
+    }
+
+    public function evaluate($params){
+        $results = null;
+        $methodology = $this->getOne($params->methodology);
+        $rules = $methodology->reglas;
+        foreach ($rules as $rule){
+            $ruleName = 'App\Model\Domain\Rules\Rule'.strtoupper(explode(',',$rule->condicion)[0]);
+            $objRule = new $ruleName();
+            $results = $objRule->evaluate($results, $params, $rule);
         }
     }
 }

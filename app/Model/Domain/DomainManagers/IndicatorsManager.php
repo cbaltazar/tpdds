@@ -64,7 +64,12 @@ class IndicatorsManager extends DomainManager
     /*indicatorEvaluate: evalua todos los indicadores, para una empresa y un periodo dados.
      * */
     public function indicatorEvaluate($params){
-        $indicators = $this->getAll();
+        $indicators = array();
+        if( isset($params->indicator) && $params->indicator != null){
+            $indicators[] = $this->getOne($params->indicator);
+        }else{
+            $indicators = $this->getAll();
+        }
         $results = array();
 
         foreach ($indicators as $indicator){

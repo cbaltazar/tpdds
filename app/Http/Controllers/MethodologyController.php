@@ -17,9 +17,14 @@ class MethodologyController extends Controller
         return redirect('methodList')->with('status', $status);
     }
 
-    public function methodologyDelete($id=null){
+    public function deleteMethodology($id=null){
         $domainManager = MethodologiesManager::getInstance();
         $status = $domainManager->delete($id);
         return redirect('methodList')->with('status', $status);
+    }
+
+    public function evaluateMethodology(Request $request){
+        $domainManager = MethodologiesManager::getInstance();
+        $domainManager->evaluate( json_decode($request->getContent()) );
     }
 }

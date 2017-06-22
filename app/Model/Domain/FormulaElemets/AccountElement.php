@@ -12,7 +12,7 @@ use App\Model\ORMConnections\EloquentConnection;
 class AccountElement extends FormulaElement
 {
     public function getValue( $data ){
-        $result = -1;
+        $result = 0;
         $accountCopanyRelation = $this->orm->findWhere(Cuenta_Empresa::class, $this->getConditions($data) );
 
         if($accountCopanyRelation != null){

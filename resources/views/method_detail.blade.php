@@ -61,7 +61,7 @@
                                                    <td>
                                                        <select class='form-control element'>
                                                            @foreach($elements as $elem)
-                                                                <option value='{{ $elem->nombre }}' @if($regla->elemento == $elem->nombre) selected @endif>{{ $elem->nombre }}</option>
+                                                                <option value='{{ $elem->id }},{{ $elem->clase }},{{ $elem->nombre }}' @if(explode(',',$regla->elemento)[2] == $elem->nombre) selected @endif>{{ $elem->nombre }}</option>
                                                            @endforeach
                                                        </select>
                                                    </td>
@@ -233,7 +233,7 @@
                 "<td><select class='form-control element'>";
 
             elements.forEach(function ( item ) {
-                htmlText += "<option value='"+ item.nombre +"'>"+item.nombre+"</option>";
+                htmlText += "<option value='"+ item.id + "," + item.clase +"," + item.nombre +"'>"+item.nombre+"</option>";
             });
 
             htmlText += "</select></td>"+
