@@ -120,7 +120,7 @@
                 }
             });
             params.methodology = $("#selectedMethodology").val();
-            console.log(params);
+            console.log(JSON.stringify(params));
             return params;
         }
 
