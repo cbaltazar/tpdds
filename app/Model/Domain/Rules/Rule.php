@@ -17,6 +17,26 @@ abstract class Rule
         return $this->$mode();
     }
 
+    public function addCompaniesValues($companies){
+        $companiesSum = array();
+        foreach($companies as $key=>$values){
+            $companiesSum[$key] = $this->sum($values);
+        }
+        return $companiesSum;
+    }
+
+    public function addPoints($companies){
+        $companiesWithPoints = array();
+
+        $maxPoints = count((array)$companies);
+        foreach( $companies as $key => $value){
+            $companiesWithPoints[$key] = $maxPoints;
+            $maxPoints--;
+        }
+
+        return $companiesWithPoints;
+    }
+
     public function sum($values){
         $result = 0;
         foreach($values as $key=>$term){
@@ -39,7 +59,9 @@ abstract class Rule
         $values = array();
         $data = new \stdClass();
         $data->company = $companyId;
+
         for ($i = $rule->desde; $i <= $rule->hasta; $i++) {
+            $indicatorResult = new \stdClass();
             $data->period = $i;
             $values[$i] = $element->getValue($data);
         }

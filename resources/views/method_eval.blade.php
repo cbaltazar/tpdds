@@ -21,10 +21,11 @@
                             <tr class="companyToEvaluate">
                                 <td>
                                     <div class="icheckbox_square-green" style="position: relative;">
-                                        <input type="checkbox" checked="" class="i-checks" name="input[]" style="position: absolute; opacity: 0;">
+                                        <input type="checkbox" class="i-checks" name="input[]" style="position: absolute; opacity: 0;">
+                                        <input type="hidden" class="companyName" id="{{ $company->id }}">
                                     </div>
                                 </td>
-                                <td class="companyName" id="{{ $company->id }}">{{ $company->nombre }}</td>
+                                <td>{{ $company->nombre }}</td>
                             </tr>
                             @endforeach
                         @else
@@ -115,7 +116,7 @@
             params.companies = [];
 
             $('.companyToEvaluate').each(function(index, item){
-                if( $(item).find('.icheckbox_square-green.checked') ){
+                if( $(item).find('.checked').length === 1 ){
                     params.companies.push($(item).find('.companyName').attr('id'));
                 }
             });
