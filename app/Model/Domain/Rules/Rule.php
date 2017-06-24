@@ -18,7 +18,11 @@ abstract class Rule
     }
 
     public function sum($values){
-
+        $result = 0;
+        foreach($values as $key=>$term){
+            $result+=$term;
+        }
+        return $result;
     }
 
     public function avg($values){
