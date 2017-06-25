@@ -5,12 +5,13 @@ namespace App\Model\Domain\Rules;
 
 class RuleMIN extends Rule
 {
-    public function evaluate($results, $params, $rule)
+    public function evaluate($results, $rule)
     {
+        $companies = $results;
         /*array donde se guardan los resultados de aplicar el indicador o cuenta de la regla,
         por empresa, para el rango de periodos.*/
         $indicatorResults = array();
-        foreach ($params->companies as $key => $companyId){
+        foreach ($companies as $companyId => $value){
             $indicatorResults[$companyId] = $this->getValuesOfPeriods($companyId, $rule);
         }
         /*Devuelve el array de resultados parciales, con la valoracion que consiguio cada empresa,

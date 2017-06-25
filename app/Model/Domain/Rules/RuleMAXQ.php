@@ -5,13 +5,13 @@ namespace App\Model\Domain\Rules;
 
 class RuleMAXQ extends Rule
 {
-    public function evaluate($results, $params, $rule)
+    public function evaluate($results, $rule)
     {
+        $companies = $results;
         $indicatorResults = array();
-        foreach ($params->companies as $key => $companyId){
+        foreach ($companies as $companyId => $value){
             $indicatorResults[$companyId] = $this->getValuesOfPeriods($companyId, $rule);
         }
-
         return $this->applyCondition($indicatorResults, $results,$rule);
     }
 

@@ -120,6 +120,22 @@ class MethodologiesManager extends DomainManager
         return $results;
     }
 
+    public function orderResults($results){
+        uasort($results, function($a, $b) {
+            return $b - $a;
+        });
+        return $results;
+    }
+
+    public function addValoration($results){
+        $results = $this->orderResults($results);
+        $total = array_sum($results);
+        foreach($results as $key => $value){
+            $results[$key] = (($value*100)/$total).'%';
+        }
+        return $results;
+    }
+
     public function evaluate($params){
         $results = $this->prepareArrayResults($params);
         $methodology = $this->getOne($params->methodology);
@@ -127,7 +143,8 @@ class MethodologiesManager extends DomainManager
         foreach ($rules as $rule){
             $ruleName = 'App\Model\Domain\Rules\Rule'.strtoupper(explode(',',$rule->condicion)[0]);
             $objRule = new $ruleName();
-            $results = $objRule->evaluate($results, $params, $rule);
+            $results = $objRule->evaluate($results, $rule);
         }
+        return $this->addValoration($results);
     }
 }

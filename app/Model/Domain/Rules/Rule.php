@@ -10,7 +10,7 @@ use App\Model\ORMConnections\EloquentConnection;
 
 abstract class Rule
 {
-    public abstract function evaluate($results, $params, $rule);
+    public abstract function evaluate($results, $rule);
 
     public function applyMode($rule, $values){
         if( $rule->modalidad != 'uni'){
