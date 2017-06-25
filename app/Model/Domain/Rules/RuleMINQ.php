@@ -4,16 +4,32 @@ namespace App\Model\Domain\Rules;
 
 class RuleMINQ extends Rule
 {
-    public function evaluate($results, $params, $rule)
+    public function evaluate($results, $rule)
     {
-        foreach ($params->companies as $companyId){
-            $valueOfPeriods = $this->getValuesOfPeriods($companyId, $rule);
-            if( $rule->modalidad != 'uni' ){ //tengo un solo registro y lo comparo contra el valor.
-               $valueOfPeriods =  $this->applyMode($rule, $valueOfPeriods);
-            }
-            /*si es uni, no hago nada.
-            despues le paso el valueOfPriods a una funcion que compare contra el valor y devuelvo falso y alguno no cumple. descarto la empresa */
-
+        $companies = $results;
+        $indicatorResults = array();
+        foreach ($companies as $companyId => $value){
+            $indicatorResults[$companyId] = $this->getValuesOfPeriods($companyId, $rule);
         }
+        return $this->applyCondition($indicatorResults, $results,$rule);
+    }
+
+    public function applyCondition($indicatorResults, $results,$rule){
+        foreach ($indicatorResults as $key => $partialResult){
+            if(!$this->compareValues($partialResult, $rule)){
+                unset($results[$key]);
+            }
+        }
+        return $results;
+    }
+
+    public function compareValues($partialResult, $rule){
+        $response = true;
+        foreach ($partialResult as $partial){
+            if($partial > explode(",",$rule->condicion)[1]){
+                $response = false;
+            }
+        }
+        return $response;
     }
 }

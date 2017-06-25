@@ -14,10 +14,9 @@ abstract class Rule
 
     public function applyMode($rule, $values){
         $total = array();
-        if( $rule->modalidad != 'uni'){
-            $mode = $rule->modalidad;
-            $total['total'] = $this->$mode($values);
-        }
+        $mode = $rule->modalidad;
+        $total['total'] = $this->$mode($values);
+
         return $total;
     }
 
@@ -75,7 +74,10 @@ abstract class Rule
             $data->period = $i;
             $values[$i] = $element->getValue($data);
         }
-        return $this->applyMode($rule, $values);
+        if($rule->modalidad != 'uni'){
+            $values = $this->applyMode($rule, $values);
+        }
+        return $values;
     }
 
     public function getElement($rule)

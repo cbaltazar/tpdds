@@ -2,6 +2,7 @@
 
 namespace App\Model\Domain\DomainManagers;
 
+use App\Model\Entities\Empresa;
 use App\Model\Entities\Metodologia;
 use App\Model\Entities\Regla;
 use App\Model\ORMConnections\EloquentConnection;
@@ -141,6 +142,15 @@ class MethodologiesManager extends DomainManager
         return $results;
     }
 
+    public function getCompaniesNames($results){
+        foreach ($results as $company => $value){
+            $obj = $this->ormConnection->findById(Empresa::class, $company);
+            $results[$obj->getNombre()] = $value;
+            unset($results[$company]);
+        }
+        return $results;
+    }
+
     public function evaluate($params){
         $results = $this->prepareArrayResults($params);
         $methodology = $this->getOne($params->methodology);
@@ -150,6 +160,6 @@ class MethodologiesManager extends DomainManager
             $objRule = new $ruleName();
             $results = $objRule->evaluate($results, $rule);
         }
-        return $this->addValoration($results);
+        return $this->getCompaniesNames($this->addValoration($results));
     }
 }
