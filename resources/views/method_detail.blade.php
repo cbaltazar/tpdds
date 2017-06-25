@@ -63,6 +63,7 @@
                                                            @foreach($elements as $elem)
                                                                 <option value='{{ $elem->id }},{{ $elem->clase }},{{ $elem->nombre }}' @if(explode(',',$regla->elemento)[2] == $elem->nombre) selected @endif>{{ $elem->nombre }}</option>
                                                            @endforeach
+                                                                <option value='age'>Antigüedad</option>
                                                        </select>
                                                    </td>
                                                    <td class='form-inline'>
@@ -187,7 +188,6 @@
             var rowId = $(this).parent().parent().attr('id');
             var lastPeriod = $(this).data('lastPeriod');
             var newPeriod = $(this).val();
-
             if($('#'+rowId+' .from').val() > $('#'+rowId+' .to').val()){
                 sweetAlert("Ups...", "La fecha final no puede ser menor que la inicial");
                 $(this).val(lastPeriod)
@@ -204,6 +204,12 @@
                 $(rowId+ ' .function').attr("disabled",true).val("uni");
             }
         });
+        //----------AGE VALIDATION---------
+        $('body').on('change','.element',function(){
+            var rowId ='#'+ $(this).parent().parent().attr('id');
+            $(rowId+' .from,' +rowId+' .to,'+rowId+' .function').attr("disabled",($(this).val()=="age"));
+            $(rowId+' option[value="asc"],' +rowId+' option[value="dec"]').css("display",($(this).val()=="age")?"none":"block");
+        })
         //----------DELETE RULE------------------
         $('body').on('click','.deleteRule',function(){
             var i;
@@ -235,6 +241,8 @@
             elements.forEach(function ( item ) {
                 htmlText += "<option value='"+ item.id + "," + item.clase +"," + item.nombre +"'>"+item.nombre+"</option>";
             });
+
+            htmlText += "<option value='age'>Antigüedad</option>";
 
             htmlText += "</select></td>"+
                 "<td class='form-inline'>"+

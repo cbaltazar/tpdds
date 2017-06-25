@@ -33,7 +33,8 @@
                         <div class="ibox-title">
                             <h5>Listado de Metodologías</h5>
                             <div class="ibox-tools">
-                                <a href="{{ url('methodDetail') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Crear metodología</a>
+                                <a href="{{ url('methodEval') }}" class="btn btn-primary btn-sm"><i class="fa fa-tachometer"></i> Aplicar</a>
+                                <a href="{{ url('methodDetail') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Crear</a>
                             </div>
                         </div>
                         <div class="ibox-content">

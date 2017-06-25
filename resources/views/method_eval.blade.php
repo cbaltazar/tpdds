@@ -47,7 +47,7 @@
           <tr>
                   @if( count($methodologies)>0 )
                   <td class="project-status">
-                      <h5 style="font-size:14px">Evaluar mediante:</h5>
+                      <h5 style="font-size:14px">Metodología de evaluación:</h5>
                   </td>
                   <td class="project-title" style="padding:13px 10px">
                     <select class="form-control" id="selectedMethodology">
@@ -55,10 +55,12 @@
                           <option value="{{ $methodology->id }}" > {{ $methodology->nombre }}</option>
                           @endforeach
                     </select>
+
+                  </td>
+                  <td>
+                      <a href="{{ url('methodDetail/'.$methodology->id) }}" class="btn btn-default btn-sm"><i class="fa fa-eye"></i></a>
                   </td>
                   <td class="project-actions">
-                      <a href="{{ url('methodDetail/'.$methodology->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-eye"></i> Ver </a>
-                      <a href="{{ url('methodDetail') }}" class="btn btn-warning btn-sm"><i class="fa fa-eye"></i> Cargar </a>
                       <a href="#" class="btn btn-primary btn-sm" id="applyMethodology"><i class="fa fa-check"></i> Aplicar</a>
                   </td>
                       @else
@@ -66,7 +68,7 @@
                           No hay metodologías cargadas.
                       </td>
                   <td class="project-actions">
-                        <a href="{{ url('methodDetail') }}" class="btn btn-warning btn-sm"><i class="fa fa-eye"></i> Cargar </a>
+                        <a href="{{ url('methodDetail') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Cargar </a>
                   </td>
                   @endif
           </tr>
