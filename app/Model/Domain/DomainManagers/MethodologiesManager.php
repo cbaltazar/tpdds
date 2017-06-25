@@ -131,7 +131,12 @@ class MethodologiesManager extends DomainManager
         $results = $this->orderResults($results);
         $total = array_sum($results);
         foreach($results as $key => $value){
-            $results[$key] = (($value*100)/$total).'%';
+            if($total > 0){
+                $results[$key] = round(($value*100)/$total, 2).'%';
+            }else{
+                $results[$key] = '100%';
+            }
+
         }
         return $results;
     }

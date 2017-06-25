@@ -13,11 +13,12 @@ abstract class Rule
     public abstract function evaluate($results, $rule);
 
     public function applyMode($rule, $values){
+        $total = array();
         if( $rule->modalidad != 'uni'){
             $mode = $rule->modalidad;
-            $values = $this->$mode($values);
+            $total['total'] = $this->$mode($values);
         }
-        return $values;
+        return $total;
     }
 
     public function addCompaniesValues($companies){
@@ -74,7 +75,6 @@ abstract class Rule
             $data->period = $i;
             $values[$i] = $element->getValue($data);
         }
-
         return $this->applyMode($rule, $values);
     }
 
