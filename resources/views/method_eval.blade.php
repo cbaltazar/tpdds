@@ -21,7 +21,7 @@
                             <tr class="companyToEvaluate">
                                 <td>
                                     <div class="icheckbox_square-green" style="position: relative;">
-                                        <input type="checkbox" class="i-checks" name="input[]" style="position: absolute; opacity: 0;">
+                                        <input type="checkbox" checked class="i-checks" name="input[]" style="position: absolute; opacity: 0;">
                                         <input type="hidden" class="companyName" id="{{ $company->id }}">
                                     </div>
                                 </td>
@@ -55,10 +55,9 @@
                           <option value="{{ $methodology->id }}" > {{ $methodology->nombre }}</option>
                           @endforeach
                     </select>
-
                   </td>
                   <td>
-                      <a href="{{ url('methodDetail/'.$methodology->id) }}" class="btn btn-default btn-sm"><i class="fa fa-eye"></i></a>
+                      <a id="editButton" href="#" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
                   </td>
                   <td class="project-actions">
                       <a href="#" class="btn btn-primary btn-sm" id="applyMethodology"><i class="fa fa-check"></i> Aplicar</a>
@@ -141,6 +140,11 @@
                var params = prepareParams();
                evaluateMethodology( params );
             });
+            $("#editButton").attr("href","methodDetail/"+$("#selectedMethodology").val());
+       });
+
+       $('body').on('change load','#selectedMethodology',function(){
+         $("#editButton").attr("href","methodDetail/"+$("#selectedMethodology").val());
        });
     </script>
 @endsection
