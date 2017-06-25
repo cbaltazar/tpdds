@@ -13,28 +13,33 @@ abstract class Rule
     public abstract function evaluate($results, $params, $rule);
 
     public function applyMode($rule, $values){
-        $mode = $rule->modalidad;
-        return $this->$mode();
+        if( $rule->modalidad != 'uni'){
+            $mode = $rule->modalidad;
+            $values = $this->$mode($values);
+        }
+        return $values;
     }
 
     public function addCompaniesValues($companies){
         $companiesSum = array();
+
         foreach($companies as $key=>$values){
-            $companiesSum[$key] = $this->sum($values);
+            if(is_array($values)){
+                $companiesSum[$key] = $this->sum($values);
+            }else{
+                $companiesSum[$key] = $values;
+            }
         }
         return $companiesSum;
     }
 
-    public function addPoints($companies){
-        $companiesWithPoints = array();
-
+    public function addPoints($companies, $results){
         $maxPoints = count((array)$companies);
         foreach( $companies as $key => $value){
-            $companiesWithPoints[$key] = $maxPoints;
+            $results[$key]+= $maxPoints;
             $maxPoints--;
         }
-
-        return $companiesWithPoints;
+        return $results;
     }
 
     public function sum($values){
@@ -46,7 +51,11 @@ abstract class Rule
     }
 
     public function avg($values){
-
+        $result = 0;
+        foreach($values as $key=>$term){
+            $result+=$term;
+        }
+        return $result/count($values);
     }
 
     public function med($values){
@@ -66,7 +75,7 @@ abstract class Rule
             $values[$i] = $element->getValue($data);
         }
 
-        return $values;
+        return $this->applyMode($rule, $values);
     }
 
     public function getElement($rule)

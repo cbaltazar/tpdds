@@ -112,8 +112,16 @@ class MethodologiesManager extends DomainManager
         }
     }
 
+    public function prepareArrayResults($params){
+        $results = array();
+        foreach ($params->companies as $company){
+            $results[$company] = 0;
+        }
+        return $results;
+    }
+
     public function evaluate($params){
-        $results = null;
+        $results = $this->prepareArrayResults($params);
         $methodology = $this->getOne($params->methodology);
         $rules = $methodology->reglas;
         foreach ($rules as $rule){
