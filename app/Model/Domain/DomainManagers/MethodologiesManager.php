@@ -17,12 +17,12 @@ use App\Model\Domain\Rules\RuleMAXQ;
 class MethodologiesManager extends DomainManager
 {
     private $ruleTypes = array(
-        'asc'=>'boolean',
-        'dec'=>'boolean',
-        'minq'=>'boolean',
-        'maxq'=>'boolean',
-        'min'=>'order',
-        'max'=>'order',
+        'asc'=>'Boolean',
+        'dec'=>'Boolean',
+        'minq'=>'Boolean',
+        'maxq'=>'Boolean',
+        'min'=>'Order',
+        'max'=>'Order',
     );
 
     protected static $obj = null;
@@ -178,7 +178,7 @@ class MethodologiesManager extends DomainManager
         $methodology = $this->getOne($params->methodology);
         $rules = $this->orderRules($methodology->reglas);
         foreach ($rules as $rule){
-            $ruleName = 'App\Model\Domain\Rules\Rule'.strtoupper(explode(',',$rule->condicion)[0]);
+            $ruleName = 'App\Model\Domain\Rules\\'.$this->ruleTypes[explode(",",$rule->condicion)[0]].'Rule';
             $objRule = new $ruleName();
             $results = $objRule->evaluate($results, $rule);
         }

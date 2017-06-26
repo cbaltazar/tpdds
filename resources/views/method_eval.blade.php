@@ -110,18 +110,18 @@
                 }
             });
             params.methodology = $("#selectedMethodology").val();
-            console.log(JSON.stringify(params));
             return params;
         }
 
         function drawEvaluatedCompanies(obj){
             $("#companiesEvaluated").empty();
             var i = 1;
-            var tableBody;
-            if(obj.length > 0){
+            var tableBody = '';
+
+            if(Object.keys(obj).length > 0){
                 $.each(obj, function(name, valoration){
-                    console.log("name: "+name+" valoration: "+valoration);
-                    tableBody = '<tr>' +
+                    console.log(name);
+                    tableBody += '<tr>' +
                         '<td>'+ i +'</td>' +
                         '<td>'+ name +'</td>' +
                         '<td class="text-navy" style="width:100px"><i class="fa fa-level-up"></i>'+ valoration +'</td></tr>';

@@ -10,7 +10,8 @@ use App\Model\ORMConnections\EloquentConnection;
 
 abstract class Rule
 {
-    public abstract function evaluate($results, $rule);
+
+    public abstract function applyCondition($indicatorResults, $results,$rule);
 
     public function applyMode($rule, $values){
         $total = array();
@@ -23,10 +24,10 @@ abstract class Rule
     public function addCompaniesValues($companies){
         $companiesSum = array();
 
-        foreach($companies as $key=>$values){
-            if(is_array($values)){
+        foreach($companies as $key=>$values) {
+            if (is_array($values)) {
                 $companiesSum[$key] = $this->sum($values);
-            }else{
+            } else {
                 $companiesSum[$key] = $values;
             }
         }
@@ -111,5 +112,15 @@ abstract class Rule
     public function getOrmConnection()
     {
         return new EloquentConnection();
+    }
+
+    /*Template method*/
+    public function evaluate($results, $rule){
+        $companies = $results;
+        $indicatorResults = array();
+        foreach ($companies as $companyId => $value){
+            $indicatorResults[$companyId] = $this->getValuesOfPeriods($companyId, $rule);
+        }
+        return $this->applyCondition($indicatorResults, $results,$rule);
     }
 }
