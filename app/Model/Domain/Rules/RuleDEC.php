@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: amansilla
- * Date: 22/06/17
- * Time: 12:48
- */
 
 namespace App\Model\Domain\Rules;
 
@@ -18,6 +12,7 @@ class RuleDEC extends Rule
         foreach ($companies as $companyId => $value){
             $indicatorResults[$companyId] = $this->getValuesOfPeriods($companyId, $rule);
         }
+
         return $this->applyCondition($indicatorResults, $results,$rule);
     }
 
