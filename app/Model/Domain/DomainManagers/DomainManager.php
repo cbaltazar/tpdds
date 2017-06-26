@@ -90,6 +90,10 @@ abstract class DomainManager
         return $obj = $this->ormConnection->findWhere( $this->model, $where);
     }
 
+    public function getWhereColumn($columnName, $value){
+        return $obj = $this->ormConnection->getWhere( $this->model, $columnName, $value);
+    }
+
     /* getColumn: retorna los datos de la columna pasada como parametro
      * */
     public function getColumn($column){

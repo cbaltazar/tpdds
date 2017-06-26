@@ -16,6 +16,15 @@ use App\Model\Domain\Rules\RuleMAXQ;
 
 class MethodologiesManager extends DomainManager
 {
+    private $ruleTypes = array(
+        'asc'=>'boolean',
+        'dec'=>'boolean',
+        'minq'=>'boolean',
+        'maxq'=>'boolean',
+        'min'=>'order',
+        'max'=>'order',
+    );
+
     protected static $obj = null;
 
     function __construct($orm){
@@ -151,10 +160,23 @@ class MethodologiesManager extends DomainManager
         return $results;
     }
 
+    public function orderRules($rules){
+        $booleans = array();
+        $orders = array();
+        foreach ($rules as $key => $rule){
+            if($this->ruleTypes[explode(',',$rule->condicion)[0]] == 'boolean'){
+                array_push($booleans, $rule);
+            }else{
+                array_push($orders, $rule);
+            }
+        }
+        return array_merge($booleans, $orders);
+    }
+
     public function evaluate($params){
         $results = $this->prepareArrayResults($params);
         $methodology = $this->getOne($params->methodology);
-        $rules = $methodology->reglas;
+        $rules = $this->orderRules($methodology->reglas);
         foreach ($rules as $rule){
             $ruleName = 'App\Model\Domain\Rules\Rule'.strtoupper(explode(',',$rule->condicion)[0]);
             $objRule = new $ruleName();

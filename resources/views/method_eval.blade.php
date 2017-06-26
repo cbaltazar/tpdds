@@ -87,7 +87,7 @@
                 </tr>
                 </thead>
                 <tbody id="companiesEvaluated">
-
+                    <tr><td>No se han realizado valoraciones.</td></tr>
                 </tbody>
             </table>
         </div>
@@ -115,21 +115,24 @@
         }
 
         function drawEvaluatedCompanies(obj){
-            obj.each(function(key, value){
-                console.log("key: "+key+" value: "+value);
-            });
-            /*
-            <tr>
-             <td></td>
-             <td>Empresa </td>
-             <td class="text-navy" style="width:100px"> <i class="fa fa-level-up"></i> </td>
-             </tr>
-            <tr>
-             <td></td>
-             <td>Empresa </td>
-             <td class="text-warning"> <i class="fa fa-level-down"></i>  </td>
-             </tr>
-            */
+            $("#companiesEvaluated").empty();
+            var i = 1;
+            var tableBody;
+            if(obj.length > 0){
+                $.each(obj, function(name, valoration){
+                    console.log("name: "+name+" valoration: "+valoration);
+                    tableBody = '<tr>' +
+                        '<td>'+ i +'</td>' +
+                        '<td>'+ name +'</td>' +
+                        '<td class="text-navy" style="width:100px"><i class="fa fa-level-up"></i>'+ valoration +'</td></tr>';
+                    i++;
+                });
+            }else{
+                tableBody = '<tr>' +
+                    '<td>'+ i +'</td>' +
+                    '<td>'+ "No hay empresas que cumplan con el criterio seleccionado" +'</td></tr>';
+            }
+            $("#companiesEvaluated").append( tableBody );
         }
 
         function evaluateMethodology( params ){
