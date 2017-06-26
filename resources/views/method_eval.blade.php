@@ -86,21 +86,8 @@
                     <th>Valoración</th>
                 </tr>
                 </thead>
-                <tbody>
-                @for($i=1;$i<6;$i++)
-                <tr>
-                    <td>{{$i}}</td>
-                    <td>Empresa {{$i}}</td>
-                    <td class="text-navy" style="width:100px"> <i class="fa fa-level-up"></i> {{(5-$i)*10}}% </td>
-                </tr>
-                @endfor
-                @for($i=6;$i<11;$i++)
-                <tr>
-                    <td>{{$i}}</td>
-                    <td>Empresa {{$i}}</td>
-                    <td class="text-warning"> <i class="fa fa-level-down"></i> -{{($i)*10}}% </td>
-                </tr>
-                @endfor
+                <tbody id="companiesEvaluated">
+
                 </tbody>
             </table>
         </div>
@@ -127,8 +114,35 @@
             return params;
         }
 
-        function evaluateMethodology( params ){
+        function drawEvaluatedCompanies(obj){
+            obj.each(function(key, value){
+                console.log("key: "+key+" value: "+value);
+            });
+            /*
+            <tr>
+             <td></td>
+             <td>Empresa </td>
+             <td class="text-navy" style="width:100px"> <i class="fa fa-level-up"></i> </td>
+             </tr>
+            <tr>
+             <td></td>
+             <td>Empresa </td>
+             <td class="text-warning"> <i class="fa fa-level-down"></i>  </td>
+             </tr>
+            */
+        }
 
+        function evaluateMethodology( params ){
+            $.ajax({
+                url: '/api/methodologyEvaluate',
+                type: 'post',
+                dataType: 'json',
+                data: JSON.stringify(params),
+                success: function ( obj ) {
+                    console.log(obj);
+                    drawEvaluatedCompanies(obj);
+                }
+            });
         }
 
         $(document).ready(function(){

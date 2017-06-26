@@ -12,6 +12,7 @@ class RuleASC extends Rule
         foreach ($companies as $companyId => $value){
             $indicatorResults[$companyId] = $this->getValuesOfPeriods($companyId, $rule);
         }
+        
         return $this->applyCondition($indicatorResults, $results,$rule);
     }
 

@@ -25,6 +25,7 @@ class MethodologyController extends Controller
 
     public function evaluateMethodology(Request $request){
         $domainManager = MethodologiesManager::getInstance();
+
         return $domainManager->evaluate( json_decode($request->getContent()) );
     }
 }

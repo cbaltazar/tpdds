@@ -64,13 +64,12 @@ abstract class Rule
 
     public function getValuesOfPeriods($companyId, $rule)
     {
-        $element = $this->getElement($rule);
         $values = array();
         $data = new \stdClass();
         $data->company = $companyId;
 
         for ($i = $rule->desde; $i <= $rule->hasta; $i++) {
-            $indicatorResult = new \stdClass();
+            $element = $this->getElement($rule);
             $data->period = $i;
             $values[$i] = $element->getValue($data);
         }
