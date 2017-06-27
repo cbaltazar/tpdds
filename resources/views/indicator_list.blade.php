@@ -30,7 +30,7 @@
                 <div class="ibox-title">
                     <h5>Listado de Indicadores</h5>
                     <div class="ibox-tools">
-                        <a href="{{ url('indicatorDetail') }}" class="btn btn-primary btn-sm"><i class="fa fa-paint-brush"></i> Crear Indicador</a>
+                        <a href="{{ url('indicatorDetail') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Crear</a>
                     </div>
                 </div>
                 <div class="ibox-content">

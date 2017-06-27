@@ -63,7 +63,7 @@
 
     <script src="{{asset('js/plugins/mathjs/math.min.js')}}"></script>
     <script src="{{asset('js/plugins/validate/jquery.validate.min.js')}}"></script>
-    <script src="{{asset('js/indicator-validation.js')}}"></script>
+    <script src="{{asset('js/form-validations.js')}}"></script>
     <script src="{{asset('js/plugins/iCheck/icheck.min.js')}}"></script>
 
     <script>
@@ -130,8 +130,6 @@
                     }
                 });
             });
-
-            console.log(JSON.stringify(idsFiltered));
             $('#formulaElements').val(JSON.stringify(idsFiltered));
         });
     </script>
