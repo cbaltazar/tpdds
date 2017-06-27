@@ -153,14 +153,25 @@ abstract class DomainManager
             $obj->clase = $clase[count($clase)-1];
             array_push($availablesElements,$obj);
         }
+
         return $availablesElements;
     }
 
     public function getAvailablesFromulaElements(){
         $accounts = $this->getAvailablesElements( Cuenta::class );
         $indicators = $this->getAvailablesElements( Indicador::class );
+        $elements = array_merge($accounts, $indicators);
+        $antiquity = new \stdClass();
+        $antiquity->id = 0;
+        $antiquity->nombre = 'Antigüedad';
+        $antiquity->clase = '';
+        array_push($elements, $antiquity);
 
-        return array_merge($accounts, $indicators);
+        usort($elements, function ($a, $b){
+            return strcmp($a->nombre, $b->nombre);
+        });
+
+        return $elements;
     }
 
     /*getObject: busca el elemento con el nombre seleccionado. Si no se encuentra, lo crea.

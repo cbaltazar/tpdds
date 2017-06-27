@@ -155,6 +155,7 @@
 
             $('#applyMethodology').click(function(){
                var params = prepareParams();
+               console.log(JSON.stringify(params));
                evaluateMethodology( params );
             });
 

@@ -18,7 +18,7 @@ class BooleanRule extends Rule
     public function compareASCValues($partialResult, $rule){
         $response = true;
         foreach ($partialResult as $key => $value){
-            if(isset($partialResult[$key+1]) && $value > $partialResult[$key+1] ){
+            if(isset($partialResult[$key+1]) && $value >= $partialResult[$key+1] ){
                 $response = false;
                 break;
             }
@@ -29,7 +29,7 @@ class BooleanRule extends Rule
     public function compareDECValues($partialResult, $rule){
         $response = true;
         foreach ($partialResult as $key => $value){
-            if(isset($partialResult[$key+1]) && $value < $partialResult[$key+1] ){
+            if(isset($partialResult[$key+1]) && $value <= $partialResult[$key+1] ){
                 $response = false;
                 break;
             }
