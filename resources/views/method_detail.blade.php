@@ -88,28 +88,19 @@
                                                    </td>
 
                                                    <td>
+
                                                        <select class='form-control from' name='from'>
-                                                           <option value='2010' @if($regla->desde == '2010') selected @endif>2010</option>
-                                                           <option value='2011' @if($regla->desde == '2011') selected @endif>2011</option>
-                                                           <option value='2012' @if($regla->desde == '2012') selected @endif>2012</option>
-                                                           <option value='2013' @if($regla->desde == '2013') selected @endif>2013</option>
-                                                           <option value='2014' @if($regla->desde == '2014') selected @endif>2014</option>
-                                                           <option value='2015' @if($regla->desde == '2015') selected @endif>2015</option>
-                                                           <option value='2016' @if($regla->desde == '2016') selected @endif>2016</option>
-                                                           <option value='2017' @if($regla->desde == '2017') selected @endif>2017</option>
+                                                           @foreach($periods as $period)
+                                                               <option value='{{ $period->periodo }}' @if($regla->desde == $period->periodo ) selected @endif>{{ $period->periodo }}</option>
+                                                           @endforeach
                                                        </select>
                                                    </td>
 
                                                    <td>
                                                        <select class='form-control to' name='to'>
-                                                           <option value='2010' @if($regla->hasta == '2010') selected @endif>2010</option>
-                                                           <option value='2011' @if($regla->hasta == '2011') selected @endif>2011</option>
-                                                           <option value='2012' @if($regla->hasta == '2012') selected @endif>2012</option>
-                                                           <option value='2013' @if($regla->hasta == '2013') selected @endif>2013</option>
-                                                           <option value='2014' @if($regla->hasta == '2014') selected @endif>2014</option>
-                                                           <option value='2015' @if($regla->hasta == '2015') selected @endif>2015</option>
-                                                           <option value='2016' @if($regla->hasta == '2016') selected @endif>2016</option>
-                                                           <option value='2017' @if($regla->hasta == '2017') selected @endif>2017</option>
+                                                           @foreach($periods as $period)
+                                                               <option value='{{ $period->periodo }}' @if($regla->hasta == $period->periodo ) selected @endif>{{ $period->periodo }}</option>
+                                                           @endforeach
                                                        </select>
                                                    </td>
 
