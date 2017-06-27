@@ -84,21 +84,8 @@
                     <th>Valoración</th>
                 </tr>
                 </thead>
-                <tbody>
-                @for($i=1;$i<6;$i++)
-                <tr>
-                    <td>{{$i}}</td>
-                    <td>Empresa {{$i}}</td>
-                    <td class="text-navy" style="width:100px"> <i class="fa fa-level-up"></i> {{(5-$i)*10}}% </td>
-                </tr>
-                @endfor
-                @for($i=6;$i<11;$i++)
-                <tr>
-                    <td>{{$i}}</td>
-                    <td>Empresa {{$i}}</td>
-                    <td class="text-warning"> <i class="fa fa-level-down"></i> -{{($i)*10}}% </td>
-                </tr>
-                @endfor
+                <tbody id="companiesEvaluated">
+                    <tr><td>No se han realizado valoraciones.</td></tr>
                 </tbody>
             </table>
         </div>
@@ -121,12 +108,42 @@
                 }
             });
             params.methodology = $("#selectedMethodology").val();
-            console.log(JSON.stringify(params));
             return params;
         }
 
-        function evaluateMethodology( params ){
+        function drawEvaluatedCompanies(obj){
+            $("#companiesEvaluated").empty();
+            var i = 1;
+            var tableBody = '';
 
+            if(Object.keys(obj).length > 0){
+                $.each(obj, function(name, valoration){
+                    console.log(name);
+                    tableBody += '<tr>' +
+                        '<td>'+ i +'</td>' +
+                        '<td>'+ name +'</td>' +
+                        '<td class="text-navy" style="width:100px"><i class="fa fa-level-up"></i>'+ valoration +'</td></tr>';
+                    i++;
+                });
+            }else{
+                tableBody = '<tr>' +
+                    '<td>'+ i +'</td>' +
+                    '<td>'+ "No hay empresas que cumplan con el criterio seleccionado" +'</td></tr>';
+            }
+            $("#companiesEvaluated").append( tableBody );
+        }
+
+        function evaluateMethodology( params ){
+            $.ajax({
+                url: '/api/methodologyEvaluate',
+                type: 'post',
+                dataType: 'json',
+                data: JSON.stringify(params),
+                success: function ( obj ) {
+                    console.log(obj);
+                    drawEvaluatedCompanies(obj);
+                }
+            });
         }
 
         $(document).ready(function(){

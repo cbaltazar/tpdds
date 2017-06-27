@@ -91,6 +91,8 @@ class FrontController extends Controller{
     public function methodEval(){
         $companiesManager = CompaniesManager::getInstance();
         $methodologiesManager = MethodologiesManager::getInstance();
-        return view('method_eval')->with("companies", $companiesManager->getAll())->with("methodologies", $methodologiesManager->getAll());
+
+        return view('method_eval')->with("companies", $companiesManager->getAll())
+                                       ->with("methodologies", $methodologiesManager->getWhereColumn('activo',1));
     }
 }

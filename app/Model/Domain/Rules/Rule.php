@@ -10,23 +10,24 @@ use App\Model\ORMConnections\EloquentConnection;
 
 abstract class Rule
 {
-    public abstract function evaluate($results, $rule);
+
+    public abstract function applyCondition($indicatorResults, $results,$rule);
 
     public function applyMode($rule, $values){
-        if( $rule->modalidad != 'uni'){
-            $mode = $rule->modalidad;
-            $values = $this->$mode($values);
-        }
-        return $values;
+        $total = array();
+        $mode = $rule->modalidad;
+        $total['total'] = $this->$mode($values);
+
+        return $total;
     }
 
     public function addCompaniesValues($companies){
         $companiesSum = array();
 
-        foreach($companies as $key=>$values){
-            if(is_array($values)){
+        foreach($companies as $key=>$values) {
+            if (is_array($values)) {
                 $companiesSum[$key] = $this->sum($values);
-            }else{
+            } else {
                 $companiesSum[$key] = $values;
             }
         }
@@ -58,24 +59,35 @@ abstract class Rule
         return $result/count($values);
     }
 
-    public function med($values){
-
+    public function med($arr){
+        sort($arr);
+        $count = count($arr);
+        $middleval = floor(($count-1)/2);
+        if($count % 2) {
+            $median = $arr[$middleval];
+        } else {
+            $low = $arr[$middleval];
+            $high = $arr[$middleval+1];
+            $median = (($low+$high)/2);
+        }
+        return $median;
     }
 
     public function getValuesOfPeriods($companyId, $rule)
     {
-        $element = $this->getElement($rule);
         $values = array();
         $data = new \stdClass();
         $data->company = $companyId;
 
         for ($i = $rule->desde; $i <= $rule->hasta; $i++) {
-            $indicatorResult = new \stdClass();
+            $element = $this->getElement($rule);
             $data->period = $i;
             $values[$i] = $element->getValue($data);
         }
-
-        return $this->applyMode($rule, $values);
+        if($rule->modalidad != 'uni'){
+            $values = $this->applyMode($rule, $values);
+        }
+        return $values;
     }
 
     public function getElement($rule)
@@ -110,5 +122,15 @@ abstract class Rule
     public function getOrmConnection()
     {
         return new EloquentConnection();
+    }
+
+    /*Template method*/
+    public function evaluate($results, $rule){
+        $companies = $results;
+        $indicatorResults = array();
+        foreach ($companies as $companyId => $value){
+            $indicatorResults[$companyId] = $this->getValuesOfPeriods($companyId, $rule);
+        }
+        return $this->applyCondition($indicatorResults, $results,$rule);
     }
 }

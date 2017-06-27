@@ -2,6 +2,7 @@
 
 namespace App\Model\Domain\DomainManagers;
 
+use App\Model\Entities\Empresa;
 use App\Model\Entities\Metodologia;
 use App\Model\Entities\Regla;
 use App\Model\ORMConnections\EloquentConnection;
@@ -15,6 +16,15 @@ use App\Model\Domain\Rules\RuleMAXQ;
 
 class MethodologiesManager extends DomainManager
 {
+    private $ruleTypes = array(
+        'asc'=>'Boolean',
+        'dec'=>'Boolean',
+        'minq'=>'Boolean',
+        'maxq'=>'Boolean',
+        'min'=>'Order',
+        'max'=>'Order',
+    );
+
     protected static $obj = null;
 
     function __construct($orm){
@@ -131,20 +141,47 @@ class MethodologiesManager extends DomainManager
         $results = $this->orderResults($results);
         $total = array_sum($results);
         foreach($results as $key => $value){
-            $results[$key] = (($value*100)/$total).'%';
+            if($total > 0){
+                $results[$key] = round(($value*100)/$total, 2).'%';
+            }else{
+                $results[$key] = '100%';
+            }
+
         }
         return $results;
+    }
+
+    public function getCompaniesNames($results){
+        foreach ($results as $company => $value){
+            $obj = $this->ormConnection->findById(Empresa::class, $company);
+            $results[$obj->getNombre()] = $value;
+            unset($results[$company]);
+        }
+        return $results;
+    }
+
+    public function orderRules($rules){
+        $booleans = array();
+        $orders = array();
+        foreach ($rules as $key => $rule){
+            if($this->ruleTypes[explode(',',$rule->condicion)[0]] == 'boolean'){
+                array_push($booleans, $rule);
+            }else{
+                array_push($orders, $rule);
+            }
+        }
+        return array_merge($booleans, $orders);
     }
 
     public function evaluate($params){
         $results = $this->prepareArrayResults($params);
         $methodology = $this->getOne($params->methodology);
-        $rules = $methodology->reglas;
+        $rules = $this->orderRules($methodology->reglas);
         foreach ($rules as $rule){
-            $ruleName = 'App\Model\Domain\Rules\Rule'.strtoupper(explode(',',$rule->condicion)[0]);
+            $ruleName = 'App\Model\Domain\Rules\\'.$this->ruleTypes[explode(",",$rule->condicion)[0]].'Rule';
             $objRule = new $ruleName();
             $results = $objRule->evaluate($results, $rule);
         }
-        return $this->addValoration($results);
+        return $this->getCompaniesNames($this->addValoration($results));
     }
 }
