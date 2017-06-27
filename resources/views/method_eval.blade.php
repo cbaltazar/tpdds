@@ -2,7 +2,6 @@
 @section ('title','Evaluar Empresas')
 @section ('head')
     <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
-    <link href="{{asset('js/plugins/sweetalert/dist/sweetalert.css')}}" rel="stylesheet">
 @endsection
 @section ('content')
 <div class="wrapper wrapper-content animated fadeInUp">
@@ -21,7 +20,7 @@
                             <tr class="companyToEvaluate">
                                 <td>
                                     <div class="icheckbox_square-green" style="position: relative;">
-                                        <input type="checkbox" class="i-checks" name="input[]" style="position: absolute; opacity: 0;">
+                                        <input type="checkbox" checked class="i-checks" name="input[]" style="position: absolute; opacity: 0;">
                                         <input type="hidden" class="companyName" id="{{ $company->id }}">
                                     </div>
                                 </td>
@@ -55,13 +54,12 @@
                           <option value="{{ $methodology->id }}" > {{ $methodology->nombre }}</option>
                           @endforeach
                     </select>
-
                   </td>
                   <td>
-                      <a href="{{ url('methodDetail/'.$methodology->id) }}" class="btn btn-default btn-sm"><i class="fa fa-eye"></i></a>
+                      <a id="editButton" href="#" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
                   </td>
                   <td class="project-actions">
-                      <a href="#" class="btn btn-primary btn-sm" id="applyMethodology"><i class="fa fa-check"></i> Aplicar</a>
+                      <a href="#" class="btn btn-primary btn-sm" id="applyMethodology"><i class="fa fa-check"></i> Aplicar </a>
                   </td>
                       @else
                       <td>
@@ -82,12 +80,15 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Empresa</th>
+                    <th width=520>Empresa</th>
                     <th>Valoración</th>
                 </tr>
                 </thead>
                 <tbody id="companiesEvaluated">
-                    <tr><td>No se han realizado valoraciones.</td></tr>
+                    <tr>
+                      <td></td>
+                      <td>No se han realizado valoraciones.</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -99,7 +100,6 @@
 @section ('scripts')
     <script src="{{asset('js/plugins/iCheck/icheck.min.js')}}"></script>
     <script>
-
         function prepareParams(){
             params = {};
             params.companies = [];
@@ -120,11 +120,10 @@
 
             if(Object.keys(obj).length > 0){
                 $.each(obj, function(name, valoration){
-                    console.log(name);
                     tableBody += '<tr>' +
                         '<td>'+ i +'</td>' +
                         '<td>'+ name +'</td>' +
-                        '<td class="text-navy" style="width:100px"><i class="fa fa-level-up"></i>'+ valoration +'</td></tr>';
+                        '<td><i class="fa"> </i>'+' '+valoration +'</td></tr>';
                     i++;
                 });
             }else{
@@ -142,8 +141,8 @@
                 dataType: 'json',
                 data: JSON.stringify(params),
                 success: function ( obj ) {
-                    console.log(obj);
                     drawEvaluatedCompanies(obj);
+                    rankingStylize();
                 }
             });
         }
@@ -158,6 +157,38 @@
                var params = prepareParams();
                evaluateMethodology( params );
             });
+
+
+
+            $("#editButton").attr("href","methodDetail/"+$("#selectedMethodology").val());
        });
+
+       $('body').on('change load','#selectedMethodology',function(){
+         $("#editButton").attr("href","methodDetail/"+$("#selectedMethodology").val());
+       });
+
+
+       function rankingStylize(){
+         var rankeds = $("#companiesEvaluated tr");
+         var N = rankeds.size();
+         for(var i=0; i<N; i++){
+           if(i<N/4){
+             setStyle($(rankeds[i]),"fa-long-arrow-up", "text-navy");
+           }else if (i<(N/4)*2){
+             setStyle($(rankeds[i]),"fa-level-up", "text-warning");
+           }else if (i<(N/4)*3){
+             setStyle($(rankeds[i]),"fa-level-down", "text-warning");
+           }else {
+             setStyle($(rankeds[i]),"fa-long-arrow-down", "text-danger");
+           }
+         }
+       }
+
+       function setStyle(position,icon,color){
+         var valoration = position.children().last();
+         valoration.addClass(color);
+         valoration.find("i").addClass(icon);
+       }
+
     </script>
 @endsection

@@ -2,7 +2,7 @@
 @section ('title','Ver Metodología')
 @section ('head')
 <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
-<link href="{{asset('js/plugins/sweetalert/dist/sweetalert.css')}}" rel="stylesheet">
+<link href="{{asset('js/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet">
 @endsection
 
 @section ('content')
@@ -19,14 +19,14 @@
                   <h5>Editor de Metodología</h5>
               </div>
               <div class="ibox-content">
-                  <form method="post" class="form-horizontal" style="margin-top:15px" id="methodology-form" action="{{ url('saveMethodology') }}/{{ $methodologyObject->id or "" }}">
+                  <form method="post" class="form-horizontal" style="margin-top:15px" id="methodology-form" name="methodology-form" action="{{ url('saveMethodology') }}/{{ $methodologyObject->id or ""}}">
                       <input type="hidden" name="_token" value="{{ csrf_token() }}">
                       <div class="form-group"><label class="col-sm-2 control-label">Nombre</label>
-                          <div class="col-sm-9"><input type="text" class="form-control" placeholder="Nombre de la metodología" id="nombre" value="{{$methodologyObject->nombre or " "}}"></div>
+                          <div class="col-sm-9"><input type="text" class="form-control" placeholder="Nombre de la metodología" name="name" id="nombre" value="{{$methodologyObject->nombre or ""}}"></div>
                       </div>
                       <div class="hr-line-dashed"></div>
                       <div class="form-group"><label class="col-sm-2 control-label">Descripción</label>
-                          <div class="col-sm-9"><input type="text" class="form-control" placeholder="Descripción de la metodología" id="descripcion" value="{{$methodologyObject->descripcion or " "}}"> <span class="help-block m-b-none">Este campo le permitirá dar una breve descripción de la metodología generada.</span></div>
+                          <div class="col-sm-9"><input type="text" class="form-control" placeholder="Descripción de la metodología" id="descripcion" value="{{$methodologyObject->descripcion or ""}}"> <span class="help-block m-b-none">Este campo le permitirá dar una breve descripción de la metodología generada.</span></div>
                       </div>
                       <div class="hr-line-dashed"></div>
                       <div class="form-group"><label class="col-sm-2 control-label">Estado</label>
@@ -42,11 +42,11 @@
                                   <thead>
                                   <tr>
                                       <th>#</th>
-                                      <th width="25%">Indicador</th> <!--30-->
-                                      <th width="25%">Condición</th> <!--15-->
-                                      <th width="10%">Desde</th> <!--10-->
-                                      <th width="10%">Hasta</th> <!--10-->
-                                      <th width="15%">Modalidad</th> <!--15-->
+                                      <th width="25%">Indicador</th>
+                                      <th width="25%">Condición</th>
+                                      <th width="10%">Desde</th>
+                                      <th width="10%">Hasta</th>
+                                      <th width="15%">Modalidad</th>
                                       <th></th>
                                   </tr>
                                   </thead>
@@ -153,7 +153,9 @@
 
 @section ('scripts')
     <script src="{{asset('js/plugins/iCheck/icheck.min.js')}}"></script>
-    <script src="{{asset('js/plugins/sweetalert/dist/sweetalert.min.js')}}"></script>
+    <script src="{{asset('js/plugins/sweetalert/sweetalert.min.js')}}"></script>
+    <script src="{{asset('js/plugins/validate/jquery.validate.min.js')}}"></script>
+    <script src="{{asset('js/form-validations.js')}}"></script>
     <script>
         var ruleId=1;
         $(document).ready(function(){
@@ -174,7 +176,7 @@
 
         //--------campo value------------------
         $('body').on('change','.condition', function(){
-            var rowId ='#'+ $(this).parent().parent().attr('id');
+            rowId = getRuleId($(this));
             if(this.value == "minq" || this.value == "maxq"){
                 $(rowId+' .value').show().width("10%");
                 $(rowId+' .condition').width("36%");
@@ -185,10 +187,10 @@
         })
         //-----------DATE-VALIDATOR--------------------------
         $('body').on('change','.from,.to',function(){
-            var rowId = $(this).parent().parent().attr('id');
+            rowId = getRuleId($(this));
             var lastPeriod = $(this).data('lastPeriod');
             var newPeriod = $(this).val();
-            if($('#'+rowId+' .from').val() > $('#'+rowId+' .to').val()){
+            if($(rowId+' .from').val() > $(rowId+' .to').val()){
                 sweetAlert("Ups...", "La fecha final no puede ser menor que la inicial");
                 $(this).val(lastPeriod)
             }else {
@@ -197,7 +199,7 @@
         })
         //-----------MODALIDAD VALIDATOR--------------------------
         $('body').on('change','.from,.to,.condition', function(){
-            var rowId ='#'+ $(this).parent().parent().attr('id');
+            rowId = getRuleId($(this));
             if($(rowId+' .from').val() != $(rowId+' .to').val() && $(rowId+' .condition').val()!='asc' && $(rowId+' .condition').val()!='dec'){
                 $(rowId+' .function').attr("disabled",false);
             }else{
@@ -206,30 +208,45 @@
         });
         //----------AGE VALIDATION---------
         $('body').on('change','.element',function(){
-            var rowId ='#'+ $(this).parent().parent().attr('id');
+            rowId = getRuleId($(this));
             $(rowId+' .from,' +rowId+' .to,'+rowId+' .function').attr("disabled",($(this).val()=="age"));
             $(rowId+' option[value="asc"],' +rowId+' option[value="dec"]').css("display",($(this).val()=="age")?"none":"block");
         })
         //----------DELETE RULE------------------
         $('body').on('click','.deleteRule',function(){
             var i;
+            rowId = getRuleId($(this));
 
-            if ($('#rules .rule').length>1) {
-                rowId= $(this).parent().parent().attr('id');
-                $('#'+rowId).remove()
+            if ($('#rules .rule').length>1){
+              swal({
+                title: "¿Estás seguro?",
+                text: "Esta acción no se puede deshacer",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Si",
+                cancelButtonText: "No",
+                closeOnConfirm: true
+              },
+              function(){
+                $(rowId).remove();
                 for (i = 0; i < $('#rules .rule').length; i++) {
                     $($('#rules .rule')[i]).find('.ruleId').html(i+1)
                     $($('#rules .rule')[i]).attr('id',i);
                 };
                 ruleId = i+1 //que proxima que se genere parta del id de la ultima
+              });
             }else{
                 sweetAlert("Ups...", "Necesitas al menos una regla");
             };
         });
         //----------CREATE RULE-----
         $("#addRule").click(function(){
-            createRuleRow(ruleId)
+            createRuleRow()
         });
+
+        function getRuleId(elem){
+          return '#'+$(elem).parent().parent().attr('id')
+        }
 
         function createRuleRow(){
             var elements = JSON.parse('{!! json_encode($elements) !!}');
@@ -295,7 +312,6 @@
         $('#methodology-form').submit(function(){
             var methodology = prepareRequest();
             $("#jsonData").val(JSON.stringify(methodology));
-            console.log( $("#jsonData").val() );
         });
 
         function prepareRequest(){
