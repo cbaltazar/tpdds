@@ -5,6 +5,7 @@ namespace App\Model\Domain\Rules;
 use App\Model\Domain\FormulaElements\AccountElement;
 use App\Model\Domain\FormulaElements\IndicatorElement;
 use App\Model\Entities\Cuenta;
+use App\Model\Entities\Empresa;
 use App\Model\Entities\Indicador;
 use App\Model\ORMConnections\EloquentConnection;
 
@@ -78,15 +79,19 @@ abstract class Rule
         $values = array();
         $data = new \stdClass();
         $data->company = $companyId;
+        if(explode(",", $rule->elemento)[2] == 'Antigüedad'){
+            $values['age'] = Empresa::find($companyId)->antiguedad;
+        }else{
+            for ($i = $rule->desde; $i <= $rule->hasta; $i++) {
+                $element = $this->getElement($rule);
+                $data->period = $i;
+                $values[$i] = $element->getValue($data);
+            }
+            if($rule->modalidad != 'uni'){
+                $values = $this->applyMode($rule, $values);
+            }
+        }
 
-        for ($i = $rule->desde; $i <= $rule->hasta; $i++) {
-            $element = $this->getElement($rule);
-            $data->period = $i;
-            $values[$i] = $element->getValue($data);
-        }
-        if($rule->modalidad != 'uni'){
-            $values = $this->applyMode($rule, $values);
-        }
         return $values;
     }
 

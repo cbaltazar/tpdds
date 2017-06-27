@@ -38,7 +38,23 @@ class AccountsManager extends DomainManager
             foreach ($data as $d) {
                 $this->saveAccountCompanyElement($d);
             }
+            $this->addAntiquity();
             return 1;
+    }
+
+    public function addAntiquity(){
+        $companies = Empresa::all();
+        foreach ($companies as $company){
+            $relations = Cuenta_Empresa::distinct()->where('empresa_id', $company->id)->pluck('periodo')->toArray();
+            $antiquity = 1;
+            if(count($relations) > 1){
+                $antiquity = $relations[count($relations)-1] - $relations[0];
+            }
+            $company->antiguedad = $antiquity;
+            $company->save();
+            var_dump( $antiquity );
+        }
+        return 1;
     }
 
     public function saveAccountCompanyElement($d){
