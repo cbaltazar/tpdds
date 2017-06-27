@@ -85,7 +85,8 @@ class FrontController extends Controller{
         $methodologyObject = $domainManager->getOne($id);
 
         return view('method_detail')->with("elements", $domainManager->getAvailablesFromulaElements())
-                                         ->with("methodologyObject", $methodologyObject);
+                                         ->with("methodologyObject", $methodologyObject)
+                                         ->with("periods", AccountCompanyRelationManager::getInstance()->getColumn("periodo"));
     }
 
     public function methodEval(){
