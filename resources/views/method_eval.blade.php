@@ -88,6 +88,7 @@
                     <tr>
                       <td></td>
                       <td>No se han realizado valoraciones.</td>
+                      <td></td>
                     </tr>
                 </tbody>
             </table>
@@ -113,11 +114,27 @@
             return params;
         }
 
+        function setStyle(position,icon,color){
+          position.children().last().addClass(color);
+          position.find("i").addClass(icon);
+        }
+
+        function valorationStylize(){
+          var positions = $("#companiesEvaluated tr");
+          var N = positions.size();
+          for(var i=0; i<N; i++){
+            if(i<N/4){        setStyle($(positions[i]),"fa-long-arrow-up", "text-navy")}
+            else if(i<N/2){   setStyle($(positions[i]),"fa-level-up", "text-warning")}
+            else if(i<N*3/4){ setStyle($(positions[i]),"fa-level-down", "text-warning")}
+            else {            setStyle($(positions[i]),"fa-long-arrow-down", "text-danger")}
+          }
+        }
+
         function drawEvaluatedCompanies(obj){
             $("#companiesEvaluated").empty();
             var i = 1;
             var tableBody = '';
-
+            
             if(Object.keys(obj).length > 0){
                 $.each(obj, function(name, valoration){
                     tableBody += '<tr>' +
@@ -128,10 +145,12 @@
                 });
             }else{
                 tableBody = '<tr>' +
-                    '<td>'+ i +'</td>' +
-                    '<td>'+ "No hay empresas que cumplan con el criterio seleccionado" +'</td></tr>';
+                    '<td></td>' +
+                    '<td> No hay empresas que cumplan con el criterio seleccionado </td>'+
+                    '<td></td></tr>';
             }
             $("#companiesEvaluated").append( tableBody );
+            valorationStylize();
         }
 
         function evaluateMethodology( params ){
@@ -142,7 +161,6 @@
                 data: JSON.stringify(params),
                 success: function ( obj ) {
                     drawEvaluatedCompanies(obj);
-                    rankingStylize();
                 }
             });
         }
@@ -158,37 +176,11 @@
                evaluateMethodology( params );
             });
 
-
-
             $("#editButton").attr("href","methodDetail/"+$("#selectedMethodology").val());
+            $('#selectedMethodology').on('change',function(){
+              $("#editButton").attr("href","methodDetail/"+$("#selectedMethodology").val());
+            });
        });
-
-       $('body').on('change load','#selectedMethodology',function(){
-         $("#editButton").attr("href","methodDetail/"+$("#selectedMethodology").val());
-       });
-
-
-       function rankingStylize(){
-         var rankeds = $("#companiesEvaluated tr");
-         var N = rankeds.size();
-         for(var i=0; i<N; i++){
-           if(i<N/4){
-             setStyle($(rankeds[i]),"fa-long-arrow-up", "text-navy");
-           }else if (i<(N/4)*2){
-             setStyle($(rankeds[i]),"fa-level-up", "text-warning");
-           }else if (i<(N/4)*3){
-             setStyle($(rankeds[i]),"fa-level-down", "text-warning");
-           }else {
-             setStyle($(rankeds[i]),"fa-long-arrow-down", "text-danger");
-           }
-         }
-       }
-
-       function setStyle(position,icon,color){
-         var valoration = position.children().last();
-         valoration.addClass(color);
-         valoration.find("i").addClass(icon);
-       }
 
     </script>
 @endsection
