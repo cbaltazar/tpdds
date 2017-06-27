@@ -15,7 +15,7 @@ class BooleanRule extends Rule
         return $results;
     }
 
-    public function compareASC($partialResult, $rule){
+    public function compareASCValues($partialResult, $rule){
         $response = true;
         foreach ($partialResult as $key => $value){
             if(isset($partialResult[$key+1]) && $value > $partialResult[$key+1] ){
