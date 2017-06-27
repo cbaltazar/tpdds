@@ -165,7 +165,7 @@
         });
 
         //--------campo value------------------
-        $('body').on('change','.condition', function(){
+        $('.condition').on('change', function(){
             rowId = getRuleId($(this));
             if(this.value == "minq" || this.value == "maxq"){
                 $(rowId+' .value').show().width("10%");
@@ -176,7 +176,7 @@
             }
         })
         //-----------DATE-VALIDATOR--------------------------
-        $('body').on('change','.from,.to',function(){
+        $('.from,.to').on('change',function(){
             rowId = getRuleId($(this));
             var lastPeriod = $(this).data('lastPeriod');
             var newPeriod = $(this).val();
@@ -188,7 +188,7 @@
             }
         })
         //-----------MODALIDAD VALIDATOR--------------------------
-        $('body').on('change','.from,.to,.condition', function(){
+        $('.from,.to,.condition').on('change', function(){
             rowId = getRuleId($(this));
             if($(rowId+' .from').val() != $(rowId+' .to').val() && $(rowId+' .condition').val()!='asc' && $(rowId+' .condition').val()!='dec'){
                 $(rowId+' .function').attr("disabled",false);
@@ -197,7 +197,7 @@
             }
         });
         //----------AGE VALIDATION---------
-        $('body').on('change','.element',function(){
+        $('.element').on('change',function(){
             rowId = getRuleId($(this));
             $(rowId+' .from,' +rowId+' .to,'+rowId+' .function').attr("disabled",($(this).val().split(",")[2]=="Antigüedad"));
             $(rowId+' option[value="asc"],' +rowId+' option[value="dec"]').css("display",($(this).val().split(",")[2]=="Antigüedad")?"none":"block");

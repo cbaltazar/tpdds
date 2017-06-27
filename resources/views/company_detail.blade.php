@@ -14,11 +14,11 @@
               <div class="ibox float-e-margins">
                   <div class="ibox-title">
                       <h5>Cuentas</h5>
-                      <div class="ibox-tools">
+                      <!--div class="ibox-tools">
                           <a class="collapse-link">
                               <i class="fa fa-chevron-up"></i>
                           </a>
-                      </div>
+                      </div-->
                   </div>
                   <div class="ibox-content">
 
@@ -55,17 +55,20 @@
                 <div class="ibox-title">
                     <h5>Indicadores</h5>
                     <div class="ibox-tools">
-                        <label>Periodo:</label>
-                          <select id="indicatorPeriod">
-                            @foreach($indicatorsPeriods as $indicatorPeriod)
-                              <option value={{$indicatorPeriod->periodo}}>{{$indicatorPeriod->periodo}}</option>
-                            @endforeach
-                          </select>
+                      <h5 style="margin-right:20px">Periodo:</h5>
+                      <select class="form-control input-sm" id="indicatorPeriod" style="width:80px">
+                        @foreach($indicatorsPeriods as $indicatorPeriod)
+                          <option value={{$indicatorPeriod->periodo}}>{{$indicatorPeriod->periodo}}</option>
+                        @endforeach
+                      </select>
+                    </div>
 
+
+                    <!--div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
                         </a>
-                    </div>
+                    </div-->
                 </div>
                 <div class="ibox-content">
                 <table class="table table-striped table-bordered table-hover dataTable" >
