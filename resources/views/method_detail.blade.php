@@ -176,7 +176,7 @@
 
         //--------campo value------------------
         $('body').on('change','.condition', function(){
-            var rowId ='#'+ $(this).parent().parent().attr('id');
+            rowId = getRuleId($(this));
             if(this.value == "minq" || this.value == "maxq"){
                 $(rowId+' .value').show().width("10%");
                 $(rowId+' .condition').width("36%");
@@ -187,10 +187,10 @@
         })
         //-----------DATE-VALIDATOR--------------------------
         $('body').on('change','.from,.to',function(){
-            var rowId = $(this).parent().parent().attr('id');
+            rowId = getRuleId($(this));
             var lastPeriod = $(this).data('lastPeriod');
             var newPeriod = $(this).val();
-            if($('#'+rowId+' .from').val() > $('#'+rowId+' .to').val()){
+            if($(rowId+' .from').val() > $(rowId+' .to').val()){
                 sweetAlert("Ups...", "La fecha final no puede ser menor que la inicial");
                 $(this).val(lastPeriod)
             }else {
@@ -199,7 +199,7 @@
         })
         //-----------MODALIDAD VALIDATOR--------------------------
         $('body').on('change','.from,.to,.condition', function(){
-            var rowId ='#'+ $(this).parent().parent().attr('id');
+            rowId = getRuleId($(this));
             if($(rowId+' .from').val() != $(rowId+' .to').val() && $(rowId+' .condition').val()!='asc' && $(rowId+' .condition').val()!='dec'){
                 $(rowId+' .function').attr("disabled",false);
             }else{
@@ -208,30 +208,45 @@
         });
         //----------AGE VALIDATION---------
         $('body').on('change','.element',function(){
-            var rowId ='#'+ $(this).parent().parent().attr('id');
+            rowId = getRuleId($(this));
             $(rowId+' .from,' +rowId+' .to,'+rowId+' .function').attr("disabled",($(this).val()=="age"));
             $(rowId+' option[value="asc"],' +rowId+' option[value="dec"]').css("display",($(this).val()=="age")?"none":"block");
         })
         //----------DELETE RULE------------------
         $('body').on('click','.deleteRule',function(){
             var i;
+            rowId = getRuleId($(this));
 
-            if ($('#rules .rule').length>1) {
-                rowId= $(this).parent().parent().attr('id');
-                $('#'+rowId).remove()
+            if ($('#rules .rule').length>1){
+              swal({
+                title: "¿Estás seguro?",
+                text: "Esta acción no se puede deshacer",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Si",
+                cancelButtonText: "No",
+                closeOnConfirm: true
+              },
+              function(){
+                $(rowId).remove();
                 for (i = 0; i < $('#rules .rule').length; i++) {
                     $($('#rules .rule')[i]).find('.ruleId').html(i+1)
                     $($('#rules .rule')[i]).attr('id',i);
                 };
                 ruleId = i+1 //que proxima que se genere parta del id de la ultima
+              });
             }else{
                 sweetAlert("Ups...", "Necesitas al menos una regla");
             };
         });
         //----------CREATE RULE-----
         $("#addRule").click(function(){
-            createRuleRow(ruleId)
+            createRuleRow()
         });
+
+        function getRuleId(elem){
+          return '#'+$(elem).parent().parent().attr('id')
+        }
 
         function createRuleRow(){
             var elements = JSON.parse('{!! json_encode($elements) !!}');
