@@ -2,7 +2,6 @@
 @section ('title','Evaluar Empresas')
 @section ('head')
     <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
-    <link href="{{asset('js/plugins/sweetalert/dist/sweetalert.css')}}" rel="stylesheet">
 @endsection
 @section ('content')
 <div class="wrapper wrapper-content animated fadeInUp">
@@ -60,7 +59,7 @@
                       <a id="editButton" href="#" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
                   </td>
                   <td class="project-actions">
-                      <a href="#" class="btn btn-primary btn-sm" id="applyMethodology"><i class="fa fa-check"></i> Aplicar</a>
+                      <a id="applyButton" href="#" class="btn btn-primary btn-sm" id="applyMethodology"><i class="fa fa-check"></i> Aplicar </a>
                   </td>
                       @else
                       <td>
