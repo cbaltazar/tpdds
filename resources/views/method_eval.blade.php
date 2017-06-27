@@ -45,10 +45,10 @@
         <tbody>
           <tr>
                   @if( count($methodologies)>0 )
-                  <td class="project-status">
+                  <td class="project-status" style="32%">
                       <h5 style="font-size:14px">Metodología de evaluación:</h5>
                   </td>
-                  <td class="project-title" style="padding:13px 10px">
+                  <td class="project-title" style="padding:13px 10px; width:37%">
                     <select class="form-control" id="selectedMethodology">
                       @foreach( $methodologies as $methodology)
                           <option value="{{ $methodology->id }}" > {{ $methodology->nombre }}</option>
@@ -134,7 +134,7 @@
             $("#companiesEvaluated").empty();
             var i = 1;
             var tableBody = '';
-            
+
             if(Object.keys(obj).length > 0){
                 $.each(obj, function(name, valoration){
                     tableBody += '<tr>' +
