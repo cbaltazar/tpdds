@@ -198,9 +198,10 @@
         });
         //----------AGE VALIDATION---------
         $('body').on('change','.element',function(){
+            alert("cambia");
             rowId = getRuleId($(this));
-            $(rowId+' .from,' +rowId+' .to,'+rowId+' .function').attr("disabled",($(this).val()=="age"));
-            $(rowId+' option[value="asc"],' +rowId+' option[value="dec"]').css("display",($(this).val()=="age")?"none":"block");
+            $(rowId+' .from,' +rowId+' .to,'+rowId+' .function').attr("disabled",($(this).val().split(",")[2]=="Antigüedad"));
+            $(rowId+' option[value="asc"],' +rowId+' option[value="dec"]').css("display",($(this).val().split(",")[2]=="Antigüedad")?"none":"block");
         })
         //----------DELETE RULE------------------
         $('body').on('click','.deleteRule',function(){
