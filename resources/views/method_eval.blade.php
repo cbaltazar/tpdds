@@ -115,18 +115,23 @@
         }
 
         function setStyle(position,icon,color){
-          position.children().last().addClass(color);
+          position.children().last().addClass(color).append("%");
           position.find("i").addClass(icon);
         }
 
-        function valorationStylize(){
+        function valorationStylize(avg){
           var positions = $("#companiesEvaluated tr");
           var N = positions.size();
+          var value;
+
           for(var i=0; i<N; i++){
-            if(i<N/4){        setStyle($(positions[i]),"fa-long-arrow-up", "text-navy")}
-            else if(i<N/2){   setStyle($(positions[i]),"fa-level-up", "text-warning")}
-            else if(i<N*3/4){ setStyle($(positions[i]),"fa-level-down", "text-warning")}
-            else {            setStyle($(positions[i]),"fa-long-arrow-down", "text-danger")}
+            value = $(positions[i]).children().last().text();
+            if(value>=avg){
+              setStyle($(positions[i]),"fa-long-arrow-up", "text-navy")}
+            else if(value>=avg/2){
+              setStyle($(positions[i]),"fa-level-down", "text-warning")}
+            else {
+              setStyle($(positions[i]),"fa-long-arrow-down", "text-danger")}
           }
         }
 
@@ -134,15 +139,17 @@
             $("#companiesEvaluated").empty();
             var i = 1;
             var tableBody = '';
-
+            var sum=0,avg=0;
             if(Object.keys(obj).length > 0){
                 $.each(obj, function(name, valoration){
                     tableBody += '<tr>' +
                         '<td>'+ i +'</td>' +
                         '<td>'+ name +'</td>' +
-                        '<td><i class="fa"> </i>'+' '+valoration +'</td></tr>';
+                        '<td><i class="fa"> </i> '+ valoration +'</td></tr>';
                     i++;
+                    sum += parseInt(valoration);
                 });
+                avg = sum/Object.keys(obj).length
             }else{
                 tableBody = '<tr>' +
                     '<td></td>' +
@@ -150,7 +157,7 @@
                     '<td></td></tr>';
             }
             $("#companiesEvaluated").append( tableBody );
-            valorationStylize();
+            valorationStylize(avg);
         }
 
         function evaluateMethodology( params ){
@@ -181,6 +188,7 @@
             $('#selectedMethodology').on('change',function(){
               $("#editButton").attr("href","methodDetail/"+$("#selectedMethodology").val());
             });
+
        });
 
     </script>
