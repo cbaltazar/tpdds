@@ -142,9 +142,9 @@ class MethodologiesManager extends DomainManager
         $total = array_sum($results);
         foreach($results as $key => $value){
             if($total > 0){
-                $results[$key] = round(($value*100)/$total, 2).'%';
+                $results[$key] = round(($value*100)/$total, 2);
             }else{
-                $results[$key] = '100%';
+                $results[$key] = 100;
             }
 
         }
