@@ -87,11 +87,11 @@ abstract class Rule
                 $data->period = $i;
                 $values[$i] = $element->getValue($data);
             }
+
             if($rule->modalidad != 'uni'){
                 $values = $this->applyMode($rule, $values);
             }
         }
-
         return $values;
     }
 
