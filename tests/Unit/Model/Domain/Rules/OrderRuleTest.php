@@ -91,4 +91,106 @@ class OrderRuleTest extends TestCase
         $this->assertEquals($arrayResult, $rmObject->evaluate( $this->getArrayResults(), $rule));
 
     }
+
+    //menor, periodo multiple (2013-2016), sumatoria
+    public function testCase5(){
+        $rmObject = $this->getBooleanRuleObject();
+        $rmObject->expects($this->any(2))
+            ->method('getValuesOfPeriods')
+            ->will( $this->onConsecutiveCalls(array('2013' => 10,'2014'=> 20,'2015'=> 30,'2016' => 40),
+                array('2013' => 120,'2014' => 110,'2015' => 100,'2016' => 90),
+                array('2013' => 40,'2014' => 50,'2015' => 60,'2016' => 70)));
+
+        $rule = $this->getRuleCondition('min');
+        $rule->setModalidad('sum');
+
+        $arrayResult = array('1'=>3,'2'=>1,'3'=>2);
+        $this->assertEquals($arrayResult, $rmObject->evaluate( $this->getArrayResults(), $rule));
+
+    }
+
+    //menor, periodo multiple (2013-2016), promedio
+    public function testCase6(){
+        $rmObject = $this->getBooleanRuleObject();
+        $rmObject->expects($this->any(2))
+            ->method('getValuesOfPeriods')
+            ->will( $this->onConsecutiveCalls(array('2013' => 10,'2014'=> 20,'2015'=> 30,'2016' => 40),
+                array('2013' => 120,'2014' => 110,'2015' => 100,'2016' => 90),
+                array('2013' => 40,'2014' => 50,'2015' => 60,'2016' => 70)));
+
+        $rule = $this->getRuleCondition('min');
+        $rule->setModalidad('avg');
+
+        $arrayResult = array('1'=>3,'2'=>1,'3'=>2);
+        $this->assertEquals($arrayResult, $rmObject->evaluate( $this->getArrayResults(), $rule));
+
+    }
+
+    //menor, periodo multiple (2013-2016), media
+    public function testCase7(){
+        $rmObject = $this->getBooleanRuleObject();
+        $rmObject->expects($this->any(2))
+            ->method('getValuesOfPeriods')
+            ->will( $this->onConsecutiveCalls(array('2013' => 10,'2014'=> 20,'2015'=> 30,'2016' => 40),
+                array('2013' => 120,'2014' => 110,'2015' => 100,'2016' => 90),
+                array('2013' => 40,'2014' => 50,'2015' => 60,'2016' => 70)));
+
+        $rule = $this->getRuleCondition('min');
+        $rule->setModalidad('med');
+
+        $arrayResult = array('1'=>3,'2'=>1,'3'=>2);
+        $this->assertEquals($arrayResult, $rmObject->evaluate( $this->getArrayResults(), $rule));
+
+    }
+
+    //menor, periodo multiple (2013-2016), sumatoria
+    public function testCase8(){
+        $rmObject = $this->getBooleanRuleObject();
+        $rmObject->expects($this->any(2))
+            ->method('getValuesOfPeriods')
+            ->will( $this->onConsecutiveCalls(array('2013' => 10,'2014'=> 20,'2015'=> 30,'2016' => 40),
+                array('2013' => 120,'2014' => 110,'2015' => 100,'2016' => 90),
+                array('2013' => 40,'2014' => 50,'2015' => 60,'2016' => 70)));
+
+        $rule = $this->getRuleCondition('max');
+        $rule->setModalidad('sum');
+
+        $arrayResult = array('1'=>1,'2'=>3,'3'=>2);
+        $this->assertEquals($arrayResult, $rmObject->evaluate( $this->getArrayResults(), $rule));
+
+    }
+
+    //menor, periodo multiple (2013-2016), promedio
+    public function testCase9(){
+        $rmObject = $this->getBooleanRuleObject();
+        $rmObject->expects($this->any(2))
+            ->method('getValuesOfPeriods')
+            ->will( $this->onConsecutiveCalls(array('2013' => 10,'2014'=> 20,'2015'=> 30,'2016' => 40),
+                array('2013' => 120,'2014' => 110,'2015' => 100,'2016' => 90),
+                array('2013' => 40,'2014' => 50,'2015' => 60,'2016' => 70)));
+
+        $rule = $this->getRuleCondition('max');
+        $rule->setModalidad('avg');
+
+        $arrayResult = array('1'=>1,'2'=>3,'3'=>2);
+        $this->assertEquals($arrayResult, $rmObject->evaluate( $this->getArrayResults(), $rule));
+
+    }
+
+    //menor, periodo multiple (2013-2016), media
+    public function testCase10(){
+        $rmObject = $this->getBooleanRuleObject();
+        $rmObject->expects($this->any(2))
+            ->method('getValuesOfPeriods')
+            ->will( $this->onConsecutiveCalls(array('2013' => 10,'2014'=> 20,'2015'=> 30,'2016' => 40),
+                array('2013' => 120,'2014' => 110,'2015' => 100,'2016' => 90),
+                array('2013' => 40,'2014' => 50,'2015' => 60,'2016' => 70)));
+
+        $rule = $this->getRuleCondition('max');
+        $rule->setModalidad('avg');
+
+        $arrayResult = array('1'=>1,'2'=>3,'3'=>2);
+        $this->assertEquals($arrayResult, $rmObject->evaluate( $this->getArrayResults(), $rule));
+
+    }
 }
