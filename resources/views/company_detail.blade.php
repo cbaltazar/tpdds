@@ -20,7 +20,7 @@
                           </a>
                       </div-->
                   </div>
-                  <div class="ibox-content">
+                  <div class="ibox-content" style="padding-top:12px">
 
                   <table class="table table-striped table-bordered table-hover dataTable" >
                   <thead>
@@ -70,7 +70,7 @@
                         </a>
                     </div-->
                 </div>
-                <div class="ibox-content">
+                <div class="ibox-content" style="padding-top:12px">
                 <table class="table table-striped table-bordered table-hover dataTable" >
                 <thead>
                 <tr>
@@ -124,7 +124,14 @@ function prepareDataTable(){
         responsive: true,
         "dom": 'T<"clear">lfrtip',
         "tableTools": {
-            "sSwfPath": "{{asset('js/plugins/dataTables/swf/copy_csv_xls_pdf.swf')}}"
+            "sSwfPath": "{{asset('js/plugins/dataTables/swf/copy_csv_xls_pdf.swf')}}",
+            "aButtons": [{
+                        "sExtends":    "csv",
+                        "sButtonText": '<i class="fa fa-download text-muted"></i>',
+                      },{
+                        "sExtends":    "print",
+                        "sButtonText": '<i class="fa fa-print text-muted"></i>',
+                      }]
         }
     });
 }

@@ -11332,7 +11332,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sSearch": "Buscar:",
+			"sSearch": "<i class='fa fa-search fa-lg'> &nbsp; </i>",
 
 
 			/**
