@@ -1,30 +1,15 @@
 @extends ('master')
 @section ('title','Indicadores')
+@section ('head')
+<link href="{{asset('js/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet">
+@endsection
+
 @section ('content')
     <div class="col-lg-12">
         <div class="wrapper wrapper-content animated fadeInUp">
             @if (session('status'))
                 <div class="alert alert-success"> {{ session('status') }}</div>
             @endif
-            <!--confirm modal-->
-                        <div class="modal inmodal fade" id="confirmModal" tabindex="-1" role="dialog"  aria-hidden="true">
-                            <div class="modal-dialog modal-md">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                        <h4 class="modal-title">Confirmar acción</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>¿Está seguro de que desea <strong>Eliminar</strong> este Indicador?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
-                                        <a type="button" class="btn btn-primary confirm" href="">Aceptar</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-            <!--fin modal-->
 
             <div class="ibox">
                 <div class="ibox-title">
@@ -75,15 +60,29 @@
 @endsection
 
 @section ('scripts')
-<script src="{{asset('js/plugins/paginator/paginator.js')}}"></script>
+  <script src="{{asset('js/plugins/paginator/paginator.js')}}"></script>
+  <script src="{{asset('js/plugins/sweetalert/sweetalert.min.js')}}"></script>
   <script>
       $(document).ready(function () {
           setTimeout(function () {
               $(".alert-success").slideUp(1500);
           }, 2000);
       });
-      $(".btn-delete").click(function(e){
-        $(".confirm").attr('href',"{{ url('indicatorDelete/')}}"+"/"+$(this).attr('id'));
-      })
+
+      $(".btn-delete").click(function(){
+        var id=$(this).attr('id');
+        swal({
+          title: "¿Estás seguro?",
+          text: "Esta acción no se puede deshacer",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Si",
+          cancelButtonText: "No",
+          closeOnConfirm: true
+        },
+        function(){
+          window.location = "{{ url('indicatorDelete/')}}"+"/"+id;
+        });
+      });
   </script>
 @endsection

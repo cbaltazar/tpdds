@@ -2,6 +2,7 @@
 @section ('title','Empresas')
 @section ('head')
 <link href="{{asset('css/plugins/toastr/toastr.min.css')}}" rel="stylesheet">
+<link href="{{asset('js/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet">
 @endsection
 @section ('content')
     <div class="col-lg-12">
@@ -30,26 +31,6 @@
                                 <input type="submit" value="Cargar Cuentas" class="btn btn-primary">
                             </div>
                         </form>
-                    </div>
-                </div>
-            </div>
-<!--fin modal-->
-
-<!--confirm modal-->
-            <div class="modal inmodal fade" id="confirmModal" tabindex="-1" role="dialog"  aria-hidden="true">
-                <div class="modal-dialog modal-md">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                            <h4 class="modal-title">Confirmar acción</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>¿Está seguro de que desea <strong>Eliminar</strong> esta empresa?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
-                            <a type="button" class="btn btn-primary confirm" href="">Aceptar</a>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -105,9 +86,29 @@
 <script src="{{asset('js/plugins/toastr/toastr.min.js')}}"></script>
 <script src="{{asset('js/messenger.js')}}"></script>
 <script src="{{asset('js/plugins/paginator/paginator.js')}}"></script>
+<script src="{{asset('js/plugins/sweetalert/sweetalert.min.js')}}"></script>
 <script>
-$(".btn-delete").click(function(e){
-  $(".confirm").attr('href',"{{ url('deleteCompany/')}}"+"/"+$(this).attr('id'));
-})
+
+$(document).ready(function () {
+    setTimeout(function () {
+        $(".alert").slideUp(1500);
+    }, 2000);
+});
+
+$(".btn-delete").click(function(){
+  var id=$(this).attr('id');
+  swal({
+    title: "¿Estás seguro?",
+    text: "Esta acción no se puede deshacer",
+    showCancelButton: true,
+    confirmButtonColor: "#DD6B55",
+    confirmButtonText: "Si",
+    cancelButtonText: "No",
+    closeOnConfirm: true
+  },
+  function(){
+    window.location = "{{ url('deleteCompany/')}}"+"/"+id;
+  });
+});
 </script>
 @endsection

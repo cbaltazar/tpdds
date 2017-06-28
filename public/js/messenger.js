@@ -11,7 +11,4 @@ $(document).ready(function () {
     }, 1300);
     localStorage.setItem('visited',0)
   }
-    setTimeout(function () {
-        $(".alert-success").slideUp(1500);
-    }, 2000);
 });
