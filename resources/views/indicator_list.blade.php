@@ -64,7 +64,9 @@
                             @endif
                             </tbody>
                         </table>
-                        <div id="paginator" style="text-align:center"></div>
+                        <div style="text-align:center">
+                            <div class="btn-group" id="paginator"></div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -48,7 +48,7 @@
                                 </div>
                             </div-->
                             <div class="project-list">
-                                <table class="table table-hover">
+                                <table class="table table-hover" id="table">
                                     <tbody>
                                     @if( count($methodologies) > 0 )
                                     @foreach( $methodologies as $methodology)
@@ -72,6 +72,9 @@
                                     @endif
                                     </tbody>
                                 </table>
+                                <div style="text-align:center">
+                                    <div class="btn-group" id="paginator"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -80,6 +83,7 @@
 @endsection
 
 @section ('scripts')
+<script src="{{asset('js/plugins/paginator/paginator.js')}}"></script>
     <script>
         $(document).ready(function () {
             setTimeout(function () {
