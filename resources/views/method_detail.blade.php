@@ -117,8 +117,6 @@
                                                    </td>
                                                </tr>
                                            @endforeach
-                                        @else
-
                                         @endif
                                   </tbody>
                               </table>
@@ -162,6 +160,8 @@
             setTimeout(function () {
                 $(".alert").slideUp(1500);
             }, 2000);
+
+            $('.condition, .from, .to, .element' ).trigger('change');
         });
 
         //--------SHOW VALUE------------------
