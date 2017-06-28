@@ -145,7 +145,7 @@
                     tableBody += '<tr>' +
                         '<td>'+ i +'</td>' +
                         '<td>'+ name +'</td>' +
-                        '<td><i class="fa"> </i>'+ valoration +'</td></tr>';
+                        '<td><i class="fa"> </i> '+ valoration +'</td></tr>';
                     i++;
                     sum += parseInt(valoration);
                 });
