@@ -24,7 +24,7 @@
             </div>
             <h3>Registrate en ¿Dónde Invierto?</h3></br>
             <p>Crea tu cuenta para comenzar a operar.</p>
-            <form class="m-t" role="form" action="login.html">
+            <form class="m-t" role="form" action={{ url('companyList') }}>
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Usuario" required="">
                 </div>

@@ -183,7 +183,7 @@
             var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
 
             elems.forEach(function(html) {
-              var switchery = new Switchery(html,{color: '#1ab394'});
+              var switchery = new Switchery(html,{color: '#1ab394', size: 'small'});
             });
        });
     </script>

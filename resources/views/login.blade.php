@@ -18,9 +18,9 @@
             </div>
             <h3>Ingresa en ¿Dónde Invierto?</h3></br>
             <p>Ingresa tus datos para comenzar a operar.</p>
-            <form class="m-t" role="form" action="index.html">
+            <form class="m-t" role="form" action={{ url('companyList') }}>
                 <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Usuario" required="">
+                    <input type="text" class="form-control" placeholder="Usuario" required="">
                 </div>
                 <div class="form-group">
                     <input type="password" class="form-control" placeholder="Contraseña" required="">
