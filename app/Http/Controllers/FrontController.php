@@ -13,6 +13,12 @@ class FrontController extends Controller{
     public function lockscreen(){
         return view('lockscreen');
     }
+    public function login(){
+        return view('login');
+    }
+    public function register(){
+        return view('register');
+    }
 
     /*
      * Consulta el manager de empresas, que se conecta con el ORM y se trae todos las empresas

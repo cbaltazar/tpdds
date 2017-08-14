@@ -5,12 +5,11 @@ Route::get('/phpinfo', function(){ return phpinfo(); });
 
 //GENERAL
 Route::get('/lockscreen', 'FrontController@lockscreen');
+Route::get('/login', 'FrontController@login');
+Route::get('/register', 'FrontController@register');
 Route::get('/', function(){ return redirect('/companyList'); });
 
-
 Route::get('/calcular', 'FrontController@calcular');
-
-
 
 //COMPANIES
 Route::get('/companyList', 'FrontController@companyList');
@@ -38,4 +37,3 @@ Route::get('/methodEval','FrontController@methodEval');
 //ABM METHODOLOGIES
 Route::post('/saveMethodology/{id?}', 'MethodologyController@saveMethodology');
 Route::get('/deleteMethodology/{id}', 'MethodologyController@deleteMethodology');
-
