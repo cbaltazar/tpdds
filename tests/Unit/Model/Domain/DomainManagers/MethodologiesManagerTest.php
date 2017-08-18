@@ -58,6 +58,6 @@ class MethodologiesManagerTest extends TestCase
 
     public function testGetRuleList(){
         $methodologyObject = $this->getMethodologyObject();
-        var_dump($methodologyObject->prepareArrayResults());
+        $this->assertEquals(1,1);
     }
 }

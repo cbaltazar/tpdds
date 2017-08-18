@@ -65,14 +65,14 @@ class BooleanRuleTest extends TestCase
         $rmObject->expects($this->any(2))
             ->method('getValuesOfPeriods')
             ->will( $this->onConsecutiveCalls(array('2013' => 10,'2014'=> 20,'2015'=> 30,'2016' => 40),
-                array('2013' => 120,'2014' => 110,'2015' => 100,'2016' => 90),
+                array('2013' => 120,'2014' => 130,'2015' => 140,'2016' => 190),
                 array('2013' => 40,'2014' => 50,'2015' => 60,'2016' => 70)));
 
         $rule = $this->getRuleCondition('asc');
         $rule->setDesde(2013);
         $rule->setHasta(2016);
 
-        $arrayResult = array('1'=>0, '3'=>0);
+        $arrayResult = array('1'=>0, '3'=>0, '2'=>0);
         $this->assertEquals($arrayResult, $rmObject->evaluate( $this->getArrayResults(), $rule));
     }
 
