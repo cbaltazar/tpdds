@@ -3662,15 +3662,15 @@ body.modal-open {
   margin-left: -200px;
   z-index: 100;
 }
-.lockscreen.middle-box {
+.loginscreen.middle-box {
   width: 200px;
   margin-left: -100px;
   margin-top: -190px;
 }
-.loginscreen.middle-box {
-  width: 300px;
-  margin-left: -150px;
-  margin-top: -330px;
+.registerscreen.middle-box {
+  width: 200px;
+  margin-left: -100px;
+  margin-top: -230px;
 }
 .loginColumns {
   width: 760px;

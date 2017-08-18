@@ -18,15 +18,15 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" src="{{asset('img/profile_small.jpg')}}"/>
+                            <img alt="image" class="img-circle" src="{{asset('img/profile_sm.png')}}"/>
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Warren Buffett</strong>
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{ Auth::user()->name }}</strong>
                             </span> <span class="text-muted text-xs block">Analista de inversiones <b class="caret"></b></span> </span>
                         </a>
                         <ul class="dropdown-menu animated fadeInDown m-t-xs">
                             <li><a href="{{ url('login') }}">Configuración</a></li>
-                            <li><a href="{{ url('login') }}">Salir</a></li>
+                            <li><a href="{{ url('logout')}}">Salir</a></li>
                         </ul>
                     </div>
                     <div class="logo-element">DI?</div>
@@ -57,7 +57,7 @@
                         <span class="m-r-sm text-muted welcome-message">Bienvenido a ¿Dónde Invierto?</span>
                     </li>
                     <li>
-                        <a href="{{ url('login') }}">
+                        <a href="{{ url('logout') }}">
                             <i class="fa fa-sign-out"></i> Salir
                         </a>
                     </li>
