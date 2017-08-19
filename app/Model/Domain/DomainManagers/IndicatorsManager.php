@@ -37,6 +37,7 @@ class IndicatorsManager extends DomainManager
      * */
     public function saveElement($data, $id){
         $params = $this->getParams($data, 'save');
+        $params->id = $id;
 
         $indicator = null;
         if( $id != null){
@@ -46,7 +47,7 @@ class IndicatorsManager extends DomainManager
             $indicator = $indicatorFactory->createObject();
         }
 
-        $this->ormConnection->saveEntity($this->setValues($indicator, $params, $id));
+        $this->ormConnection->saveEntity($this->setValues($indicator, $params));
         return $indicator;
     }
 
@@ -85,10 +86,11 @@ class IndicatorsManager extends DomainManager
     en esta clase
     */
     function deleteRelations($id){}
+    public function deleteMessage(){}
 
-    public function deleteMessage(){
-      return "Indicador borrado con exito!";
-    }
+
+
+
 
     /*--------------------- Funciones Auxiliares -------------------------------------------------------------*/
     public function prepareResult($params, $indicator, $indicatorElement){
@@ -122,7 +124,7 @@ class IndicatorsManager extends DomainManager
             case 'save':
                 $params->name = $data->input('name');
                 $params->description = $data->input('description');
-                $params->formula = str_replace(" ", "_", $data->input('formula'));
+                $params->formula = $data->input('formula');
                 $params->elementosDeFormula = $data->formulaElements;
                 is_array($data->status) ? $params->activo = 1:$params->activo = 0;
                 break;
@@ -130,12 +132,12 @@ class IndicatorsManager extends DomainManager
         return $params;
     }
 
-    public function setValues($indicator, $params, $id){
-        if($this->validateInput($params, $id)){
+    public function setValues($indicator, $params){
+        if($this->validateInput($params)){
             $indicator->nombre = $params->name;
             $indicator->descripcion = $params->description;
             $indicator->activo = $params->activo;
-            $indicator->formula = str_replace("_", " ", $params->formula);
+            $indicator->formula = $params->formula;
             if(!$params->elementosDeFormula){
                 $params->elementosDeFormula = $this->addElementosDeFormula($params);
             }

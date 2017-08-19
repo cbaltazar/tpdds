@@ -2,7 +2,6 @@
 @section ('title','Empresas')
 @section ('head')
 <link href="{{asset('css/plugins/toastr/toastr.min.css')}}" rel="stylesheet">
-<link href="{{asset('js/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet">
 @endsection
 @section ('content')
     <div class="col-lg-12">
@@ -36,23 +35,42 @@
             </div>
 <!--fin modal-->
 
+<!--confirm modal-->
+            <div class="modal inmodal fade" id="confirmModal" tabindex="-1" role="dialog"  aria-hidden="true">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title">Confirmar acción</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>¿Está seguro de que desea <strong>Eliminar</strong> esta empresa?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
+                            <a type="button" class="btn btn-primary confirm" href="">Aceptar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--fin modal-->
+
             <div class="ibox animated">
                 <div class="ibox-title">
                     <h5>Listado de Empresas</h5>
                     <div class="ibox-tools">
-                      <a href="{{ url('methodEval') }}" class="btn btn-primary btn-sm"><i class="fa fa-tachometer"></i> Evaluar </a>
-                      <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadModal"><i class="fa fa-upload"></i> Cargar</a>
+                        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#uploadModal"><i class="fa fa-plus"></i> Cargar cuentas</button>
                     </div>
                 </div>
                 <div class="ibox-content">
                     <div class="project-list">
-                        <table class="table table-hover" id=table>
+                        <table class="table table-hover">
                             <tbody>
                             @if( count($empresas) > 0)
                                 @foreach($empresas as $empresa)
                                     <tr>
                                         <td class="project-status">
-                                            <span class="label label-primary">Activo</span>
+                                            <span class="label label-primary">activo</span>
                                         </td>
                                         <td class="project-title">
                                             <a href="{{ url('companyDetail/'.$empresa->id) }}">{{ $empresa->nombre }}</a>
@@ -71,9 +89,6 @@
 
                             </tbody>
                         </table>
-                        <div style="text-align:center">
-                            <div class="btn-group" id="paginator"></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -85,30 +100,12 @@
 <script src="{{asset('js/plugins/fileStyle/bootstrap-filestyle.min.js')}}"></script>
 <script src="{{asset('js/plugins/toastr/toastr.min.js')}}"></script>
 <script src="{{asset('js/messenger.js')}}"></script>
-<script src="{{asset('js/plugins/paginator/paginator.js')}}"></script>
-<script src="{{asset('js/plugins/sweetalert/sweetalert.min.js')}}"></script>
+
+
 <script>
-
-$(document).ready(function () {
-    setTimeout(function () {
-        $(".alert").slideUp(1500);
-    }, 2000);
-});
-
-$(".btn-delete").click(function(){
-  var id=$(this).attr('id');
-  swal({
-    title: "¿Estás seguro?",
-    text: "Esta acción no se puede deshacer",
-    showCancelButton: true,
-    confirmButtonColor: "#DD6B55",
-    confirmButtonText: "Si",
-    cancelButtonText: "No",
-    closeOnConfirm: true
-  },
-  function(){
-    window.location = "{{ url('deleteCompany/')}}"+"/"+id;
-  });
-});
+$(".btn-delete").click(function(e){
+  $(".confirm").attr('href',"{{ url('deleteCompany/')}}"+"/"+$(this).attr('id'));
+})
 </script>
+
 @endsection

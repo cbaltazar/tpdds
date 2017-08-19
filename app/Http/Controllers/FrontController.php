@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Domain\DomainManagers\AccountsManager;
 use App\Model\Domain\DomainManagers\AccountCompanyRelationManager;
 use App\Model\Domain\DomainManagers\IndicatorsManager;
 use App\Model\Domain\DomainManagers\CompaniesManager;
-use App\Model\Domain\DomainManagers\MethodologiesManager;
-use App\Model\Entities\Metodologia;
+use Symfony\Component\ExpressionLanguage\Parser;
+use Symfony\Component\ExpressionLanguage\Lexer;
+use Symfony\Component\ExpressionLanguage\Node;
 
 class FrontController extends Controller{
 
@@ -65,35 +67,73 @@ class FrontController extends Controller{
      *
      */
     public function indicatorDetail($id=null){
-        $domainManager = IndicatorsManager::getInstance();
+        $accounts = AccountsManager::getInstance()->getAvailablesElements();
+        $indicators = IndicatorsManager::getInstance()->getAvailablesElements();
 
-        $indicatorObject = $domainManager->getOne($id);
+        $indicatorObject = IndicatorsManager::getInstance()->getOne($id);
 
-        return view('indicator_detail')->with("variable", $domainManager->getAvailablesFromulaElements())
+        return view('indicator_detail')->with("variable", array_merge($accounts, $indicators))
                                        ->with("indicatorObject", $indicatorObject);
     }
 
 
 //MOTHODOLOGIES
     public function methodList(){
-        $domainManager = MethodologiesManager::getInstance();
-        return view('method_list')->with("methodologies", $domainManager->getAll());
+        return view('method_list');
     }
 
-    public function methodDetail($id=null){
-        $domainManager = MethodologiesManager::getInstance();
-        $methodologyObject = $domainManager->getOne($id);
-
-        return view('method_detail')->with("elements", $domainManager->getAvailablesFromulaElements())
-                                         ->with("methodologyObject", $methodologyObject)
-                                         ->with("periods", AccountCompanyRelationManager::getInstance()->getColumn("periodo"));
+    public function methodDetail(){
+        return view('method_detail');
     }
 
-    public function methodEval(){
-        $companiesManager = CompaniesManager::getInstance();
-        $methodologiesManager = MethodologiesManager::getInstance();
 
-        return view('method_eval')->with("companies", $companiesManager->getAll())
-                                       ->with("methodologies", $methodologiesManager->getWhereColumn('activo',1));
+
+
+
+
+    private function check_syntax($str) {
+
+        $lexer = new Lexer();
+        $parser = new Parser(array());
+        $tokenizado = $lexer->tokenize('((EBITDA*2.5)/(FDS*0.33))*888');
+
+        while(!$tokenizado->isEOF()){
+            $token = $tokenizado->current;
+            if($token->type == 'name'){
+                echo "<br>";var_dump($token); echo "<br>";
+            }
+            $tokenizado->next();
+        }
+        die;
+
+        // define the grammar
+        $number = "\d+(\.\d+)?";
+        $ident  = "[a-zA-Z]\w*";
+        $atom   = "[+-]?($number|$ident)";
+        $op     = "[+*/-]";
+        $sexpr  = "$atom($op$atom)*"; // simple expression
+
+        // step1. remove whitespace
+        $str = preg_replace('~\s+~', '', $str);
+
+        // step2. repeatedly replace parenthetic expressions with 'x'
+        $par = "~\($sexpr\)~";
+        while(preg_match($par, $str, $matches))
+            $str = preg_replace($par, 'x', $str);
+
+        // step3. no more parens, the string must be simple expression
+        $match = preg_match("~^$sexpr$~", $str);
+    }
+
+    public function calcular()
+    {
+        $tests = array(
+            "((Indicador)+centa",
+            "((EBITDA*2.5)/(FDS*0.33))*888"
+        );
+
+        foreach($tests as $t)
+            echo $t, "=", $this->check_syntax($t) ? "ok" : "nope", "\n";
+
     }
 }

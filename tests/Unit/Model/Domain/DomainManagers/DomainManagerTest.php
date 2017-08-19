@@ -11,11 +11,15 @@ class DomainManagerTest extends TestCase
     protected $formulaElement = null;
     protected $entity = null;
 
-    protected function setUp(){$this->entity = new Cuenta();
+    protected function setUp(){
+        $this->entity = new Cuenta();
+
         $this->formulaElement = $this->getMockBuilder('App\Model\Domain\FormulaElements\AccountElement');
+
         $this->ormConnection = $this->getMockBuilder('App\Model\ORMConnections\EloquentConnection')
-            ->setMethods(['findFormulaElementEntity'])->getMock();
+                                    ->setMethods(['findFormulaElementEntity'])->getMock();
         $this->ormConnection->method('findFormulaElementEntity')->willReturn($this->entity);
+
         $this->domainManager = $this->getMockForAbstractClass(DomainManager::class);
         $this->domainManager->setOrmConnection($this->ormConnection);
     }
