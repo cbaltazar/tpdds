@@ -9,11 +9,6 @@ use App\Model\Domain\DomainManagers\MethodologiesManager;
 use App\Model\Entities\Metodologia;
 
 class FrontController extends Controller{
-
-    public function lockscreen(){
-        return view('lockscreen');
-    }
-
     /*
      * Consulta el manager de empresas, que se conecta con el ORM y se trae todos las empresas
      * de la base, para mostrarlas en el listado.

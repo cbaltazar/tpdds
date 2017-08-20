@@ -1,7 +1,7 @@
 @extends ('master')
 @section ('title','Evaluar Empresas')
 @section ('head')
-    <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
+    <link href="{{asset('js/plugins/switchery/switchery.min.css')}}" rel="stylesheet">
 @endsection
 @section ('content')
 <div class="wrapper wrapper-content animated fadeInUp">
@@ -18,15 +18,10 @@
                       @if( count($companies) > 0 )
                         @foreach($companies as $company)
                             <tr class="companyToEvaluate">
-                                <td>
-                                    <div class="icheckbox_square-green" style="position: relative;">
-                                        <input type="checkbox" checked class="i-checks" name="input[]" style="position: absolute; opacity: 0;">
-                                        <input type="hidden" class="companyName" id="{{ $company->id }}">
-                                    </div>
-                                </td>
-                                <td>{{ $company->nombre }}</td>
+                                <td><input type="checkbox" checked class="js-switch companyName" id="{{ $company->id }}"></td>
+                                <td style="vertical-align:middle">{{ $company->nombre }}</td>
                             </tr>
-                            @endforeach
+                        @endforeach
                         @else
                           <tr>
                               <td>No hay empresas para evaluar.</td>
@@ -99,14 +94,13 @@
 </div>
 @endsection
 @section ('scripts')
-    <script src="{{asset('js/plugins/iCheck/icheck.min.js')}}"></script>
+    <script src="{{asset('js/plugins/switchery/switchery.min.js')}}"></script>
     <script>
         function prepareParams(){
             params = {};
             params.companies = [];
-
             $('.companyToEvaluate').each(function(index, item){
-                if( $(item).find('.checked').length === 1 ){
+                if( $(item).find(':checked').length === 1 ){
                     params.companies.push($(item).find('.companyName').attr('id'));
                 }
             });
@@ -153,11 +147,13 @@
             }else{
                 tableBody = '<tr>' +
                     '<td></td>' +
-                    '<td> No hay empresas que cumplan con el criterio seleccionado </td>'+
+                    '<td> No existen empresas que cumplan con el criterio seleccionado.</td>'+
                     '<td></td></tr>';
             }
             $("#companiesEvaluated").append( tableBody );
-            valorationStylize(avg);
+            if (avg!=0) {
+              valorationStylize(avg);
+            }
         }
 
         function evaluateMethodology( params ){
@@ -173,11 +169,6 @@
         }
 
         $(document).ready(function(){
-            $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });
-
             $('#applyMethodology').click(function(){
                var params = prepareParams();
                console.log(JSON.stringify(params));
@@ -186,10 +177,14 @@
 
             $("#editButton").attr("href","methodDetail/"+$("#selectedMethodology").val());
             $('#selectedMethodology').on('change',function(){
-              $("#editButton").attr("href","methodDetail/"+$("#selectedMethodology").val());
+                $("#editButton").attr("href","methodDetail/"+$("#selectedMethodology").val());
             });
 
-       });
+            var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
 
+            elems.forEach(function(html) {
+              var switchery = new Switchery(html,{color: '#1ab394', size: 'small'});
+            });
+       });
     </script>
 @endsection

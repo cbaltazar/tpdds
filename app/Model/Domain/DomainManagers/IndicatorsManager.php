@@ -17,7 +17,7 @@ class IndicatorsManager extends DomainManager
 {
     protected static $obj = null;
 
-    function __construct($orm){
+    private function __construct($orm){
         $this->ormConnection=$orm;
         $this->model = Indicador::class;
         $this->validator = new ValidateIndicatorInput();

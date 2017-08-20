@@ -28,7 +28,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
-                                <input type="submit" value="Cargar Cuentas" class="btn btn-primary">
+                                <input type="submit" value="Aceptar" class="btn btn-primary">
                             </div>
                         </form>
                     </div>

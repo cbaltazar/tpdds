@@ -81,7 +81,7 @@
           @endif
         });
 
-        for (var i = 0; i < indicators.length; i++) {
+        for (var i = 0; i < indicators.length && indicators[i].nombre != "{{$indicatorObject->nombre}}"; i++) {
             $("#symbols").append("<option>"+indicators[i].nombre+"</option>");
             indicators[i].nombre = indicators[i].nombre.replace(/\s+/g,'');
             scope[indicators[i].nombre] = 1;
