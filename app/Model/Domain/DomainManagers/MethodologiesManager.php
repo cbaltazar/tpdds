@@ -13,6 +13,7 @@ use App\Model\Domain\Rules\RuleMAX;
 use App\Model\Domain\Rules\RuleMIN;
 use App\Model\Domain\Rules\RuleMINQ;
 use App\Model\Domain\Rules\RuleMAXQ;
+use Illuminate\Support\Facades\Auth;
 
 class MethodologiesManager extends DomainManager
 {
@@ -111,6 +112,7 @@ class MethodologiesManager extends DomainManager
             $methodology->nombre = $data->name;
             $methodology->descripcion = $data->description;
             $methodology->activo = $data->status;
+            $methodology->user_id = Auth::id();
             return $methodology;
         }
     }

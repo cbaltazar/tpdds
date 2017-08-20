@@ -4,19 +4,20 @@ namespace App\Model\ORMConnections;
 
 use App\Model\Entities\Cuenta;
 use App\Model\Entities\Indicador;
+use Illuminate\Support\Facades\Auth;
 
 class EloquentConnection implements IORMConnection
 {
     public function getAll($model){
-        return $model::all();
+        return $model::where('user_id', Auth::id())->get();
     }
 
     public function findByColumnName($model, $columnName, $value){
-        return $model::where($columnName, $value)->first();
+        return $model::where($columnName, $value)->where('user_id', Auth::id())->first();
     }
 
     public function findAllByColumnName($model, $columnName, $value){
-        return $model::where($columnName, $value)->get();
+        return $model::where($columnName, $value)->where('user_id', Auth::id())->get();
     }
 
     public function findById($model, $id){
@@ -24,7 +25,7 @@ class EloquentConnection implements IORMConnection
     }
 
     public function findWhere($model, $where){
-        return $model::where($where)->first();
+        return $model::where($where)->where('user_id', Auth::id())->first();
     }
 
     public function getDistinct($model, $column){
@@ -32,11 +33,11 @@ class EloquentConnection implements IORMConnection
     }
 
     public function countWhere($model, $columnName, $value){
-        return $model::where($columnName, $value)->count();
+        return $model::where($columnName, $value)->where('user_id', Auth::id())->count();
     }
 
     public function getWhere($model, $columnName, $value){
-        return $model::where($columnName, $value)->get();
+        return $model::where($columnName, $value)->where('user_id', Auth::id())->get();
     }
 
     public function saveEntity($entity){

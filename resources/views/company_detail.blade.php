@@ -142,6 +142,7 @@ function calculateIndicator(){
     var data = {};
     data.company = id;
     data.period = $('#indicatorPeriod').val();
+    data.user_id = "{{ $userId }}";
 
     $.ajax({
         url: '/api/indicatorEvaluate',

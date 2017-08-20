@@ -11,6 +11,7 @@ use App\Model\Entities\Cuenta_Empresa;
 use App\Model\Entities\Empresa;
 use App\Model\ORMConnections\EloquentConnection;
 use App\Model\Factories\Cuenta_EmpresaFactory;
+use Illuminate\Support\Facades\Auth;
 
 class AccountsManager extends DomainManager
 {
@@ -66,6 +67,7 @@ class AccountsManager extends DomainManager
         $cuenta_empresa->setEmpresaId($empresa->getId());
         $cuenta_empresa->setPeriodo($d->period);
         $cuenta_empresa->setMonto($d->amount);
+        $cuenta_empresa->setUserId(Auth::id());
 
         $saved = $this->ormConnection->saveEntity($cuenta_empresa);
 

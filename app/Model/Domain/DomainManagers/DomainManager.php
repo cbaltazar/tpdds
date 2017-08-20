@@ -10,6 +10,7 @@ namespace App\Model\Domain\DomainManagers;
 
 use App\Model\Entities\Indicador;
 use App\Model\Entities\Cuenta;
+use Illuminate\Support\Facades\Auth;
 
 abstract class DomainManager
 {
@@ -183,6 +184,7 @@ abstract class DomainManager
             $factory = $this->getFactory($type);
             $object = $factory->createObject();
             $object->nombre = $name;
+            $object->user_id = Auth::id();
             $this->ormConnection->saveEntity($object);
         }
         return $object;

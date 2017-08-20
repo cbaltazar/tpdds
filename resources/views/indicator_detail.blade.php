@@ -81,11 +81,20 @@
           @endif
         });
 
-        for (var i = 0; i < indicators.length && indicators[i].nombre != "{{$indicatorObject->nombre}}"; i++) {
-            $("#symbols").append("<option>"+indicators[i].nombre+"</option>");
-            indicators[i].nombre = indicators[i].nombre.replace(/\s+/g,'');
-            scope[indicators[i].nombre] = 1;
-        }
+        @if( $indicatorObject != null and $indicatorObject->predefinido)
+            for (var i = 0; i < indicators.length && indicators[i].nombre != "{{$indicatorObject->nombre}}"; i++) {
+                $("#symbols").append("<option>"+indicators[i].nombre+"</option>");
+                indicators[i].nombre = indicators[i].nombre.replace(/\s+/g,'');
+                scope[indicators[i].nombre] = 1;
+            }
+            @else
+                for (var i = 0; i < indicators.length; i++) {
+                    $("#symbols").append("<option>"+indicators[i].nombre+"</option>");
+                    indicators[i].nombre = indicators[i].nombre.replace(/\s+/g,'');
+                    scope[indicators[i].nombre] = 1;
+                }
+        @endif
+
         @if( $indicatorObject == null or !$indicatorObject->predefinido)
         $("#symbols option").dblclick(function() {
             $('#formula').val($('#formula').val()+this.value);

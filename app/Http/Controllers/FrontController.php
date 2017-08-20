@@ -7,6 +7,7 @@ use App\Model\Domain\DomainManagers\IndicatorsManager;
 use App\Model\Domain\DomainManagers\CompaniesManager;
 use App\Model\Domain\DomainManagers\MethodologiesManager;
 use App\Model\Entities\Metodologia;
+use Illuminate\Support\Facades\Auth;
 
 class FrontController extends Controller{
     /*
@@ -36,7 +37,8 @@ class FrontController extends Controller{
         $domainManager = IndicatorsManager::getInstance();
         $indicatorsCount = $domainManager->getQuantity("activo",1);
 
-        return view('company_detail')->with("companyName", $company->nombre)
+        return view('company_detail')->with("userId", Auth::id())
+                                     ->with("companyName", $company->nombre)
                                      ->with("companyAccounts",$company->cuentas)
                                      ->with("indicatorsPeriods", $periods)
                                      ->with("indicatorsCount", $indicatorsCount);
