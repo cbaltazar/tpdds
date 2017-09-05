@@ -34,15 +34,17 @@ class ValidateIndicatorInput extends Validator
         // define the grammar
         $number = "\d+(\.\d+)?";
         $ident  = "[a-zA-Z]\w*";
-        $atom   = "[+-]?($number|$ident)";
+        $atom   = "[+-]?($number|$ident|Antigüedad)";
         $op     = "[+*/-]";
         $sexpr  = "$atom($op$atom)*";
         $formula = preg_replace('~\s+~', '', $formula);
         $par = "~\($sexpr\)~";
+
         while(preg_match($par, $formula)){
             $formula = preg_replace($par, 'x', $formula);
         }
         $response = preg_match("~^$sexpr$~", $formula);
+
         return $response;
     }
 
@@ -67,7 +69,8 @@ class ValidateIndicatorInput extends Validator
     private function validateElement($element){
         $response = true;
         if(!$this->existName(Indicador::class, str_replace("_", " ",$element->value)) &&
-            !$this->existName(Cuenta::class, str_replace("_", " ",$element->value))){
+            !$this->existName(Cuenta::class, str_replace("_", " ",$element->value)) &&
+            $element->value != 'Antigüedad'){
             $response = false;
         }
         return $response;
