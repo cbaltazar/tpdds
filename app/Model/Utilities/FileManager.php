@@ -2,6 +2,8 @@
 
 namespace App\Model\Utilities;
 
+use App\Exceptions\CustomExceptions\DataFileException;
+
 class FileManager
 {
     private $response = null;
@@ -22,15 +24,24 @@ class FileManager
 
     public function processFile($file)
     {
-        $this->createAccountsList(
-            $this->processJson(
-                $this->getFileContent($file)
+        try{
+            $this->createAccountsList(
+                $this->processJson(
+                    $this->getFileContent($file)
                 )
-        );
+            );
+        }catch(DataFileException $e){
+            echo $e->getMessage();
+            die;
+        }
+
     }
 
     public function createAccountsList($data){
-        $this->domainManager->save($data, null);
+        if( $data )
+            $this->domainManager->save($data, null);
+        else
+            throw new DataFileException("Error en el archivo de cuentas.");
     }
 
     public function getFileContent($file){

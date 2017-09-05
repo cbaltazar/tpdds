@@ -53,7 +53,6 @@ class AccountsManager extends DomainManager
             }
             $company->antiguedad = $antiquity;
             $company->save();
-            var_dump( $antiquity );
         }
         return 1;
     }
