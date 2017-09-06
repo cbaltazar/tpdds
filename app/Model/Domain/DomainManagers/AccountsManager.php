@@ -66,7 +66,6 @@ class AccountsManager extends DomainManager
         $cuenta_empresa->setEmpresaId($empresa->getId());
         $cuenta_empresa->setPeriodo($d->period);
         $cuenta_empresa->setMonto($d->amount);
-        $cuenta_empresa->setUserId(Auth::id());
 
         $saved = $this->ormConnection->saveEntity($cuenta_empresa);
 

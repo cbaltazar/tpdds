@@ -28,10 +28,6 @@ class Cuenta_Empresa extends Model
         return $this->periodo;
     }
 
-    public function getUserId(){
-        return $this->user_id;
-    }
-
     public function setCuentaId($id){
         $this->cuenta_id = $id;
     }
@@ -46,10 +42,6 @@ class Cuenta_Empresa extends Model
 
     public function setPeriodo($periodo){
         $this->periodo = $periodo;
-    }
-
-    public function setUserId($id){
-        $this->user_id = $id;
     }
 
 }

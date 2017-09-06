@@ -52,7 +52,7 @@ class FrontController extends Controller{
      */
     public function indicatorList(){
         $domainManager = IndicatorsManager::getInstance();
-        return view('indicator_list')->with("indicators", $domainManager->getAll());
+        return view('indicator_list')->with("indicators", $domainManager->getAllByUserId(Auth::id()));
     }
 
     /*
@@ -74,7 +74,7 @@ class FrontController extends Controller{
 //MOTHODOLOGIES
     public function methodList(){
         $domainManager = MethodologiesManager::getInstance();
-        return view('method_list')->with("methodologies", $domainManager->getAll());
+        return view('method_list')->with("methodologies", $domainManager->getAllByUserId(Auth::id()));
     }
 
     public function methodDetail($id=null){

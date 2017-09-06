@@ -6,6 +6,7 @@ use App\Model\Entities\Empresa;
 use App\Model\Entities\Metodologia;
 use App\Model\Entities\Regla;
 use App\Model\ORMConnections\EloquentConnection;
+use App\Model\Utilities\MethodologyFilter;
 use App\Model\Utilities\Validators\ValidateMethodology;
 use App\Model\Domain\Rules\RuleASC;
 use App\Model\Domain\Rules\RuleDEC;
@@ -33,6 +34,7 @@ class MethodologiesManager extends DomainManager
         $this->model = Metodologia::class;
         $this->validator = new ValidateMethodology();
         $this->validator->setOrm($this->ormConnection);
+       $this->filter = new MethodologyFilter();
     }
 
     /*getInstance: devuelve la instancia de la clase.

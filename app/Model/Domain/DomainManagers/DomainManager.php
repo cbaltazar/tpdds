@@ -22,6 +22,7 @@ abstract class DomainManager
     protected $ormConnection = null;
     protected $model = null;
     protected $validator = null;
+    protected $filter = null;
 
     /*------------------------------------------------------
      * Metodos del patron "Template Method"
@@ -75,6 +76,11 @@ abstract class DomainManager
     public function getAll(){
         return $this->ormConnection->getAll( $this->model );
     }
+
+    public function getAllByUserId($id){
+        return $this->filter->filterByUserId($id, $this->ormConnection->getAll( $this->model ));
+    }
+
 
     /* getOne: retorna el objeto del modelo, con el id pasado como
      * parametro.
@@ -184,7 +190,6 @@ abstract class DomainManager
             $factory = $this->getFactory($type);
             $object = $factory->createObject();
             $object->nombre = $name;
-            $object->user_id = Auth::id();
             $this->ormConnection->saveEntity($object);
         }
         return $object;
