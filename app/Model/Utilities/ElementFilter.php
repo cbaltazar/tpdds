@@ -10,7 +10,7 @@ abstract class ElementFilter
     public function filterByUserId($user_id, $elements){
         foreach ($elements as $key => $value){
             if(Auth::user()->role != "admin"){
-                if($value->user_id != $user_id){
+                if($value->user_id != $user_id && !$value->visible()){
                     unset($elements[$key]);
                 }
             }
