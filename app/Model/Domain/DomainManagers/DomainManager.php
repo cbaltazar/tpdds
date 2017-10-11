@@ -158,15 +158,27 @@ abstract class DomainManager
             $obj->nombre = $element->getNombre();
             $clase =  explode("\\", get_class($element));
             $obj->clase = $clase[count($clase)-1];
+            $obj->user_id = $element->user_id;
             array_push($availablesElements,$obj);
         }
 
         return $availablesElements;
     }
 
+    private function filterIndicators($elements){
+        foreach ($elements as $key => $value){
+            if(Auth::user()->role != "admin"){
+                if($value->user_id != Auth::id()){
+                    unset($elements[$key]);
+                }
+            }
+        }
+        return $elements;
+    }
+
     public function getAvailablesFromulaElements(){
         $accounts = $this->getAvailablesElements( Cuenta::class );
-        $indicators = $this->getAvailablesElements( Indicador::class );
+        $indicators = $this->filterIndicators($this->getAvailablesElements( Indicador::class ));
         $elements = array_merge($accounts, $indicators);
         $antiquity = new \stdClass();
         $antiquity->id = 0;
