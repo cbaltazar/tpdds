@@ -25,6 +25,13 @@
         @endif
     </div>
 
+    <div class="form-group">
+        <select id="role" name="role" style="width: 200px;">
+            <option value="admin">Administrador</option>
+            <option value="std">Estandar</option>
+        </select>
+    </div>
+
     <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
         <input id="password" type="password" class="form-control" placeholder="Contraseña" name="password" required>
 
