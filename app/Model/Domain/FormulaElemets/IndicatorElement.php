@@ -30,7 +30,7 @@ class IndicatorElement extends FormulaElement
             $formulaElement->setModel($entity);
 
             if($formulaElement->getValue($data) >= 0){
-                $this->setFormula(str_replace($formulaElement->getName(), $formulaElement->getValue($data), $this->getFormula()));
+                $this->setFormula(str_replace(trim($formulaElement->getName()), $formulaElement->getValue($data), $this->getFormula()));
             }else{
                 $this->setFormula(0);
                 break;
