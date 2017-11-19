@@ -73,7 +73,7 @@ class IndicatorsManager extends DomainManager
         if( isset($params->indicator) && $params->indicator != null){
             $indicators[] = $this->getOne($params->indicator);
         }else{
-            $indicators = $this->getAll();
+            $indicators = $this->getAllByUserId(Auth::id());//$this->getAll();
         }
         $results = array();
 
