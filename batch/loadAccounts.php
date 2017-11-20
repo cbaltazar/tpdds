@@ -12,11 +12,8 @@ use \App\Model\Entities\User;
 use \App\Model\Entities\Empresa;
 use \App\Model\Entities\Cuenta_Empresa;
 
-if (!isset($argv[1])) {
-    echo "\nMissing accounts file.\n";
-} else {
     $data = new stdClass();
-    $data->fileName = $argv[1];
+    $data->fileName = "../inbound/cuentas.json";
 
     // Creo el header para el request.
     $context = stream_context_create(array(
@@ -62,7 +59,8 @@ if (!isset($argv[1])) {
                     ));
 
                     // envio el posts.
-                    $response = file_get_contents('http://localhost:8000/api/indicatorEvaluate', FALSE, $context);
+                    $url = 'http://localhost:8000/api/indicatorEvaluate';
+                    $response = file_get_contents($url, FALSE, $context);
 
                     if( $response ){
                         $cacheKey = $company->getId().$row->periodo.$user->id;
@@ -72,8 +70,4 @@ if (!isset($argv[1])) {
             }
         }
     }
-
-}
-
-
 ?>

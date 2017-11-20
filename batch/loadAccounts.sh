@@ -1,3 +1,3 @@
 #!/usr/bin/php
 
-php loadAccounts.php $1
+php loadAccounts.php

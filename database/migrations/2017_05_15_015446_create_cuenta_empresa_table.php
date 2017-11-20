@@ -15,8 +15,8 @@ class CreateCuentaEmpresaTable extends Migration
     {
         Schema::create('cuenta_empresa', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('cuenta_id');
-            $table->integer('empresa_id');
+            $table->unsignedInteger('cuenta_id');
+            $table->unsignedInteger('empresa_id');
             $table->string('periodo');
             $table->double('monto');
             $table->timestamps();
