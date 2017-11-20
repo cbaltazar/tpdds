@@ -16,8 +16,16 @@ class AccountController extends Controller
      *
      * */
     public function store(Request $request){
+        $fileName = '';
+        if( $request->file("file") ){
+            $fileName = $request->file("file")->getPathName();
+        }
+        else{
+           $filePath = json_decode($request->getContent());
+            $fileName = $filePath->fileName;
+        }
         $fileManager = new FileManager(AccountsManager::getInstance());
-        $fileManager->processFile($request->file("file")->getPathName());
+        $fileManager->processFile($fileName);
 
         return redirect('companyList')->with('status', 'Archivo cargado correctamente!');
     }

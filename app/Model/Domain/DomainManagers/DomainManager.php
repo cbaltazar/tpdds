@@ -22,6 +22,7 @@ abstract class DomainManager
     protected $ormConnection = null;
     protected $model = null;
     protected $validator = null;
+    protected $filter = null;
 
     /*------------------------------------------------------
      * Metodos del patron "Template Method"
@@ -75,6 +76,11 @@ abstract class DomainManager
     public function getAll(){
         return $this->ormConnection->getAll( $this->model );
     }
+
+    public function getAllByUserId($id){
+        return $this->filter->filterByUserId($id, $this->ormConnection->getAll( $this->model ));
+    }
+
 
     /* getOne: retorna el objeto del modelo, con el id pasado como
      * parametro.
@@ -152,15 +158,27 @@ abstract class DomainManager
             $obj->nombre = $element->getNombre();
             $clase =  explode("\\", get_class($element));
             $obj->clase = $clase[count($clase)-1];
+            $obj->user_id = $element->user_id;
             array_push($availablesElements,$obj);
         }
 
         return $availablesElements;
     }
 
+    private function filterIndicators($elements){
+        foreach ($elements as $key => $value){
+            if(Auth::user()->role != "admin"){
+                if($value->user_id != Auth::id()){
+                    unset($elements[$key]);
+                }
+            }
+        }
+        return $elements;
+    }
+
     public function getAvailablesFromulaElements(){
         $accounts = $this->getAvailablesElements( Cuenta::class );
-        $indicators = $this->getAvailablesElements( Indicador::class );
+        $indicators = $this->filterIndicators($this->getAvailablesElements( Indicador::class ));
         $elements = array_merge($accounts, $indicators);
         $antiquity = new \stdClass();
         $antiquity->id = 0;
@@ -184,7 +202,6 @@ abstract class DomainManager
             $factory = $this->getFactory($type);
             $object = $factory->createObject();
             $object->nombre = $name;
-            $object->user_id = Auth::id();
             $this->ormConnection->saveEntity($object);
         }
         return $object;

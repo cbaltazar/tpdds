@@ -13,6 +13,7 @@ use App\Model\ORMConnections\EloquentConnection;
 use App\Model\Utilities\Validators\ValidateIndicatorInput;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\ExpressionLanguage\Lexer;
+use App\Model\Utilities\IndicatorsFilter;
 
 class IndicatorsManager extends DomainManager
 {
@@ -23,6 +24,7 @@ class IndicatorsManager extends DomainManager
         $this->model = Indicador::class;
         $this->validator = new ValidateIndicatorInput();
         $this->validator->setOrm($this->ormConnection);
+        $this->filter = new IndicatorsFilter();
     }
 
     /*getInstance: devuelve la instancia de la clase.
@@ -71,7 +73,7 @@ class IndicatorsManager extends DomainManager
         if( isset($params->indicator) && $params->indicator != null){
             $indicators[] = $this->getOne($params->indicator);
         }else{
-            $indicators = $this->getAll();
+            $indicators = $this->getAllByUserId(Auth::id());//$this->getAll();
         }
         $results = array();
 

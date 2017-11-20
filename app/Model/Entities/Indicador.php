@@ -53,4 +53,8 @@ class Indicador extends Model
     public function setFormula($formula){
         $this->formula = $formula;
     }
+
+    public function visible(){
+        return $this->predefinido == 1;
+    }
 }

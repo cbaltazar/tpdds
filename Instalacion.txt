@@ -33,6 +33,6 @@ Cómo correr los tests:
 Script para generar los indicadores predefinidos:
 =================================================
 
-insert into indicadores (nombre, descripcion, activo, formula, created_at, updated_at, predefinido) values ("Predefinido 1", "indicador predefinido 1", 1, 9876.5, now(), now(), 1);
-insert into indicadores (nombre, descripcion, activo, formula, created_at, updated_at, predefinido) values ("Predefinido 2", "indicador predefinido 2", 1, 1000, now(), now(), 1);
-insert into indicadores (nombre, descripcion, activo, formula, created_at, updated_at, predefinido) values ("Predefinido 3", "indicador predefinido 3", 0, 250, now(), now(), 1);
+insert into indicadores (nombre, descripcion, activo, formula, created_at, updated_at, predefinido, user_id) values ("Predefinido 1", "indicador predefinido 1", 1, 9876.5, now(), now(), 1, 0);
+insert into indicadores (nombre, descripcion, activo, formula, created_at, updated_at, predefinido, user_id) values ("Predefinido 2", "indicador predefinido 2", 1, 1000, now(), now(), 1, 0);
+insert into indicadores (nombre, descripcion, activo, formula, created_at, updated_at, predefinido, user_id) values ("Predefinido 3", "indicador predefinido 3", 0, 250, now(), now(), 1, 0);
