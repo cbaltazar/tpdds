@@ -21,7 +21,7 @@ class CreateReglasTable extends Migration
             $table->integer('desde');
             $table->integer('hasta');
             $table->string('modalidad');
-            $table->integer('metodologia_id');
+            $table->unsignedInteger('metodologia_id');
 
             $table->timestamps();
         });

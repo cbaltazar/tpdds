@@ -16,12 +16,10 @@ class CreateIndicadoresTable extends Migration
         Schema::create('indicadores', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
-            $table->string('descripcion');
             $table->integer('activo');
             $table->string('formula');
-            $table->string('elementosDeFormula');
-            $table->string('elementosDeFormula')->nullable()->change();
-            $table->string('descripcion')->nullable()->change();
+            $table->string('elementosDeFormula')->nullable();
+            $table->string('descripcion')->nullable();
             $table->boolean('predefinido')->nullable();
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
