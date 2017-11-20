@@ -13,6 +13,7 @@ use App\Model\ORMConnections\EloquentConnection;
 use App\Model\Utilities\Validators\ValidateIndicatorInput;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\ExpressionLanguage\Lexer;
+use App\Model\Utilities\IndicatorsFilter;
 
 class IndicatorsManager extends DomainManager
 {
@@ -23,6 +24,7 @@ class IndicatorsManager extends DomainManager
         $this->model = Indicador::class;
         $this->validator = new ValidateIndicatorInput();
         $this->validator->setOrm($this->ormConnection);
+        $this->filter = new IndicatorsFilter();
     }
 
     /*getInstance: devuelve la instancia de la clase.
@@ -62,26 +64,39 @@ class IndicatorsManager extends DomainManager
         return $msg;
     }
 
+    private function getDataFromCache($params){
+        $cacheKey = $params->company.$params->period.$params->user_id;
+        return \Cache::get($cacheKey);
+    }
+
     /*indicatorEvaluate: evalua todos los indicadores, para una empresa y un periodo dados.
      * */
     public function indicatorEvaluate($params){
         if(!Auth::id())
             Auth::loginUsingId($params->user_id);
-        $indicators = array();
-        if( isset($params->indicator) && $params->indicator != null){
-            $indicators[] = $this->getOne($params->indicator);
-        }else{
-            $indicators = $this->getAll();
-        }
-        $results = array();
 
-        foreach ($indicators as $indicator){
-            if($indicator->isActive()){
-                array_push($results, $this->calculateIndicator($indicator, $params));
-            }
-        }
+        $response = $this->getDataFromCache($params);
+         if( !$response ){
+             $indicators = array();
+             if( isset($params->indicator) && $params->indicator != null){
+                 $indicators[] = $this->getOne($params->indicator);
+             }else{
+                 $indicators = $this->getAllByUserId(Auth::id());//$this->getAll();
+             }
+             $results = array();
 
-        return json_encode($results);
+             foreach ($indicators as $indicator){
+                 if($indicator->isActive()){
+                     array_push($results, $this->calculateIndicator($indicator, $params));
+                 }
+             }
+
+             $cacheKey = $cacheKey = $params->company.$params->period.$params->user_id;
+             $response = json_encode($results);
+             \Cache::put($cacheKey, $response, 60);
+         }
+
+        return $response;
     }
 
     /*se agregan porque son abstractos en la clase padre, pero no se implementa ya que no se necesita

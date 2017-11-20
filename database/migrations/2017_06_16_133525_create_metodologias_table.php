@@ -19,7 +19,7 @@ class CreateMetodologiasTable extends Migration
             $table->string('nombre');
             $table->string('descripcion')->nullable();
             $table->integer('activo');
-
+            $table->unsignedInteger('user_id');
             $table->timestamps();
         });
     }

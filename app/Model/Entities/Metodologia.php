@@ -9,4 +9,8 @@ class Metodologia extends Model
     public function reglas(){
         return $this->hasMany( Regla::class, 'metodologia_id', 'id');
     }
+
+    public function visible(){
+        return false;
+    }
 }

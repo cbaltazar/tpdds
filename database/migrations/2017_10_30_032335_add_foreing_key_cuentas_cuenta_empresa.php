@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnToTable extends Migration
+class AddForeingKeyCuentasCuentaEmpresa extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddColumnToTable extends Migration
      */
     public function up()
     {
-        Schema::table('indicadores', function (Blueprint $table) {
-            $table->string('elementosDeFormula');
+        Schema::table('cuenta_empresa', function (Blueprint $table) {
+            $table->foreign('cuenta_id')->references('id')->on('cuentas');
         });
     }
 
@@ -25,8 +25,6 @@ class AddColumnToTable extends Migration
      */
     public function down()
     {
-        Schema::table('indicadores', function (Blueprint $table) {
-            //
-        });
+        //
     }
 }

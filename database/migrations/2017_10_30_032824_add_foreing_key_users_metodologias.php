@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class SetNullable extends Migration
+class AddForeingKeyUsersMetodologias extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class SetNullable extends Migration
      */
     public function up()
     {
-        Schema::table('indicadores', function (Blueprint $table) {
-            $table->string('elementosDeFormula')->nullable()->change();
+        Schema::table('metodologias', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -25,8 +25,6 @@ class SetNullable extends Migration
      */
     public function down()
     {
-        Schema::table('indicadores', function (Blueprint $table) {
-            //
-        });
+        //
     }
 }

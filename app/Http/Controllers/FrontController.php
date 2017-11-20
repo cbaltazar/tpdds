@@ -6,7 +6,6 @@ use App\Model\Domain\DomainManagers\AccountCompanyRelationManager;
 use App\Model\Domain\DomainManagers\IndicatorsManager;
 use App\Model\Domain\DomainManagers\CompaniesManager;
 use App\Model\Domain\DomainManagers\MethodologiesManager;
-use App\Model\Entities\Metodologia;
 use Illuminate\Support\Facades\Auth;
 
 class FrontController extends Controller{
@@ -52,7 +51,7 @@ class FrontController extends Controller{
      */
     public function indicatorList(){
         $domainManager = IndicatorsManager::getInstance();
-        return view('indicator_list')->with("indicators", $domainManager->getAll());
+        return view('indicator_list')->with("indicators", $domainManager->getAllByUserId(Auth::id()));
     }
 
     /*
@@ -74,7 +73,7 @@ class FrontController extends Controller{
 //MOTHODOLOGIES
     public function methodList(){
         $domainManager = MethodologiesManager::getInstance();
-        return view('method_list')->with("methodologies", $domainManager->getAll());
+        return view('method_list')->with("methodologies", $domainManager->getAllByUserId(Auth::id()));
     }
 
     public function methodDetail($id=null){
