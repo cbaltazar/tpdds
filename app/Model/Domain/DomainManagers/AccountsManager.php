@@ -57,7 +57,40 @@ class AccountsManager extends DomainManager
         return 1;
     }
 
-    public function saveAccountCompanyElement($d){
+    private function getConditions($data){
+        $empresa = $this->getObject(Empresa::class, $data->company);
+        $cuenta = $this->getObject(Cuenta::class, $data->account);
+
+        $where = array();
+
+        $account_id = ['cuenta_id', '=', $cuenta->getId()];
+        $company_id = ['empresa_id', '=', $empresa->getId()];
+        $period = ['periodo', '=', $data->period];
+
+        array_push($where, $account_id);
+        array_push($where, $company_id);
+        array_push($where, $period);
+
+        return $where;
+    }
+
+    private function existRow($d){
+        if( $this->ormConnection->findWhere(Cuenta_Empresa::class, $this->getConditions($d)) ){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    private function updateRow($data){
+        $entity = $this->ormConnection->findWhere(Cuenta_Empresa::class, $this->getConditions($data));
+        $entity->setMonto($data->amount);
+        $this->ormConnection->saveEntity($entity);
+        return $entity;
+    }
+
+    private function saveNewData($d){
         $empresa = $this->getObject(Empresa::class, $d->company);
         $cuenta = $this->getObject(Cuenta::class, $d->account);
         $entityFactory = $this->getFactory(Cuenta_Empresa::class);
@@ -70,6 +103,16 @@ class AccountsManager extends DomainManager
         $saved = $this->ormConnection->saveEntity($cuenta_empresa);
 
         return $cuenta_empresa;
+    }
+
+    public function saveAccountCompanyElement($d){
+        $response = null;
+        if( $this->existRow($d) ){
+            $response = $this->updateRow($d);
+        }else{
+            $response = $this->saveNewData($d);
+        }
+        return $response;
     }
 
     /* Devuelve el mensaje de guardado de cuentas.
