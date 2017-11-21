@@ -18,6 +18,8 @@ $data->fileName = "../inbound/cuentas.json";
 $serviceIndicators = "/api/indicatorEvaluate";
 $serviceStore = "/api/store";
 
+var_dump(App::environment());
+
 $url = "http://tpdds.herokuapp.com";
 if (App::environment() == 'local') {
     $url = "http://localhost:8000";
