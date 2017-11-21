@@ -14,7 +14,7 @@ class AddEmpresasAntiquity extends Migration
     public function up()
     {
         Schema::table('empresas', function (Blueprint $table) {
-            $table->integer('antiguedad');
+            $table->integer('antiguedad')->nullable();
         });
     }
 
