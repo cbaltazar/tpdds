@@ -36,6 +36,7 @@ class AccountsManager extends DomainManager
      * empresa, cuenta, monto y periodo, y en la tabla de cuentas, crea una nueva entidad.
      * */
     public function saveElement($data, $id=null){
+        var_dump($data);
             foreach ($data as $d) {
                 $this->saveAccountCompanyElement($d);
             }

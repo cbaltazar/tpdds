@@ -39,7 +39,6 @@ class FileManager
     }
 
     public function createAccountsList($data){
-        var_dump($data);
         if( $data )
             $this->domainManager->save($data, null);
         else
