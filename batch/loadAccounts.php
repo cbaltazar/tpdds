@@ -59,8 +59,12 @@ use \App\Model\Entities\Cuenta_Empresa;
                     ));
 
                     // envio el posts.
-                    $url = 'http://localhost:8000/api/indicatorEvaluate';
-                    $response = file_get_contents($url, FALSE, $context);
+                    $service = "/api/indicatorEvaluate";
+                    $url = "http://tpdds.herokuapp.com";
+                    if(App::environment() == 'local'){
+                        $url = "http://localhost:8000";
+                    }
+                    $response = file_get_contents($url.$service, FALSE, $context);
 
                     if( $response ){
                         $cacheKey = $company->getId().$row->periodo.$user->id;
