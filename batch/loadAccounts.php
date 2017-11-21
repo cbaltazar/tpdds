@@ -36,6 +36,7 @@ $context = stream_context_create(array(
 ));
 
 // envio el posts.
+var_dump($url.$serviceStore);
 $response = file_get_contents($url.$serviceStore, FALSE, $context);
 
 // valido si estuvo todo bien.

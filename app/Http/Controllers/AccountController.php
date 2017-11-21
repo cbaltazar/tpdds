@@ -19,14 +19,17 @@ class AccountController extends Controller
         $fileName = '';
         if( $request->file("file") ){
             $fileName = $request->file("file")->getPathName();
+            $fileManager = new FileManager(AccountsManager::getInstance());
+            $fileManager->processFile($fileName);
+
+            return redirect('companyList')->with('status', 'Archivo cargado correctamente!');
         }
         else{
            $filePath = json_decode($request->getContent());
             $fileName = $filePath->fileName;
+            $fileManager = new FileManager(AccountsManager::getInstance());
+            $fileManager->processFile($fileName);
         }
-        $fileManager = new FileManager(AccountsManager::getInstance());
-        $fileManager->processFile($fileName);
 
-        return redirect('companyList')->with('status', 'Archivo cargado correctamente!');
     }
 }

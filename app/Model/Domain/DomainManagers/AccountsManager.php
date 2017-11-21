@@ -101,8 +101,7 @@ class AccountsManager extends DomainManager
         $cuenta_empresa->setMonto($d->amount);
 
         $saved = $this->ormConnection->saveEntity($cuenta_empresa);
-var_dump($saved);
-die;
+
         return $cuenta_empresa;
     }
 
@@ -113,6 +112,8 @@ die;
         }else{
             $response = $this->saveNewData($d);
         }
+
+        var_dump($response);
         return $response;
     }
 
