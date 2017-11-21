@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Doctrine\Common\Cache\Cache;
 use Illuminate\Http\Request;
 use App\Model\Domain\DomainManagers\IndicatorsManager;
 
@@ -15,6 +16,7 @@ class IndicatorController extends Controller
     public function indicatorSave(Request $request, $id=null){
         $domainManager = IndicatorsManager::getInstance();
         $status = $domainManager->save($request, $id);
+        Cache::flush();
         return redirect('indicatorList')->with('status', $status);
     }
 

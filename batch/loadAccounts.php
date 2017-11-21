@@ -12,66 +12,68 @@ use \App\Model\Entities\User;
 use \App\Model\Entities\Empresa;
 use \App\Model\Entities\Cuenta_Empresa;
 
-    $data = new stdClass();
-    $data->fileName = "../inbound/cuentas.json";
+$data = new stdClass();
+$data->fileName = "../inbound/cuentas.json";
 
-    // Creo el header para el request.
-    $context = stream_context_create(array(
-        'http' => array(
-            'method' => 'POST',
-            'header' => "Authorization: application/json\r\n" .
-                "Content-Type: application/json\r\n",
-            'content' => json_encode($data)
-        )
-    ));
+$serviceIndicators = "/api/indicatorEvaluate";
+$serviceStore = "/api/store";
+
+$url = "http://tpdds.herokuapp.com";
+if (App::environment() == 'local') {
+    $url = "http://localhost:8000";
+}
+
+// Creo el header para el request.
+$context = stream_context_create(array(
+    'http' => array(
+        'method' => 'POST',
+        'header' => "Authorization: application/json\r\n" .
+            "Content-Type: application/json\r\n",
+        'content' => json_encode($data)
+    )
+));
 
 // envio el posts.
-    $response = file_get_contents('http://localhost:8000/api/store', FALSE, $context);
+$response = file_get_contents($url.$serviceStore, FALSE, $context);
 
 // valido si estuvo todo bien.
-    if ($response === FALSE) {
-        die('Error al cargar el archivo de cuentas.');
-    } else {
-        echo "\nCuentas actualizadas!\n";
-        echo "\nCalculando indicadores...\n";
+if ($response === FALSE) {
+    die('Error al cargar el archivo de cuentas.');
+} else {
+    echo "\nCuentas actualizadas!\n";
+    echo "\nCalculando indicadores...\n";
 
-        //{"company":"70","period":"2013","user_id":"4"};
-        $users = User::all();
-        Cache::flush();
-        foreach ($users as $user) {
-            $companies = Empresa::all();
-            foreach ($companies as $company) {
-                $rows = Cuenta_Empresa::where("empresa_id", $company->getId())->get();
-                foreach ($rows as $row) {
-                    $request = new stdClass();
-                    $request->company = $company->getId();
-                    $request->period = $row->periodo;
-                    $request->user_id = $user->id;
+    //{"company":"70","period":"2013","user_id":"4"};
+    $users = User::all();
+    Cache::flush();
+    foreach ($users as $user) {
+        $companies = Empresa::all();
+        foreach ($companies as $company) {
+            $rows = Cuenta_Empresa::where("empresa_id", $company->getId())->get();
+            foreach ($rows as $row) {
+                $request = new stdClass();
+                $request->company = $company->getId();
+                $request->period = $row->periodo;
+                $request->user_id = $user->id;
 
-                    // Creo el header para el request.
-                    $context = stream_context_create(array(
-                        'http' => array(
-                            'method' => 'POST',
-                            'header' => "Authorization: application/json\r\n" .
-                                "Content-Type: application/json\r\n",
-                            'content' => json_encode($request)
-                        )
-                    ));
+                // Creo el header para el request.
+                $context = stream_context_create(array(
+                    'http' => array(
+                        'method' => 'POST',
+                        'header' => "Authorization: application/json\r\n" .
+                            "Content-Type: application/json\r\n",
+                        'content' => json_encode($request)
+                    )
+                ));
 
-                    // envio el posts.
-                    $service = "/api/indicatorEvaluate";
-                    $url = "http://tpdds.herokuapp.com";
-                    if(App::environment() == 'local'){
-                        $url = "http://localhost:8000";
-                    }
-                    $response = file_get_contents($url.$service, FALSE, $context);
+                $response = file_get_contents($url . $serviceIndicators, FALSE, $context);
 
-                    if( $response ){
-                        $cacheKey = $company->getId().$row->periodo.$user->id;
-                        \Cache::put($cacheKey, $response, 43200);
-                    }
+                if ($response) {
+                    $cacheKey = $company->getId() . $row->periodo . $user->id;
+                    \Cache::put($cacheKey, $response, 43200);
                 }
             }
         }
     }
+}
 ?>
