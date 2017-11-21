@@ -197,7 +197,9 @@ abstract class DomainManager
       Se ultiliza a la hora de cargar el archivo de empresas y cuentas.
      * */
     public function getObject($type, $name){
+        var_dump("aaaaaaaaaaaaaaaaaa");
         $object = $this->ormConnection->findByColumnName($type,'nombre',$name);
+        var_dump("bbbbbbbbbbbbbbbbbbbbbbbbb");
         if (!$object){
             $factory = $this->getFactory($type);
             $object = $factory->createObject();
