@@ -71,6 +71,9 @@ class AccountsManager extends DomainManager
         array_push($where, $company_id);
         array_push($where, $period);
 
+        var_dump("WHERE");
+        var_dump($where);
+
         return $where;
     }
 
