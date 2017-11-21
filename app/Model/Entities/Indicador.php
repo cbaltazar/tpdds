@@ -10,6 +10,8 @@ class Indicador extends Model
 {
     protected $table="indicadores";
 
+    public $timestamps = false;
+
     public function getId(){
         return $this->id;
     }
