@@ -201,10 +201,15 @@ abstract class DomainManager
         $object = $this->ormConnection->findByColumnName($type,'nombre',$name);
         var_dump("bbbbbbbbbbbbbbbbbbbbbbbbb");
         if (!$object){
+            var_dump("cccccccccccc");
             $factory = $this->getFactory($type);
+            var_dump("dddddddddddddd");
             $object = $factory->createObject();
+            var_dump("eeeeeeeeeeeeeee");
             $object->nombre = $name;
+            var_dump("fffffffffffffff");
             $this->ormConnection->saveEntity($object);
+            var_dump("gggggggggggggggg");
         }
         return $object;
     }
