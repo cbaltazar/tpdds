@@ -58,6 +58,7 @@ class AccountsManager extends DomainManager
     }
 
     private function getConditions($data){
+        var_dump("WHERE");
         $empresa = $this->getObject(Empresa::class, $data->company);
         $cuenta = $this->getObject(Cuenta::class, $data->account);
 
@@ -71,7 +72,7 @@ class AccountsManager extends DomainManager
         array_push($where, $company_id);
         array_push($where, $period);
 
-        var_dump("WHERE");
+
         var_dump($where);
 
         return $where;
