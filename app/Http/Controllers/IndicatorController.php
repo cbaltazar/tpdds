@@ -16,7 +16,7 @@ class IndicatorController extends Controller
     public function indicatorSave(Request $request, $id=null){
         $domainManager = IndicatorsManager::getInstance();
         $status = $domainManager->save($request, $id);
-        Cache::flush();
+        \Illuminate\Support\Facades\Cache::flush();
         return redirect('indicatorList')->with('status', $status);
     }
 
