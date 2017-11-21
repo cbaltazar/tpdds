@@ -61,7 +61,7 @@ class AccountsManager extends DomainManager
         var_dump("WHERE");
         $empresa = $this->getObject(Empresa::class, $data->company);
         $cuenta = $this->getObject(Cuenta::class, $data->account);
-
+        var_dump("WHEREeeeeeeeeeeeeee");
         $where = array();
 
         $account_id = ['cuenta_id', '=', $cuenta->getId()];
