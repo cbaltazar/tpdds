@@ -19,7 +19,7 @@
                   <h5>Editor de Metodología</h5>
               </div>
               <div class="ibox-content">
-                  <form method="post" class="form-horizontal" style="margin-top:15px" id="methodology-form" name="methodology-form" action="{{ url('/saveMethodology') }}/{{ $methodologyObject->id or ""}}">
+                  <form method="post" class="form-horizontal" style="margin-top:15px" id="methodology-form" name="methodology-form" action="{{ url('/saveMethodology') }}@if( $methodologyObject )/@endif{{ $methodologyObject->id or ""}}">
                       <input type="hidden" name="_token" value="{{ csrf_token() }}">
                       <div class="form-group"><label class="col-sm-2 control-label">Nombre</label>
                           <div class="col-sm-9"><input type="text" class="form-control" placeholder="Nombre de la metodología" name="name" id="nombre" value="{{$methodologyObject->nombre or ""}}"></div>

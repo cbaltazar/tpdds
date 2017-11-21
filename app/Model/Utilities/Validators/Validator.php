@@ -2,6 +2,9 @@
 
 namespace App\Model\Utilities\Validators;
 
+use App\Model\Entities\Indicador;
+use Illuminate\Support\Facades\Auth;
+
 abstract class Validator
 {
     protected $orm;
@@ -27,6 +30,19 @@ abstract class Validator
     public function existName($model, $name){
         $response = false;
         $elem = $this->orm->findByColumnName($model,'nombre', $name);
+
+        if( $model == Indicador::class){
+            $where = array();
+
+            $nombre = ['nombre', '=', $name];
+            $userid = ['user_id', '=', Auth::id()];
+
+            array_push($where, $nombre);
+            array_push($where, $userid);
+
+            $elem = $this->orm->findWhere($model, $where);
+        }
+
         if($elem != null){
             $response = true;
         }
