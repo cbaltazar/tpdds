@@ -24,6 +24,7 @@ class FileManager
 
     public function processFile($file)
     {
+        var_dump($file);
         try{
             $this->createAccountsList(
                 $this->processJson(
