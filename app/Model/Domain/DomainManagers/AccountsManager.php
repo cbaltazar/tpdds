@@ -51,6 +51,9 @@ class AccountsManager extends DomainManager
             if(count($relations) > 1){
                 $antiquity = $relations[count($relations)-1] - $relations[0];
             }
+            if ($antiquity < 0){
+                $antiquity = 1;
+            }
             $company->antiguedad = $antiquity;
             $company->save();
         }
