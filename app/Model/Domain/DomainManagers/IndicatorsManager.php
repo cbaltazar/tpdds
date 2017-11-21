@@ -159,6 +159,8 @@ class IndicatorsManager extends DomainManager
             }
             $indicator->elementosDeFormula = $params->elementosDeFormula;
             $indicator->user_id = Auth::id();
+            $indicator->created_at = new \DateTime();
+            $indicator->updated_at = new \DateTime();
 
             return $indicator;
         }

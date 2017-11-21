@@ -58,12 +58,8 @@ class AccountsManager extends DomainManager
     }
 
     private function getConditions($data){
-        var_dump("WHERE");
         $empresa = $this->getObject(Empresa::class, $data->company);
-        var_dump("devolvio empresa");
         $cuenta = $this->getObject(Cuenta::class, $data->account);
-        var_dump("devolvio cuenta");
-        var_dump("WHEREeeeeeeeeeeeeee");
         $where = array();
 
         $account_id = ['cuenta_id', '=', $cuenta->getId()];
@@ -74,17 +70,10 @@ class AccountsManager extends DomainManager
         array_push($where, $company_id);
         array_push($where, $period);
 
-
-        var_dump($where);
-
         return $where;
     }
 
     private function existRow($d){
-        var_dump("Conection");
-        var_dump($this->ormConnection);
-        var_dump( Cuenta_Empresa::where($this->getConditions($d))->first());
-        var_dump("EndConnection");
         if( $this->ormConnection->findWhere(Cuenta_Empresa::class, $this->getConditions($d)) ){
             return true;
         }else{
@@ -96,12 +85,12 @@ class AccountsManager extends DomainManager
     private function updateRow($data){
         $entity = $this->ormConnection->findWhere(Cuenta_Empresa::class, $this->getConditions($data));
         $entity->setMonto($data->amount);
+        $entity->updated_at = new \DateTime();
         $this->ormConnection->saveEntity($entity);
         return $entity;
     }
 
     private function saveNewData($d){
-        var_dump("NEW DATA");
         $empresa = $this->getObject(Empresa::class, $d->company);
         $cuenta = $this->getObject(Cuenta::class, $d->account);
         $entityFactory = $this->getFactory(Cuenta_Empresa::class);
@@ -110,6 +99,8 @@ class AccountsManager extends DomainManager
         $cuenta_empresa->setEmpresaId($empresa->getId());
         $cuenta_empresa->setPeriodo($d->period);
         $cuenta_empresa->setMonto($d->amount);
+        $cuenta_empresa->created_at = new \DateTime();
+        $cuenta_empresa->updated_at = new \DateTime();
 
         $saved = $this->ormConnection->saveEntity($cuenta_empresa);
 

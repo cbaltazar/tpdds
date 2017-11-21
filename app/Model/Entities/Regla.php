@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Regla extends Model
 {
-    public $timestamps = false;
 
     public function setElemento($e){
         $this->elemento = $e;

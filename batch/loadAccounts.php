@@ -18,8 +18,6 @@ $data->fileName = "../inbound/cuentas.json";
 $serviceIndicators = "/api/indicatorEvaluate";
 $serviceStore = "/api/store";
 
-var_dump(App::environment());
-
 $url = "http://tpdds.herokuapp.com";
 if (App::environment() == 'local') {
     $url = "http://localhost:8000";
@@ -36,7 +34,6 @@ $context = stream_context_create(array(
 ));
 
 // envio el posts.
-var_dump($url.$serviceStore);
 $response = file_get_contents($url.$serviceStore, FALSE, $context);
 
 // valido si estuvo todo bien.
@@ -78,5 +75,6 @@ if ($response === FALSE) {
             }
         }
     }
+    echo "\nIndicadores calculados y guardados en cache!\n";
 }
 ?>
