@@ -112,8 +112,6 @@ class AccountsManager extends DomainManager
         }else{
             $response = $this->saveNewData($d);
         }
-
-        var_dump($response);
         return $response;
     }
 
