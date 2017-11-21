@@ -13,7 +13,7 @@
                     </div>
                     <div class="ibox-content">
                         <form method="post" class="form-horizontal" name="indicator-form" style="margin-top:15px"
-                              action="{{url('indicatorSave') }}{{ $indicatorObject->id or "" }}">
+                              action="{{url('indicatorSave') }}/{{ $indicatorObject->id or "" }}">
                             <input type="hidden" name="formulaElements" id="formulaElements" value="">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="form-group"><label class="col-sm-2 control-label">Nombre *</label>
