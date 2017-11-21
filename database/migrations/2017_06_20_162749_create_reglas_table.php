@@ -23,7 +23,7 @@ class CreateReglasTable extends Migration
             $table->string('modalidad');
             $table->unsignedInteger('metodologia_id');
 
-            $table->timestamps();
+            //$table->timestamps();
         });
     }
 

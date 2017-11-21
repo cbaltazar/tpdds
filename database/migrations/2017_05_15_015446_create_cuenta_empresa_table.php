@@ -19,7 +19,7 @@ class CreateCuentaEmpresaTable extends Migration
             $table->unsignedInteger('empresa_id');
             $table->string('periodo');
             $table->double('monto');
-            $table->timestamps();
+            //$table->timestamps();
         });
     }
 
