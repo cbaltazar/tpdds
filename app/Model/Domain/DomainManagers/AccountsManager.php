@@ -75,7 +75,6 @@ class AccountsManager extends DomainManager
     }
 
     private function existRow($d){
-        var_dump("DATA: ", $d);
         if( $this->ormConnection->findWhere(Cuenta_Empresa::class, $this->getConditions($d)) ){
             return true;
         }else{

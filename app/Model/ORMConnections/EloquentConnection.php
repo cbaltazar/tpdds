@@ -21,7 +21,10 @@ class EloquentConnection implements IORMConnection
         return $model::find($id);
     }
     public function findWhere($model, $where){
-        return $model::where($where)->first();
+        var_dump("Model: ", $model, "Where:", $where);
+        $res = $model::where($where)->first();
+        var_dump($res);
+        return $res;
     }
     public function getDistinct($model, $column){
         return $model::distinct()->get([$column]);
