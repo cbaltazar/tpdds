@@ -8,8 +8,6 @@ use Mockery\Exception;
 
 class Cuenta extends Model
 {
-    public $timestamps = false;
-
     public function getEmpresas(){
         return $this->belongsToMany(Empresa::class);
     }

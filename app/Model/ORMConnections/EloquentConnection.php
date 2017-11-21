@@ -36,7 +36,13 @@ class EloquentConnection implements IORMConnection
         return $model::where($columnName, $value)->get();
     }
     public function saveEntity($entity){
-        $entity->save();
+        try{
+            $entity->save();
+        }catch(\Exception $e){
+            var_dump( $e->getMessage() );
+            die;
+        }
+
         return $entity->id;
     }
     public function deleteEntity($model, $id){

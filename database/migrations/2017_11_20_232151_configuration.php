@@ -31,7 +31,7 @@ class Configuration extends Migration
                 'elementosDeFormula' => '[{"id":1,"class":"Cuenta"}]',
                 'predefinido' => 1,
                 'user_id' => 1,
-                //'created_at' => new \DateTime()
+                'created_at' => new \DateTime()
             )
         );
 
@@ -43,7 +43,7 @@ class Configuration extends Migration
                 'elementosDeFormula' => '[{"id":0,"class":"Antigüedad"}]',
                 'predefinido' => 1,
                 'user_id' => 1,
-                //'created_at' => new \DateTime()
+                'created_at' => new \DateTime()
             )
         );
 
@@ -55,7 +55,7 @@ class Configuration extends Migration
                 'elementosDeFormula' => '[{"id":5,"class":"Cuenta"}]',
                 'predefinido' => 1,
                 'user_id' => 1,
-                //'created_at' => new \DateTime()
+                'created_at' => new \DateTime()
             )
         );
     }

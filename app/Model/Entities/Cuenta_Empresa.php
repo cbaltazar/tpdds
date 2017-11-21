@@ -8,8 +8,6 @@ class Cuenta_Empresa extends Model
 {
     protected $table='cuenta_empresa';
 
-    public $timestamps = false;
-
     public function empresa(){
         return $this->hasOne(Empresa::class, 'id', 'empresa_id');
     }
