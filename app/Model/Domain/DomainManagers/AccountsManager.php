@@ -77,7 +77,7 @@ class AccountsManager extends DomainManager
     private function existRow($d){
         var_dump("Conection");
         var_dump($this->ormConnection);
-        var_dump($this->ormConnection->findWhere(Cuenta_Empresa::class, $this->getConditions($d)));
+        var_dump( Cuenta_Empresa::where($this->getConditions($d))->first());
         var_dump("EndConnection");
         if( $this->ormConnection->findWhere(Cuenta_Empresa::class, $this->getConditions($d)) ){
             return true;
@@ -95,6 +95,7 @@ class AccountsManager extends DomainManager
     }
 
     private function saveNewData($d){
+        var_dump("NEW DATA");
         $empresa = $this->getObject(Empresa::class, $d->company);
         $cuenta = $this->getObject(Cuenta::class, $d->account);
         $entityFactory = $this->getFactory(Cuenta_Empresa::class);
