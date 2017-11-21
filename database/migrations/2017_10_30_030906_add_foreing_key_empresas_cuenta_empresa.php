@@ -14,7 +14,7 @@ class AddForeingKeyEmpresasCuentaEmpresa extends Migration
     public function up()
     {
         Schema::table('cuenta_empresa', function (Blueprint $table) {
-            $table->foreign('empresa_id')->references('id')->on('empresas');
+           // $table->foreign('empresa_id')->references('id')->on('empresas');
         });
     }
 
