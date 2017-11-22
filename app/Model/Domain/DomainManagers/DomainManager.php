@@ -168,7 +168,7 @@ abstract class DomainManager
     private function filterIndicators($elements){
         foreach ($elements as $key => $value){
             if(Auth::user()->role != "admin"){
-                if($value->user_id != Auth::id()){
+                if( $value->user_id != Auth::id() && !$value->visible() ){
                     unset($elements[$key]);
                 }
             }
